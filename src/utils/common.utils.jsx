@@ -1,0 +1,119 @@
+import NoImage from "Asset/.png";
+import { CURRENCY_SYMBOL } from "constants/common.constants";
+import moment from "moment";
+
+export const asyncWrapper = (promise) =>
+  promise
+    .then((data) => ({ data, error: null }))
+    .catch((error) => ({ data: null, error }));
+
+export const isFunction = (fn) => typeof fn === "function";
+
+export const isPublicApi = (url) => {
+  const publicApiArray = ["/login/", "/api/register/"];
+  return Boolean(publicApiArray.filter((e) => url?.includes(e))?.length);
+};
+
+export const stringifyError = (errors) => {
+  return errors;
+};
+
+export const getLocalStorage = (key, initialValue) => {
+  const resource = localStorage.getItem(key);
+  return resource ? JSON.parse(resource) : initialValue;
+};
+
+export const getImageUrl = (path) => {
+  if (path) return `http://3.82.226.195${path}`;
+
+  return NoImage;
+};
+
+
+   
+export const getProductNameByLang = (detail, language = "end") => {
+  if (detail?.length > 0)
+    return detail?.find((a) => a.language === language) ?? detail[0];
+  return (
+    detail?.find((a) => a.language === language) ?? {
+      name: "",
+      description: "",
+    }
+  );
+};
+
+export const numberFomater = (number, isCurrency) => {
+  const isCurrencyBoolean = isCurrency ? true : false;
+  return `${isCurrencyBoolean ? CURRENCY_SYMBOL : ""} ${new Intl.NumberFormat(
+    "en-IN",
+    { maximumSignificantDigits: 3 }
+  ).format(number)}`;
+};
+
+export const generateYears = () => {
+  var max = new Date().getFullYear()
+  const moonLanding = new Date('July 20, 20 00:20:18').getFullYear();
+  const current = max - moonLanding;
+  var min = max - current;
+  var years = []
+  for (var i = max; i >= min; i--) {
+    years.push(i)
+  }
+  return years
+}
+
+export const formatDate = (date, formate = "YYYY-MM-DD") => {
+return   date ? moment(date).format(formate) : "-";
+};
+export const contactNumberFormatter = (phoneNumberString) => {
+  var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+  }
+  return phoneNumberString;
+}
+
+export const weekFirstDateLastDate = () => {
+  let wDate = new Date();
+  let dDay = wDate.getDay() > 0 ? wDate.getDay() : 7;
+  let first = wDate.getDate() - dDay + 1;
+  let firstDateWeek = new Date(wDate.setDate(first));
+  let lastDateWeek = new Date(wDate.setDate(firstDateWeek.getDate() + 6));
+  return { firstDateWeek, lastDateWeek };
+}
+
+export const monthFirstDateLastDate = () => {
+  var date = new Date();
+  var monthFirstDate = new Date(date.getFullYear(), date.getMonth(), 1);
+  var monthLastDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  return { monthFirstDate, monthLastDate };
+}
+
+export const ORDER_STATUS = {
+  PENDING: "DRAFT",
+  APPROVED: "SUBMITTED",
+  SHIPPING: "SHIPPING",
+  DELIVERED: "DELIVERED",
+  COMPLETE: "COMPLETE",
+};
+
+export const PAYMENT_STATUS = {
+  UNPAID: "UNPAID",
+  PAID: "PAID",
+  APPROVED: "APPROVED",
+  REFUNDED: "REFUNDED",
+};
+
+
+
+export const preciseNum = (num, decimal) => {
+  return parseInt(num)?.toFixed(decimal ?? 2);
+}
+export const toExponent = (num, decimalValue = 3, isCurrency = false) => {
+  if (num < 50000) {
+    return ` ${isCurrency ? '$' : ''} ${parseInt(numberFomater(num))}`;
+  } else {
+    return ` ${isCurrency ? '$' : ''} ${parseInt(num)?.toExponential(decimalValue)}`;
+  }
+}
