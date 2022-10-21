@@ -1,11 +1,10 @@
 {
-  "compilerOptions":{
-    "baseUrk":"./src/",
-    "paths":{
-      "@/hooks/*":["hooks/*"],
-      "@pages/*":["pages/*"],
-      "@constants/*":["constants/*"],
-      "@/types/*":["types/"],
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "paths": {
+      "@/hooks/*": ["hooks/*"],
+      "@/pages/*": ["pages/*"],
+      "@/constants/*":["constants/"],
       "@/style/*":["style/"],
       "@/Component/*":["Component/"],
       "@/Helper/*":["Helper/"],
