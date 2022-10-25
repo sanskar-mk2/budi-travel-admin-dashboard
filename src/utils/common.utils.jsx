@@ -1,4 +1,4 @@
-import NoImage from "Asset/.png";
+// import NoImage from "Asset/.png";
 import { CURRENCY_SYMBOL } from "constants/common.constants";
 import moment from "moment";
 
@@ -24,9 +24,9 @@ export const getLocalStorage = (key, initialValue) => {
 };
 
 export const getImageUrl = (path) => {
-  if (path) return `http://3.82.226.195${path}`;
+  if (path) return `https//hello${path}`;
 
-  return NoImage;
+  return null;
 };
 
 

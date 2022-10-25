@@ -6,16 +6,11 @@ const loginValidationSchema = yup.object().shape({
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
     .max(40, "Password must not exceed 40 characters")
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Must Contain Minmum 8 Characters, alphanumeric, with upper and lower alphabet cases"
-    )
 });
 
-const emailValidationSchema = yup.object({
-  email: yup.required("Email is required").email("Email is invalid")
-});
-
+const emailValidationSchema = yup.object().shape({
+email:yup.string().email().required("")
+})
 export {
   loginValidationSchema,
   emailValidationSchema
