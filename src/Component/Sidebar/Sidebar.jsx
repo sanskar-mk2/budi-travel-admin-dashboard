@@ -15,7 +15,7 @@ const Sidebar = ({ props,
   return (
     <React.Fragment>
       <SidebarContainer>
-        <div className='lg:w-full md:w-[15%] my-[10px] '>
+        <div className='  w-full my-[10px] '>
           <div className={` activeClass flex justify-between transition-opacity hover:bg-primary-color bg-white px-2  py-3 rounded-md`}>
             <div className=''>
               <IconContext.Provider value={{ color: props?.IconColor, className: " m-auto text-[23px]  font-semibold " }}>

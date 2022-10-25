@@ -10,7 +10,7 @@
       "@/Helper/*":["Helper/"],
       "@/utils/*":["utils/"],
       "@/api/*":["api/"],
-      "@/assets/*":["Asset/"],
+      "@/assets/*":["Assets/"],
       "@/routes/*":["Routes/"]
     }
   }

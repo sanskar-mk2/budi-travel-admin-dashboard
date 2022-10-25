@@ -1,9 +1,7 @@
 import React from 'react';
-import { SearchBar } from '../Searchbar/Searchbar';
-import Icon from '../Icon/Icon';
-// icon importing 
 import { RiMessage3Fill } from "react-icons/ri";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { Icon , SearchBar} from "Component"
 const TopHeader = () => {
   return (
     <React.Fragment>
