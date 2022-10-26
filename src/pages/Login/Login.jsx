@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Textfield, CheckBox, Icon } from 'Component'
+import { Button, Textfield, CheckBox } from 'Component'
 import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { FormProvider, useForm, Controller } from "react-hook-form";
@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginValidationSchema } from 'utils/validation';
 import { useAuth } from 'hooks';
-import { AutoCompleteInput } from 'Component';
 export default function Login() {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
@@ -31,8 +30,7 @@ export default function Login() {
   return (
     <React.Fragment>
       <div className="grid h-[95vh]">
-        <div className="m-auto">
-          <AutoCompleteInput />
+        <div className="m-auto lg:w-[25%] md:w-[40%] w-[85%]">
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control">
@@ -70,7 +68,7 @@ export default function Login() {
                 </span>
                 <div className="flex  justify-between">
                   <label className="label">
-                    <span className="label-text-alt link link-hover" onClick={() => navigate('/forget-password')}>Forgot password?</span>
+                    <span className="label-text-alt mt-[-8px] link link-hover" onClick={() => navigate('/forget-password')}>Forgot password?</span>
                   </label>
                   <div className="flex justify-between">
                     <div className="">
