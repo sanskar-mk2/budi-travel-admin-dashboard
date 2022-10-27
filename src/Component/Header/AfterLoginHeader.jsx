@@ -10,7 +10,7 @@ const AfterLoginHeader = () => {
     <React.Fragment>
       <TopHeader />
       <div className="lg:px-2 md:px-2 px-0 grid grid-cols-12 gap-2">
-        <div className="lg:col-span-2 md:col-span-3 col-12">
+        <div className="lg:col-span-2 md:col-span-3 col-span-12">
           <SideBarContainer>
             {
               SidebarContants?.map((i, index) => (
@@ -21,7 +21,7 @@ const AfterLoginHeader = () => {
             }
           </SideBarContainer>
         </div>
-        <div className="lg:col-span-10 md:col-span-9 col-12">
+        <div className="lg:col-span-10 md:col-span-9 col-span-10">
           <Outlet />
         </div>
       </div>

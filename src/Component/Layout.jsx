@@ -15,7 +15,7 @@ const Layout = () => {
           },
         }} />
       {
-        session ? (<AfterLoginHeader />) : (<Outlet />)
+        session ? (<AfterLoginHeader />) :(<Outlet/>)
       }
     </React.Fragment>
   );

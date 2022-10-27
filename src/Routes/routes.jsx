@@ -25,7 +25,7 @@ const PrivateRouteList = [
   {
     path: "/",
     component: (<React.Suspense fallback={<p>Loading...</p>}>
-      <h1>Lorem iprem </h1>
+      <h1>lorem ipsum right now </h1>
     </React.Suspense>)
   }
 ];
