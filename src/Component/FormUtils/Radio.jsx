@@ -6,7 +6,7 @@ const  Radio=({
   return (
     <React.Fragment>
       <div className={`${props?.containerName} flex justify-self-auto`}>
-        <span><input type="radio" control={control} {...props} name={props?.name} className={`  ${props?.className}  radio radio-primary`} /></span>  
+        <span><input type="radio" control={control} {...props} name={props?.name} className={`  ${props?.className}  radio`} /></span>  
         <label htmlFor="radio" className={` pl-2 ${props?.labelClassName} `}>{props?.label}</label>
       </div>
     </React.Fragment>

@@ -4,43 +4,51 @@ import Layout from 'Component/Layout';
 import { PrivateRouteList, PublicRouteList } from 'Routes/routes';
 import './App.css';
 import "antd/dist/antd.min.css";
-import { AfterLoginHeader, Radio, CheckBox, Textfield } from 'Component';
-import Login from "pages/Login/Login";
+
 import { useAuth } from 'hooks';
-const ProtectedRoutes = ({ user, RedirectLink = "/login" }) => {
+const ProtectedRoute = ({ user, redirectPath = "/login" }) => {
   if (!user) {
-    return <Navigate to={RedirectLink} replace />
-  } else {
-    <Outlet />
+    return <Navigate to={redirectPath} replace />;
   }
-}
-const PrivateRoutes = ({ user, redirectionLink = "/profile" }) => {
+
+  return <Outlet />;
+};
+
+const AuthenticateRoute = ({ user, redirectPath = "/" }) => {
   if (user) {
-    return <Navigate to={redirectionLink} replace />
-  } else {
-    return <Outlet />
+    return <Navigate to={redirectPath} replace />;
   }
-}
+  return <Outlet />;
+};
 function App() {
-const {session} = useAuth();
+  const {session} = useAuth();
   return (
     <div className="App">
       <Routes>
         <Route element={<Layout />}>
-          <Route element={<ProtectedRoutes user={session} />}>
-            {
-              PrivateRouteList?.map((route, index) => (
-                <Route key={index} path={route.path} element={route.component} {...route} />
-              ))
-            }
-          </Route>
-          <Route element={<PrivateRoutes user={session} />}>
-            {
-              PublicRouteList?.map((route, index) => (
-                <Route key={index} path={route.path} element={route.component} {...route} />
-              ))
-            }
-          </Route>
+        <Route element={<AuthenticateRoute user={session} />}>
+          {PublicRouteList.map((route, index) => {
+            return (
+              <Route key={index} path={route.path} element={route.component} {...route} />
+            );
+          })}
+        </Route>
+
+        <Route
+
+          element={
+            <React.Suspense fallback={<p>loading... </p>}>
+              <ProtectedRoute user={session} />
+            </React.Suspense>
+          }
+        >
+          {PrivateRouteList.map((route, index) => {
+            return (
+              <Route key={index} path={route.path} element={route.component} {...route} />
+            );
+          })}
+         
+        </Route>
         </Route>
       </Routes>
     </div >

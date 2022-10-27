@@ -10,7 +10,7 @@ const CheckBox = (
       <div className={`${props?.containerName} flex justify-self-auto`}>
         <span>
           <input control={control} type="checkbox" {...props} name={props?.name} className={`  ${props?.className} 
-        checkbox checkbox-primary`} />
+        checkbox `} />
         </span>
         <label htmlFor="radio" className={` pl-2 ${props?.labelClassName} `}>{props?.label}</label>
       </div>

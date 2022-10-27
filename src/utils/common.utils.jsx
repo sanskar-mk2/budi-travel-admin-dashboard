@@ -22,6 +22,16 @@ export const getLocalStorage = (key, initialValue) => {
   const resource = localStorage.getItem(key);
   return resource ? JSON.parse(resource) : initialValue;
 };
+export const isMobile = () => {
+
+  if (window) {
+    if (window.matchMedia("(max-width: 700px)").matches) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 
 export const getImageUrl = (path) => {
   if (path) return `https//hello${path}`;
@@ -30,7 +40,7 @@ export const getImageUrl = (path) => {
 };
 
 
-   
+
 export const getProductNameByLang = (detail, language = "end") => {
   if (detail?.length > 0)
     return detail?.find((a) => a.language === language) ?? detail[0];
@@ -63,7 +73,7 @@ export const generateYears = () => {
 }
 
 export const formatDate = (date, formate = "YYYY-MM-DD") => {
-return   date ? moment(date).format(formate) : "-";
+  return date ? moment(date).format(formate) : "-";
 };
 export const contactNumberFormatter = (phoneNumberString) => {
   var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
