@@ -1,5 +1,7 @@
 import React from "react";
+import { Wrapper } from "Component";
 import Login from "pages/Login/Login";
+import Dashboard from "pages/Dashboard/Dashboard";
 
 const PublicRouteList = [
   {
@@ -23,10 +25,15 @@ const PublicRouteList = [
 ];
 const PrivateRouteList = [
   {
-    path: "/",
-    component: (<React.Suspense fallback={<p>Loading...</p>}>
-      <h1>lorem ipsum right now </h1>
-    </React.Suspense>)
+    path: "/dashboard",
+    component: (<Wrapper>
+      <Dashboard />
+    </Wrapper>)
+  }, {
+    path: '/customer',
+    component: (<Wrapper>
+      <Dashboard />
+    </Wrapper>)
   }
 ];
 

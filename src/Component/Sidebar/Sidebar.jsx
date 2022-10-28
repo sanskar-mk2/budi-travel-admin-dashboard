@@ -4,44 +4,60 @@ import styled from "styled-components";
 import { RiDashboardFill } from 'react-icons/ri'
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { IconContext } from "react-icons";
-// import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Sidebar = ({ props,
   children
 }) => {
   const [toggle, SetToggle] = React.useState(false);
-  // const { location } = useLocation();
-  // console.log(location, " it is your location ");
+  const navigate = useNavigate();
+
+
+  const redirectIT = (e) => {
+    if (e?.link) {
+      navigate(e?.link);
+    }
+  }
+
+  const location = React.useMemo(() => {
+    if (window) {
+      return window.location.pathname;
+    } else {
+      return undefined;
+    }
+  })
 
   return (
     <React.Fragment>
       <SidebarContainer>
         <div className='  w-full my-[10px] '>
-          <div className={` activeClass flex justify-between transition-opacity hover:bg-primary-color bg-white px-2  py-3 rounded-md`}>
+          <div onClick={() => redirectIT(props)} className={` activeClass flex justify-between transition-opacity hover:bg-primary-color bg-white px-2  py-3 rounded-md ${location === props?.link && 'text-white bg-primary-color activeClass'}`}>
             <div className=''>
-              <IconContext.Provider value={{ color: props?.IconColor, className: " m-auto text-[23px]  font-semibold " }}>
+              <IconContext.Provider value={{ color: location === props?.link ? 'white' : props?.IconColor, className: " m-auto text-[23px]  font-semibold " }}>
                 {props?.icon}
               </IconContext.Provider>
             </div>
-            <div className='text-[#1B263C] hover:text-white font-semibold'>
+            <div className={` hover:text-white font-semibold ${location === props?.link ? 'text-white' : 'text-[#1B263C]'}`}>
               {props?.title}
             </div>
             <div className=' '>
               {
-                true ? (<NewTag>{props?.tag}</NewTag>) : (
-                  <NotificationNum>90</NotificationNum>
-                )
+                props?.tag ? (<NewTag>{props?.tag}</NewTag>) :
+                  props?.notification && (<NotificationNum style={{ color: location === props?.link ? 'white' : 'black' }}>{props?.notification}</NotificationNum>)
               }
             </div>
             <div className=''>
-              <ToggleBtn onClick={() => SetToggle(!toggle)}>
-                <IconContext.Provider value={{ color: "#C3CAD9", className: "mt-1 m-auto h-full text-[15px] font-semibold " }}>
-                  <div>
-                    {
-                      toggle ? (<BsChevronDown />) : (<BsChevronUp />)
-                    }
-                  </div>
-                </IconContext.Provider>
-              </ToggleBtn>
+              {
+                props?.child?.length > 0 && (<ToggleBtn onClick={() => SetToggle(!toggle)}>
+                  <IconContext.Provider value={{ color: "#C3CAD9", className: "mt-1 m-auto h-full text-[15px] font-semibold " }}>
+                    <div>
+                      {
+                        toggle ? (<BsChevronDown />) : (<BsChevronUp />)
+                      }
+                    </div>
+                  </IconContext.Provider>
+                </ToggleBtn>)
+              }
+
             </div>
           </div>
           <div className={` overflow-hidden transition-all duration-700 ${toggle ? 'h-auto' : 'h-[0px]'}`}>{children}</div>
@@ -76,9 +92,10 @@ height:25px;
 border-radius:50%;
 display:grid;
 cursor:pointer;
-background:pink;
 font-size:13px;
 padding-top:1px;
+background: rgba( 228,226,226, 0.26 ); 
+backdrop-filter: blur(9px);
 
 `;
 const NewTag = styled.div`
@@ -86,12 +103,14 @@ background:#219653;
 text-align:center;
 border-radius:5px;
 display:grid;
-padding-left:3.5px;
+padding-left:6px;
 padding-bottom:2px;
 margin-top:1px;
-padding-right:3.5px;
+padding-right:6px;
 cursor:pointer;
 color:white;
+box-shadow: 0px 10px 30px rgba(255, 102, 51, 0.15);
+border-radius:15px;
 font-weight:medium;
 font-size:12px !important;
 `;
@@ -104,28 +123,32 @@ div {
 }
 `;
 
-export const ChildSubMenu = React.memo(({ props }) => (
-  <React.Fragment>
-    <div className={` flex justify-between transition-opacity hover:bg-primary-color bg-white px-2  py-3 rounded-md`}>
-      <div className=''>
-        <IconContext.Provider value={{ color: "white", className: " m-auto text-[23px]  font-semibold " }}>
-          <RiDashboardFill />
-        </IconContext.Provider>
-      </div>
-      <div className='text-white font-semibold'>
-        Dashboard
-      </div>
-      <div className=' '>
-        {
-          true ? (<NewTag>NEW</NewTag>) : (
-            <NotificationNum>90</NotificationNum>
-          )
-        }
+export const ChildSubMenu = ({ props }) => {
+  console.log(props, 'it is child props data ')
+  return (
 
+    <React.Fragment>
+      <div className={` flex justify-between transition-opacity hover:bg-primary-color bg-white px-2  py-3 rounded-md`}>
+        <div className=''>
+          <IconContext.Provider value={{ color: "white", className: " m-auto text-[23px]  font-semibold " }}>
+            <RiDashboardFill />
+          </IconContext.Provider>
+        </div>
+        <div className='text-white font-semibold'>
+          {props?.title}
+        </div>
+        <div className=' '>
+          {
+            true ? (<NewTag>NEW</NewTag>) : (
+              <NotificationNum>90</NotificationNum>
+            )
+          }
+
+        </div>
       </div>
-    </div>
-  </React.Fragment>
-));
+    </React.Fragment>
+  )
+}
 
 
 export const ChildSubAgent = React.memo(({ props }) => {
@@ -151,8 +174,8 @@ export const ChildSubAgent = React.memo(({ props }) => {
           Thamos Ediosn
         </div>
         <div className=' w-full'>
-     
-          <LiveMode/>
+
+          <LiveMode />
         </div>
       </div>
     </React.Fragment>
