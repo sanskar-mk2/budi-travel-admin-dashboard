@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { ServiceCardData } from 'utils/ObjectUtils';
 import { IconProvider } from 'utils/common.utils';
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { Tooltip } from 'antd';
-
-const text = <span>prompt text</span>;
+import { ColumnGraph, Tab , BarGraph } from 'Component';
 const DashboardChild = () => {
   const ServiceCard = React.memo((props) => {
     return (
@@ -61,6 +60,117 @@ const DashboardChild = () => {
       </React.Fragment>
     )
   }, []);
+
+  // tabsOne
+  const TabsOneData = React.useMemo(() => {
+    return [
+      {
+        label: 'Weekly',
+        key: 'weekly',
+        children: <ColumnGraph />
+      },
+      {
+        label: 'Month',
+        key: 'month',
+        children: <ColumnGraph />
+      },
+      {
+        label: 'Year',
+        key: 'year',
+        children: <ColumnGraph />
+      }
+    ]
+  }, [])
+
+  const TabOneLeftComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <CustomeLabel>User Stats</CustomeLabel>
+      </React.Fragment>
+    )
+  }, []);
+  const TabOneRightComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="">
+          <Tooltip placement="leftTop" color="black" title={
+            <React.Fragment>
+              <button>Click </button>
+              <p className="cursor-pointer">lorem ipsum </p>
+            </React.Fragment>} arrowPointAtCenter>
+            <span>
+              <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                <HiOutlineDotsVertical />
+              </IconProvider>
+            </span>
+          </Tooltip>
+        </div>
+      </React.Fragment>
+    )
+  }, [])
+
+  const TabOneProps = React.useMemo(() => {
+    return {
+      data: TabsOneData,
+      leftComponet: <TabOneLeftComponent />,
+      rightComponent: <TabOneRightComponent />
+    }
+  }, [TabsOneData]);
+// tabTwo
+const TabsTwoData = React.useMemo(() => {
+  return [
+    {
+      label: 'Weekly',
+      key: 'weekly',
+      children:  <BarGraph/>
+    },
+    {
+      label: 'Month',
+      key: 'month',
+      children: <BarGraph/>
+    },
+    {
+      label: 'Year',
+      key: 'year',
+      children:  <BarGraph/>
+    }
+  ]
+}, [])
+
+const TabTwoLeftComponent = React.memo(() => {
+  return (
+    <React.Fragment>
+      <CustomeLabel>Activities</CustomeLabel>
+    </React.Fragment>
+  )
+}, []);
+const TabTwoRightComponent = React.memo(() => {
+  return (
+    <React.Fragment>
+      <div className="">
+        <Tooltip placement="leftTop" color="black" title={
+          <React.Fragment>
+            <button>Click </button>
+            <p className="cursor-pointer">lorem ipsum </p>
+          </React.Fragment>} arrowPointAtCenter>
+          <span>
+            <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+              <HiOutlineDotsVertical />
+            </IconProvider>
+          </span>
+        </Tooltip>
+      </div>
+    </React.Fragment>
+  )
+}, [])
+
+const TabTwoProps = React.useMemo(() => {
+  return {
+    data: TabsTwoData,
+    leftComponet: <TabTwoLeftComponent />,
+    rightComponent: <TabTwoRightComponent />
+  }
+}, [TabsTwoData]);
   return (
     <React.Fragment>
       <div className="grid lg:grid-cols-2  md:grid-cols-1 grid-cols-1 gap-3">
@@ -71,6 +181,16 @@ const DashboardChild = () => {
                 <ServiceCard {...props} key={index} />
               ))
             }
+          </div>
+          <div className='mt-8'>
+            <BoxCantainer>
+              <Tab props={TabOneProps} />
+            </BoxCantainer>
+          </div>
+          <div className='mt-8'>
+            <BoxCantainer>
+              <Tab props={TabTwoProps} />
+            </BoxCantainer>
           </div>
         </div>
         <div className="">
@@ -110,4 +230,17 @@ height:30px;
 display:grid;
 border-radius:50%;
 &&:hover 
+`;
+const BoxCantainer = styled.div`
+background: #FFFFFF;
+box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
+border-radius: 10px;
+padding:0px 15px 15px 15px;
+`;
+const CustomeLabel = styled.div`
+// font-family: 'Open Sans';
+// font-style: normal;
+font-weight: 700;
+font-size: 13px;
+color: #4D5E80;
 `;

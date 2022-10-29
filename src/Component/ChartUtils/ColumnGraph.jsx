@@ -17,7 +17,7 @@ export const ColumnGraph = () => {
     },
     {
       type: 'Nepal',
-      sales: 145,
+      sales: 80,
     },
     {
       type: 'Bhutan',
@@ -35,6 +35,7 @@ export const ColumnGraph = () => {
       type: 'Canada',
       sales: 38,
     },
+    
   ];
   const config = {
     data,
@@ -48,14 +49,16 @@ export const ColumnGraph = () => {
     },
     meta: {
       type: {
-        alias: '类别',
+        alias: 'dd',
       },
       sales: {
-        alias: '销售额',
+        alias: 'd',
       },
     },
-    minColumnWidth: 20,
-    maxColumnWidth: 20,
+    minColumnWidth: 10,
+    maxColumnWidth: 10,
+    height:260,
+    color: ' #27AE60'
   };
   return <Column {...config} />;
 };

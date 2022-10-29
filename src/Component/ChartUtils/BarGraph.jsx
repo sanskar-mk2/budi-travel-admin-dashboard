@@ -5,37 +5,21 @@ import { Bar } from '@ant-design/plots';
 export const BarGraph = ({customeConfig}) => {
   const data = [
     {
-      type: 'A ',
+      type: 'User',
       sales: 38,
     },
     {
-      type: 'B',
+      type: 'Offers',
       sales: 52,
     },
     {
-      type: 'C',
+      type: 'Agents',
       sales: 61,
     },
     {
-      type: 'C',
+      type: 'Other items',
       sales: 145,
-    },
-    {
-      type: 'C',
-      sales: 48,
-    },
-    {
-      type: 'C',
-      sales: 38,
-    },
-    {
-      type: 'L',
-      sales: 38,
-    },
-    {
-      type: 'k',
-      sales: 38,
-    },
+    }
   ];
   const config = {
     data,
@@ -49,8 +33,11 @@ export const BarGraph = ({customeConfig}) => {
         alias: 'alias',
       },
     },
-    minBarWidth: 20,
-    maxBarWidth: 20,
+    minBarWidth: 10,
+    maxBarWidth: 10,
+    height:260,
+    color: '#E95050',
+    animation:true
   };
   return customeConfig?(<Bar {...customeConfig} />):(<Bar {...config} />);
 };
