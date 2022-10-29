@@ -1,6 +1,7 @@
 // import NoImage from "Asset/.png";
 import { CURRENCY_SYMBOL } from "constants/common.constants";
 import moment from "moment";
+import { IconContext } from "react-icons";
 
 export const asyncWrapper = (promise) =>
   promise
@@ -14,6 +15,15 @@ export const isPublicApi = (url) => {
   return Boolean(publicApiArray.filter((e) => url?.includes(e))?.length);
 };
 
+export const IconProvider = ({ color , className , props, children }) => {
+  return (
+    <IconContext.Provider value={{ color:color??props?.className, className: ` ${ className??props.className}` }}>
+      {
+        children
+      }
+    </IconContext.Provider>
+  )
+}
 export const stringifyError = (errors) => {
   return errors;
 };
@@ -100,20 +110,6 @@ export const monthFirstDateLastDate = () => {
   return { monthFirstDate, monthLastDate };
 }
 
-export const ORDER_STATUS = {
-  PENDING: "DRAFT",
-  APPROVED: "SUBMITTED",
-  SHIPPING: "SHIPPING",
-  DELIVERED: "DELIVERED",
-  COMPLETE: "COMPLETE",
-};
-
-export const PAYMENT_STATUS = {
-  UNPAID: "UNPAID",
-  PAID: "PAID",
-  APPROVED: "APPROVED",
-  REFUNDED: "REFUNDED",
-};
 
 
 

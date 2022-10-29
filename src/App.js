@@ -14,14 +14,15 @@ const ProtectedRoute = ({ user, redirectPath = "/login" }) => {
   return <Outlet />;
 };
 
-const AuthenticateRoute = ({ user, redirectPath = "/" }) => {
+const AuthenticateRoute = ({ user, redirectPath = "/dashboard" }) => {
   if (user) {
     return <Navigate to={redirectPath} replace />;
   }
   return <Outlet />;
 };
 function App() {
-  const {session} = useAuth();
+  // const {session} = useAuth();
+  const  session = true  
   return (
     <div className="App">
       <Routes>
