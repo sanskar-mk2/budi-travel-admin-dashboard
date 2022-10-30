@@ -80,3 +80,33 @@ export const SidebarContants = [
   },
 
 ]
+
+
+
+export const AgentUser = [
+  {
+    link: null,
+    key: '',
+    title: 'Agent',
+    permissionKey: '',
+    tag: null,
+    notification: 12,
+    IconColor: 'blue',
+    icon: <RiDashboardFill />,
+    child: [
+      {
+        img: 'https://i.pinimg.com/474x/4b/71/f8/4b71f8137985eaa992d17a315997791e.jpg',
+        isLive: 'Live',
+        name: 'Thomas Edison',
+        link: '/thomas-edison/98'
+      },
+      {
+        img: 'https://i.pinimg.com/474x/4b/71/f8/4b71f8137985eaa992d17a315997791e.jpg',
+        isLive: 'Live',
+        name: 'Ashu Erishon',
+        link: '/thomas-edison/98'
+      }
+    ],
+  }
+
+]

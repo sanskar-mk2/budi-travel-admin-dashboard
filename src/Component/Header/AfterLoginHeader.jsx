@@ -1,25 +1,47 @@
 import React from 'react';
-import {Sidebar  ,TopHeader} from "Component"
+import { Sidebar, TopHeader } from "Component"
 import styled from "styled-components";
-import { SidebarContants } from 'constants/Sidebar.menu';
-import {   ChildSubMenu} from 'Component/Sidebar/Sidebar';
+import { SidebarContants , AgentUser} from 'constants/Sidebar.menu';
+import { ChildSubMenu, ChildSubAgent } from 'Component/Sidebar/Sidebar';
 import { Outlet } from 'react-router-dom';
 const AfterLoginHeader = () => {
+
 
   return (
     <React.Fragment>
       <TopHeader />
       <div className=" grid grid-cols-12 gap-2 lg:px-4 md:px-4 px-1">
         <div className="lg:col-span-2 md:col-span-3 col-span-12">
-          <SideBarContainer>
-            {
-              SidebarContants?.map((i, index) => (
-                <Sidebar props={i} key={index}>
-                  <ChildSubMenu {...i?.child} />
-                </Sidebar>
-              ))
-            }
-          </SideBarContainer>
+          <div className="">
+            <SideBarContainer>
+              {
+                SidebarContants?.map((i, index) => (
+                  <Sidebar props={i} key={index}>
+                    {
+                      i?.child?.map((i, index) => (
+                        <ChildSubMenu key={index} props={i} />
+                      ))
+                    }
+                  </Sidebar>
+                ))
+              }
+            </SideBarContainer>
+          </div>
+          <div className="mt-3">
+            <SideBarContainer>
+              {
+                AgentUser?.map((i, index) => (
+                  <Sidebar props={i} key={index}>
+                    {
+                      i?.child?.map((i, index) => (
+                        <ChildSubAgent key={index} props={i} />
+                      ))
+                    }
+                  </Sidebar>
+                ))
+              }
+            </SideBarContainer>
+          </div>
         </div>
         <div className="lg:col-span-10 md:col-span-9 col-span-10">
           <Outlet />

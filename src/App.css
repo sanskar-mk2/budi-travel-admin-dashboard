@@ -20,6 +20,8 @@
 .agent:hover div {
   color:white !important;
 }
+/* tab css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
