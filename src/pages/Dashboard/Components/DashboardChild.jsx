@@ -5,7 +5,8 @@ import { IconProvider } from 'utils/common.utils';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { Tooltip } from 'antd';
-import { ColumnGraph, Tab , BarGraph } from 'Component';
+import { ColumnGraph, Tab, BarGraph } from 'Component';
+import SiteSpeed from './SiteSpeed';
 const DashboardChild = () => {
   const ServiceCard = React.memo((props) => {
     return (
@@ -116,61 +117,117 @@ const DashboardChild = () => {
       rightComponent: <TabOneRightComponent />
     }
   }, [TabsOneData]);
-// tabTwo
-const TabsTwoData = React.useMemo(() => {
-  return [
-    {
-      label: 'Weekly',
-      key: 'weekly',
-      children:  <BarGraph/>
-    },
-    {
-      label: 'Month',
-      key: 'month',
-      children: <BarGraph/>
-    },
-    {
-      label: 'Year',
-      key: 'year',
-      children:  <BarGraph/>
+  // tabTwo
+  const TabsTwoData = React.useMemo(() => {
+    return [
+      {
+        label: 'Weekly',
+        key: 'weekly',
+        children: <BarGraph />
+      },
+      {
+        label: 'Month',
+        key: 'month',
+        children: <BarGraph />
+      },
+      {
+        label: 'Year',
+        key: 'year',
+        children: <BarGraph />
+      }
+    ]
+  }, [])
+
+  const TabTwoLeftComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <CustomeLabel>Activities</CustomeLabel>
+      </React.Fragment>
+    )
+  }, []);
+  const TabTwoRightComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="">
+          <Tooltip placement="leftTop" color="black" title={
+            <React.Fragment>
+              <button>Click </button>
+              <p className="cursor-pointer">lorem ipsum </p>
+            </React.Fragment>} arrowPointAtCenter>
+            <span>
+              <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                <HiOutlineDotsVertical />
+              </IconProvider>
+            </span>
+          </Tooltip>
+        </div>
+      </React.Fragment>
+    )
+  }, [])
+
+  const TabTwoProps = React.useMemo(() => {
+    return {
+      data: TabsTwoData,
+      leftComponet: <TabTwoLeftComponent />,
+      rightComponent: <TabTwoRightComponent />
     }
-  ]
-}, [])
+  }, [TabsTwoData]);
+  // side speed
 
-const TabTwoLeftComponent = React.memo(() => {
-  return (
-    <React.Fragment>
-      <CustomeLabel>Activities</CustomeLabel>
-    </React.Fragment>
-  )
-}, []);
-const TabTwoRightComponent = React.memo(() => {
-  return (
-    <React.Fragment>
-      <div className="">
-        <Tooltip placement="leftTop" color="black" title={
-          <React.Fragment>
-            <button>Click </button>
-            <p className="cursor-pointer">lorem ipsum </p>
-          </React.Fragment>} arrowPointAtCenter>
-          <span>
-            <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
-              <HiOutlineDotsVertical />
-            </IconProvider>
-          </span>
-        </Tooltip>
-      </div>
-    </React.Fragment>
-  )
-}, [])
+  const SiteSpeedComponent = React.useMemo(() => {
+    return [
+      {
+        label: 'Weekly',
+        key: 'weekly',
+        children: <SiteSpeed />
+      },
+      {
+        label: 'Month',
+        key: 'month',
+        children: <SiteSpeed />
+      },
+      {
+        label: 'Year',
+        key: 'year',
+        children: <SiteSpeed />
+      }
+    ]
+  }, [])
 
-const TabTwoProps = React.useMemo(() => {
-  return {
-    data: TabsTwoData,
-    leftComponet: <TabTwoLeftComponent />,
-    rightComponent: <TabTwoRightComponent />
-  }
-}, [TabsTwoData]);
+  const SiteSpeedTabLeftComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <CustomeLabel>Activities</CustomeLabel>
+      </React.Fragment>
+    )
+  }, []);
+  const SiteSpeedTabRightComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="">
+          <Tooltip placement="leftTop" color="black" title={
+            <React.Fragment>
+              <button>Click </button>
+              <p className="cursor-pointer">lorem ipsum </p>
+            </React.Fragment>} arrowPointAtCenter>
+            <span>
+              <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                <HiOutlineDotsVertical />
+              </IconProvider>
+            </span>
+          </Tooltip>
+        </div>
+      </React.Fragment>
+    )
+  }, [])
+
+  const SiteSpeedProps = React.useMemo(() => {
+    return {
+      data: SiteSpeedComponent,
+      leftComponet: <SiteSpeedTabLeftComponent />,
+      rightComponent: <SiteSpeedTabRightComponent />
+    }
+  }, [SiteSpeedComponent]);
   return (
     <React.Fragment>
       <div className="grid lg:grid-cols-2  md:grid-cols-1 grid-cols-1 gap-3">
@@ -193,8 +250,10 @@ const TabTwoProps = React.useMemo(() => {
             </BoxCantainer>
           </div>
         </div>
-        <div className="">
-
+        <div className="lg:pl-3 md:pl-0 pl-0">
+          <BoxCantainer>
+            <Tab props={SiteSpeedProps} />
+          </BoxCantainer>
         </div>
       </div>
     </React.Fragment>
@@ -221,6 +280,10 @@ padding-left:15px;
 padding-right:15px;
 // font-family: 'Open Sans';
 color: #FFFFFF;
+transition:all ease 0.3s; 
+   &:hover:hover{
+  opacity:0.8;
+} 
 `;
 
 const AddBtn = styled.button`
@@ -229,7 +292,10 @@ width:30px;
 height:30px;
 display:grid;
 border-radius:50%;
-&&:hover 
+transition:all ease 0.3s; 
+&:hover:hover{
+  opacity:0.8;
+} 
 `;
 const BoxCantainer = styled.div`
 background: #FFFFFF;

@@ -2,6 +2,7 @@ import React from "react";
 import { Wrapper } from "Component";
 import Login from "pages/Login/Login";
 import Dashboard from "pages/Dashboard/Dashboard";
+import DashboardRevenue from "pages/Dashboard/DashboardRevenue";
 
 const PublicRouteList = [
   {
@@ -30,9 +31,9 @@ const PrivateRouteList = [
       <Dashboard />
     </Wrapper>)
   }, {
-    path: '/customer',
+    path: '/dashboard-revenue',
     component: (<Wrapper>
-      <Dashboard />
+      <DashboardRevenue />
     </Wrapper>)
   }
 ];

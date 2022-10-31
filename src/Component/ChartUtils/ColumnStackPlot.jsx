@@ -28,7 +28,7 @@ export const ColumnStackPlot = () => {
       layout: [
         {
           type: 'interval-adjust-position',
-        }, 
+        },
         {
           type: 'interval-hide-overlap',
         },
@@ -37,6 +37,9 @@ export const ColumnStackPlot = () => {
         },
       ],
     },
+    minColumnWidth: 17,
+    maxColumnWidth: 17,
+    height: 280,
   };
 
   return <Column {...config} />;

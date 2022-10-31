@@ -2,7 +2,7 @@ import { RiDashboardFill } from 'react-icons/ri';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { MdInsertComment } from 'react-icons/md';
 import { MdOutlineLocalOffer } from "react-icons/md";
-
+import {SiScrollreveal} from 'react-icons/si';
 export const SidebarContants = [
   {
     link: '/dashboard',
@@ -14,24 +14,14 @@ export const SidebarContants = [
     IconColor: 'blue',
     icon: <RiDashboardFill />,
     child: [{
-      link: '/dashboard',
-      key: 'Dashboard',
-      title: 'Dashboard',
+      link: '/dashboard-revenue',
+      key: 'Dashboard Revenue',
+      title: 'Dashboard Revenue',
       permissionKey: '',
       tag: null,
       notification: 12,
-      IconColor: 'blue',
-      icon: <RiDashboardFill />,
-    },
-    {
-      link: '/dashboard',
-      key: 'Dashboard',
-      title: 'Dashboard',
-      permissionKey: '',
-      tag: null,
-      notification: 12,
-      IconColor: 'blue',
-      icon: <RiDashboardFill />,
+      IconColor: 'yellow',
+      icon: <SiScrollreveal />,
     }],
   },
   {
