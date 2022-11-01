@@ -13,11 +13,14 @@ import { AutoCompleteInput } from "./FormUtils/AutoSelector/AutoSelector";
 import Wrapper from "./Wrapper/Wrapper";
 // chart and garph utils 
 import { RingProgressCmp } from "./ChartUtils/RingProgress";
+import RingProgressSimple from './ChartUtils/RingProgressSimple';
 import { PieChart } from "./ChartUtils/PieChart";
 import { ColumnStackPlot } from "./ChartUtils/ColumnStackPlot";
 import { ColumnGraph } from "./ChartUtils/ColumnGraph";
 import { BarGraph } from "./ChartUtils/BarGraph";
 import { Tab } from "./Tab/Tab";
+
+
 
 export {
   AfterLoginHeader,
@@ -36,6 +39,7 @@ export {
   Tab,
   // chart & graph   
   RingProgressCmp,
+  RingProgressSimple,
   PieChart,
   ColumnStackPlot,
   ColumnGraph,
