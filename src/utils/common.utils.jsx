@@ -15,9 +15,9 @@ export const isPublicApi = (url) => {
   return Boolean(publicApiArray.filter((e) => url?.includes(e))?.length);
 };
 
-export const IconProvider = ({ color , className , props, children }) => {
+export const IconProvider = ({ color, className, props, children }) => {
   return (
-    <IconContext.Provider value={{ color:color??props?.className, className: ` ${ className??props.className}` }}>
+    <IconContext.Provider value={{ color: color ?? props?.className, className: ` ${className ?? props.className}` }}>
       {
         children
       }
