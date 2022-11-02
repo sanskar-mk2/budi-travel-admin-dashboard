@@ -11,7 +11,7 @@ export const asyncWrapper = (promise) =>
 export const isFunction = (fn) => typeof fn === "function";
 
 export const isPublicApi = (url) => {
-  const publicApiArray = ["/login/", "/api/register/"];
+  const publicApiArray = ["/api/login/", "/api/register/"];
   return Boolean(publicApiArray.filter((e) => url?.includes(e))?.length);
 };
 

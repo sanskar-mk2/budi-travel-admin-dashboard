@@ -1,13 +1,12 @@
 import axios from "axios";
 import qs from 'qs';
-import { baseURL } from "constants/config.constants";
 import {
   getLocalStorage,
   isPublicApi,
   stringifyError,
 } from 'utils/common.utils';
-import { AUTH_TOKEN } from 'constants/localstorage.constants';
-
+import { AUTH_TOKEN } from 'constants/localstorage.constants'; 
+const  baseURL = process.env.BASE_URL || 'http://74.208.150.111';
 const axiosConfig = {
   baseURL,
 };

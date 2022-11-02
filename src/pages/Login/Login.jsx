@@ -24,6 +24,7 @@ export default function Login() {
   } = methods;
 
   const onSubmit = React.useCallback((data) => {
+    console.log('=====>' , data );
     login(data);
   }, [login]);
 

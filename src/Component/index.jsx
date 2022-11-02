@@ -19,6 +19,7 @@ import { ColumnStackPlot } from "./ChartUtils/ColumnStackPlot";
 import { ColumnGraph } from "./ChartUtils/ColumnGraph";
 import { BarGraph } from "./ChartUtils/BarGraph";
 import { Tab } from "./Tab/Tab";
+import { PaginationComponent as Pagination } from "./Pagination/Pagination";
 
 
 
@@ -37,6 +38,7 @@ export {
   AutoCompleteInput,
   Wrapper,
   Tab,
+  Pagination,
   // chart & graph   
   RingProgressCmp,
   RingProgressSimple,

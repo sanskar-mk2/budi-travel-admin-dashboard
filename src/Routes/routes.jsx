@@ -3,6 +3,7 @@ import { Wrapper } from "Component";
 import Login from "pages/Login/Login";
 import Dashboard from "pages/Dashboard/Dashboard";
 import DashboardRevenue from "pages/Dashboard/DashboardRevenue";
+import Agents from "pages/Agents/Agents";
 
 const PublicRouteList = [
   {
@@ -34,6 +35,12 @@ const PrivateRouteList = [
     path: '/dashboard-revenue',
     component: (<Wrapper>
       <DashboardRevenue />
+    </Wrapper>)
+  }
+  , {
+    path: '/agents',
+    component: (<Wrapper>
+      <Agents />
     </Wrapper>)
   }
 ];

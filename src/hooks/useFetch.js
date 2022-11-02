@@ -44,13 +44,13 @@ const useFetch = ({
   const updateView = React.useCallback((newConfig) => {
     setHasError(false);
     setIsLoading(true);
+
     if (newConfig) {
       updateConfig(prevConfig => ({
         ...prevConfig,
         ...newConfig,
       }));
     }
-
     setFetchIndex(prevFetchIndex => prevFetchIndex + 1);
   }, []);
 
@@ -58,6 +58,7 @@ const useFetch = ({
 
   React.useEffect(() => {
     const cancelTokenSource = axios.CancelToken.source();
+
     const fetchData = async () => {
       const URL = url;
       const { data: response, error } = await asyncWrapper(
