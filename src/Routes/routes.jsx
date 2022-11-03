@@ -4,25 +4,26 @@ import Login from "pages/Login/Login";
 import Dashboard from "pages/Dashboard/Dashboard";
 import DashboardRevenue from "pages/Dashboard/DashboardRevenue";
 import Agents from "pages/Agents/Agents";
+import AgentDetails from "pages/Agents/AgentDetails";
 
 const PublicRouteList = [
   {
     path: "/login",
-    component: (<React.Suspense fallback={<p>Loading...</p>}>
+    component: (<Wrapper>
       <Login />
-    </React.Suspense>)
+    </Wrapper>)
   },
   {
     path: "/forget-password",
-    component: (<React.Suspense fallback={<p>Loading...</p>}>
+    component: (<Wrapper>
       <Login />
-    </React.Suspense>)
+    </Wrapper>)
   },
   {
     path: "/otp-verifcation",
-    component: (<React.Suspense fallback={<p>Loading...</p>}>
+    component: (<Wrapper>
       <Login />
-    </React.Suspense>)
+    </Wrapper>)
   }
 ];
 const PrivateRouteList = [
@@ -40,7 +41,7 @@ const PrivateRouteList = [
   , {
     path: '/agents',
     component: (<Wrapper>
-      <Agents />
+      <AgentDetails />
     </Wrapper>)
   }
 ];

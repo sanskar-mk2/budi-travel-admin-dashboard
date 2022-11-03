@@ -3,14 +3,13 @@ import qs from 'qs';
 import {
   getLocalStorage,
   isPublicApi,
-  stringifyError,
-} from 'utils/common.utils';
-import { AUTH_TOKEN } from 'constants/localstorage.constants'; 
-const  baseURL = process.env.BASE_URL || 'http://74.208.150.111';
+  stringifyError
+} from 'utils/common.utils'
+import { AUTH_TOKEN } from "constants/localstorage.constants";
+const baseURL = 'http://74.208.150.111';
 const axiosConfig = {
   baseURL,
 };
-
 export const METHODS = {
   GET: "get",
   DELETE: "delete",
@@ -80,7 +79,7 @@ request.interceptors.request.use(
         null
       )
     ) {
-      req.headers.Authorization = `TOKEN ${getLocalStorage(
+      req.headers.Authorization = `Bearer ${getLocalStorage(
         AUTH_TOKEN,
         null
       )}`;
@@ -97,6 +96,17 @@ request.interceptors.response.use(
   (err) => {
     const originalRequest = err.config;
     const status = err.response?.status;
+    if (status === 401) {
+      const error = {
+        originalRequest,
+        status,
+        message:
+          "Session is Expired!",
+      };
+      localStorage.clear();
+      window.location.href='/';
+      throw error;
+    }
     if (status === 503) {
       const error = {
         originalRequest,
@@ -140,3 +150,6 @@ function paramsSerializer(params) {
 }
 
 export default client;
+
+
+

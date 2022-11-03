@@ -5,7 +5,8 @@ import { useAuth } from 'hooks';
 import styled from 'styled-components';
 import { Outlet } from "react-router-dom";
 const Layout = () => {
-  const { session } = useAuth()
+  // const { session } = useAuth()
+  const session =true ;
   return (
     <React.Fragment>
       <Container>

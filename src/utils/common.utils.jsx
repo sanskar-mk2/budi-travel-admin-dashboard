@@ -2,7 +2,7 @@
 import { CURRENCY_SYMBOL } from "constants/common.constants";
 import moment from "moment";
 import { IconContext } from "react-icons";
-
+import toast from 'react-hot-toast';
 export const asyncWrapper = (promise) =>
   promise
     .then((data) => ({ data, error: null }))
@@ -42,7 +42,14 @@ export const isMobile = () => {
     }
   }
 }
-
+export const TxtCopy = (textBoad) => {
+  const node = document.getElementById(textBoad);
+  navigator.clipboard.writeText(node?.value).then((done) => {
+    toast.success("copied");
+  }).catch((error) => {
+    toast.error("Something gone wrong ");
+  })
+}
 export const getImageUrl = (path) => {
   if (path) return `https//hello${path}`;
 
