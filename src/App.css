@@ -38,6 +38,23 @@
   background: rgb(30 184 210) !important;
   pointer-events: none;
 }
+/* pagination */
+.ant-pagination-item-active {
+  font-weight: 500;
+  border-color: rgb(30 184 210) !important;
+  background: rgb(30 184 210) !important;
+
+}
+.ant-pagination-item-active:is(:hover , :focus){
+  border-color: rgb(30 184 210) !important;
+  background: rgb(30 184 210) !important;
+}
+.ant-pagination-item-active a {
+  color: #fdfdfd !important;
+}
+.ant-pagination-item-active a:is(:hover , :focus){
+  color: #fdfdfd !important;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,8 +1,7 @@
 import { RiDashboardFill } from 'react-icons/ri';
-import { BsFillPeopleFill } from 'react-icons/bs';
 import { MdInsertComment } from 'react-icons/md';
 import { MdOutlineLocalOffer } from "react-icons/md";
-import {SiScrollreveal} from 'react-icons/si';
+import { SiScrollreveal } from 'react-icons/si';
 export const SidebarContants = [
   {
     link: '/dashboard',
@@ -25,9 +24,9 @@ export const SidebarContants = [
     }],
   },
   {
-    link: '/customer',
-    key: '',
-    title: 'Offer',
+    link: '/agents',
+    key: 'agents',
+    title: 'Agents',
     permissionKey: '',
     tag: 'New',
     notification: null,

@@ -14,80 +14,84 @@ export const useAuth = () => {
       console.warn("Session expired ")
     }
   }, [getLocalStorage])
-
+  const onSuccess = React.useCallback((response) => {
+    if (response?.token) {
+      toast.success(response?.message);
+      navigate("/");
+    }
+    else {
+      toast.success(response?.message);
+      navigate('/verify-otp');
+    }
+  }, [ navigate]);
+  const onFailure = React.useCallback((errors) => {
+    toast.error(errors);
+  }, []);
 
   const { isLoading, callFetch } = useFetch({
-    initialUrl: '',
+    initialUrl: "/api/login/",
     skipOnStart: true,
-    config: {
-      method: "post"
-    }
+    onFailure,
+    onSuccess,
   });
 
-
-
   const login = React.useCallback((data) => {
-    if (data) {
-      callFetch(
-        {
-          url: "",
-          method: "post",
-          data: data,
-          onSuccess: (response) => {
-            // user
-            setLocalStorage();
-            // token
-            setLocalStorage();
-            toast.success("");
-          },
-          onFailure: (error) => {
-            toast.error("");
-          }
-        }
-      );
-    } else {
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    callFetch({
+      url: "api/login/",
+      method: "post",
+      data: formData,
+    });
+  }, [callFetch])
 
-    }
-
-  }, [callFetch]);
-
+  const verifyToken = React.useCallback((data) => {
+    callFetch({
+      url: "/login/",
+      method: "post",
+      data: data,
+      onSuccess: (res) => {
+        toast.success(res.msg);
+        navigate('/login');
+      },
+      onFailure: (err) => {
+        toast.error(err.msg)
+      }
+    });
+  }, [callFetch , navigate])
 
   const forgetPassword = React.useCallback((data) => {
     callFetch({
-      url: "",
+      url: "/forget-password/",
       method: "post",
       data: data,
-      onSuccess: (response) => {
-        toast.success("");
+      onSuccess: (res) => {
+        toast.success(res.msg);
       },
-      onFailure: (error) => {
-        toast.error("");
+      onFailure: (err) => {
+        toast.error(err.msg)
       }
-
-    })
+    });
   }, [callFetch])
 
-  const otpVerification = React.useCallback((data) => {
-    callFetch({
-      url: "",
-      method: "post",
-      data: data,
-      onSuccess: (response) => {
-        toast.success("");
-      },
-      onFailure: (error) => {
-        toast.error("");
-      }
-    })
+  const logout = React.useCallback(() => {
+    if (window !== undefined) {
+      callFetch({
+        url: "/logout",
+        method: "post",
+      });
+      localStorage.clear();
+      window.location.reload();
+    }
   }, [callFetch])
-
-
+  
   return {
+    session,
+    verifyToken,
+    logout,
     login,
-    otpVerification,
-    errorMessage,
-    isLoading,
-    session, 
-    forgetPassword
+    forgetPassword,
+    isLoading
   }
 }
