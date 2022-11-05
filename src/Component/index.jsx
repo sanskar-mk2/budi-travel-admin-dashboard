@@ -20,7 +20,8 @@ import { ColumnGraph } from "./ChartUtils/ColumnGraph";
 import { BarGraph } from "./ChartUtils/BarGraph";
 import { Tab } from "./Tab/Tab";
 import { PaginationComponent as Pagination } from "./Pagination/Pagination";
-
+// import ModalComp as Modal from "./Modal/Modal";
+import Modal  from "./Modal/Modal";
 
 
 export {
@@ -39,6 +40,7 @@ export {
   Wrapper,
   Tab,
   Pagination,
+  Modal,
   // chart & graph   
   RingProgressCmp,
   RingProgressSimple,

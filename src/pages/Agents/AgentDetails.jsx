@@ -7,14 +7,14 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
 import { Selector } from 'Component';
+import Items from './Componets/Items';
+
 const AgentDetails = () => {
   const [state, setState] = React.useState(null);
   React.useEffect(() => {
     console.log(state, "state === value of selctor ")
   }, [state])
-  const copyID = () => {
-    TxtCopy("agentID")
-  }
+
 
   const AgentBreadcrumbDetails = React.memo((props) => {
     return (
@@ -45,12 +45,14 @@ const AgentDetails = () => {
                 <CustomeTxtOne theme={{ color: "black" }}>
                   Agent ID
                 </CustomeTxtOne>
-                <CustomeTxtOne id="agentID">
-                  Ej784klm
+                <CustomeTxtOne >
+                  <span id="agentID">
+                    Ej784klm
+                  </span>
                 </CustomeTxtOne>
               </div>
               <span className="px-2">
-                <IconProvider onClick={copyID} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
+                <IconProvider onClick={()=> TxtCopy("agentID")} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
                   <MdOutlineContentCopy />
                 </IconProvider>
               </span>
@@ -326,8 +328,10 @@ const AgentDetails = () => {
                 </div>
               </div>
             </BoxCantainer>
+
           </div>
         </div>
+        <Items/>
       </div >
     </React.Fragment >
   );

@@ -5,6 +5,7 @@ import Dashboard from "pages/Dashboard/Dashboard";
 import DashboardRevenue from "pages/Dashboard/DashboardRevenue";
 import Agents from "pages/Agents/Agents";
 import AgentDetails from "pages/Agents/AgentDetails";
+import UserDetails from "pages/User/UserDetails";
 
 const PublicRouteList = [
   {
@@ -42,6 +43,13 @@ const PrivateRouteList = [
     path: '/agents',
     component: (<Wrapper>
       <AgentDetails />
+    </Wrapper>)
+  }
+  ,
+  {
+    path: '/user',
+    component: (<Wrapper>
+      <UserDetails />
     </Wrapper>)
   }
 ];

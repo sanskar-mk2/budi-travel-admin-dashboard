@@ -7,14 +7,14 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
 import { Selector } from 'Component';
+import Items from './Componets/Items';
+import { numberFormatter } from 'utils/common.utils';
 const UserDetails = () => {
   const [state, setState] = React.useState(null);
   React.useEffect(() => {
     console.log(state, "state === value of selctor ")
   }, [state])
-  const copyID = () => {
-    TxtCopy("agentID")
-  }
+
 
   const AgentBreadcrumbDetails = React.memo((props) => {
     return (
@@ -45,12 +45,14 @@ const UserDetails = () => {
                 <CustomeTxtOne theme={{ color: "black" }}>
                   Agent ID
                 </CustomeTxtOne>
-                <CustomeTxtOne id="agentID">
-                  Ej784klm
+                <CustomeTxtOne >
+                  <span id="agentID">
+                    Ej784klm
+                  </span>
                 </CustomeTxtOne>
               </div>
               <span className="px-2">
-                <IconProvider onClick={copyID} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
+                <IconProvider onClick={()=> TxtCopy("agentID")} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
                   <MdOutlineContentCopy />
                 </IconProvider>
               </span>
@@ -223,7 +225,7 @@ const UserDetails = () => {
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          10
+                          {numberFormatter(20)}
                         </Title>
                       </span>
                     </div>
@@ -237,7 +239,7 @@ const UserDetails = () => {
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          2
+                          {numberFormatter(2)}
                         </Title>
                       </span>
                     </div>
@@ -251,7 +253,7 @@ const UserDetails = () => {
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          9
+                          {numberFormatter(90)}
                         </Title>
                       </span>
                     </div>
@@ -326,8 +328,10 @@ const UserDetails = () => {
                 </div>
               </div>
             </BoxCantainer>
+
           </div>
         </div>
+        <Items/>
       </div >
     </React.Fragment >
   );
@@ -378,6 +382,7 @@ background: #FFFFFF;
 box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
 border-radius: 10px;
 padding:0px 15px 15px 15px;
+
 `;
 const Img = styled.img`
 width: 45px;
@@ -394,6 +399,7 @@ font-size: ${porps => porps?.theme?.fontSize ?? '14px'};
 color: ${props => props?.theme?.color ?? '#9295A3'};
 
 `;
+
 const Status = styled.button`
 width: 56px;
 background: ${props => props?.theme?.bg ?? '#6FCF97'};
@@ -401,6 +407,7 @@ color:#fff;
 border-radius: 8px;
 padding:2px 5px;
 `;
+
 const Select = styled(Selector)`
 width:80px !important;
 && :hover {
