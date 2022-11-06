@@ -73,7 +73,7 @@ const DashboardRevenue = () => {
             <div>
               <div className="flex items-center ">
                 <div className="">
-                  <Img src="https://cdn-icons-png.flaticon.com/512/147/147142.png" alt="loading... " />
+                  <Img src="https://cdn-icon<div classs-png.flaticon.com/512/147/147142.png" alt="loading... " />
                 </div>
                 <div className="pl-2">
                   <CustomeTxt>Lenny Wilson</CustomeTxt>

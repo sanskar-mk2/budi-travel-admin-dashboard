@@ -2,7 +2,7 @@
 import { CURRENCY_SYMBOL } from "constants/common.constants";
 import moment from "moment";
 import { IconContext } from "react-icons";
-
+import toast from 'react-hot-toast';
 export const asyncWrapper = (promise) =>
   promise
     .then((data) => ({ data, error: null }))
@@ -42,7 +42,15 @@ export const isMobile = () => {
     }
   }
 }
-
+export const TxtCopy = (textBoad) => {
+  const node = document.getElementById(textBoad);
+  navigator.clipboard.writeText(node.innerText);
+  // .then((done) => {
+    toast.success("copied");
+  // }).catch((error) => {
+  //   toast.error("Something gone wrong ");
+  // })
+}
 export const getImageUrl = (path) => {
   if (path) return `https//hello${path}`;
 
@@ -62,7 +70,7 @@ export const getProductNameByLang = (detail, language = "end") => {
   );
 };
 
-export const numberFomater = (number, isCurrency) => {
+export const numberFormatter = (number, isCurrency) => {
   const isCurrencyBoolean = isCurrency ? true : false;
   return `${isCurrencyBoolean ? CURRENCY_SYMBOL : ""} ${new Intl.NumberFormat(
     "en-IN",
@@ -118,7 +126,7 @@ export const preciseNum = (num, decimal) => {
 }
 export const toExponent = (num, decimalValue = 3, isCurrency = false) => {
   if (num < 50000) {
-    return ` ${isCurrency ? '$' : ''} ${parseInt(numberFomater(num))}`;
+    return ` ${isCurrency ? '$' : ''} ${parseInt(numberFormatter(num))}`;
   } else {
     return ` ${isCurrency ? '$' : ''} ${parseInt(num)?.toExponential(decimalValue)}`;
   }

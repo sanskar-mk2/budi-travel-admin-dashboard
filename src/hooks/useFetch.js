@@ -1,13 +1,13 @@
+
 import React from "react";
-import axios from "axios";
 import { useAsyncDebounce } from 'react-table';
 import { API_ERROR_MESSAGE } from 'constants/common.constants';
-import client, { METHODS } from 'api/client';
 import { asyncWrapper, isFunction } from 'utils/common.utils';
-
+import axios from 'axios';
+import client, { METHODS } from "api/client";
 const UNMOUNTED_COMPONENT = 'component unmount';
 
-const useFetch = ({ 
+const useFetch = ({
   initialUrl = null,
   initialData = null,
   config = {},
@@ -15,7 +15,7 @@ const useFetch = ({
   onSuccess,
   onFailure,
   transform,
- }) => {
+}) => {
   const [url, updateUrl] = React.useState(initialUrl);
   const [data, setData] = React.useState(initialData);
   // in case of fetch on mount - set isLoading to true
@@ -61,7 +61,8 @@ const useFetch = ({
 
     const fetchData = async () => {
       const URL = url;
-      const { data: response, error } = await asyncWrapper(
+      const { data: response, error } = 
+      await asyncWrapper(
         client({
           url: URL,
           cancelToken: cancelTokenSource.token,
@@ -89,6 +90,7 @@ const useFetch = ({
         if (isFunction(onFailure)) onFailure(errorMsg);
       }
       return { response, error };
+   
     };
 
     if (fetchIndex > 0 && url) {

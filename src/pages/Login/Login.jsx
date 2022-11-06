@@ -6,7 +6,7 @@ import { FormProvider, useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginValidationSchema } from 'utils/validation';
-import { useAuth } from 'hooks';
+import { useAuth} from 'hooks';
 export default function Login() {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
@@ -24,7 +24,6 @@ export default function Login() {
   } = methods;
 
   const onSubmit = React.useCallback((data) => {
-    console.log('=====>' , data );
     login(data);
   }, [login]);
 

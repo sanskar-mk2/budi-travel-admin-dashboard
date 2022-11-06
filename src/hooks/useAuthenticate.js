@@ -1,21 +1,29 @@
 import React from "react";
-import { useFetch, useLocalStorage } from "hooks";
-import { useNavigate } from "react-router-dom";
+import { useFetch, useLocalStorage } from 'hooks';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { USER } from 'constants/localstorage.constants';
+/*
+ * session 
+ * isloading login
+ * verify otp 
+ * reset password 
+ * logout 
+ * 
+ */
 export const useAuth = () => {
-  const { setLocalStorage, getLocalStorage } = useLocalStorage();
-  const [errorMessage, setErrorMessage] = React.useState(null);
   const navigate = useNavigate();
+  const { getLocalStorage,
+    setLocalStorage } = useLocalStorage();
   const session = React.useMemo(() => {
-    try {
-      return getLocalStorage(USER)
-    } catch (error) {
-      console.warn("Session expired ")
-    }
-  }, [getLocalStorage])
+    return getLocalStorage()
+  }, [getLocalStorage]);
+  const userValue = React.useMemo(() => {
+    return getLocalStorage()
+  }, [getLocalStorage]);
   const onSuccess = React.useCallback((response) => {
     if (response?.token) {
+      setLocalStorage();
+      setLocalStorage();
       toast.success(response?.message);
       navigate("/");
     }
@@ -23,9 +31,14 @@ export const useAuth = () => {
       toast.success(response?.message);
       navigate('/verify-otp');
     }
-  }, [ navigate]);
+  }, [navigate, setLocalStorage]);
   const onFailure = React.useCallback((errors) => {
-    toast.error(errors);
+    // toast.error(errors?.message);
+    // 
+    toast.error(errors?.message);
+    console.log(errors, "login errors --> ");
+    // 
+    // 
   }, []);
 
   const { isLoading, callFetch } = useFetch({
@@ -40,10 +53,14 @@ export const useAuth = () => {
     formData.append("email", data.email);
     formData.append("password", data.password);
     callFetch({
-      url: "api/login/",
+      url: "/api/login",
       method: "post",
-      data: formData,
+      data: {
+        email: "abhijeet",
+        password: "rightnwo"
+      },
     });
+
   }, [callFetch])
 
   const verifyToken = React.useCallback((data) => {
@@ -59,7 +76,7 @@ export const useAuth = () => {
         toast.error(err.msg)
       }
     });
-  }, [callFetch , navigate])
+  }, [callFetch, navigate])
 
   const forgetPassword = React.useCallback((data) => {
     callFetch({
@@ -74,7 +91,6 @@ export const useAuth = () => {
       }
     });
   }, [callFetch])
-
   const logout = React.useCallback(() => {
     if (window !== undefined) {
       callFetch({
@@ -85,9 +101,9 @@ export const useAuth = () => {
       window.location.reload();
     }
   }, [callFetch])
-  
   return {
     session,
+    userValue,
     verifyToken,
     logout,
     login,
@@ -95,3 +111,6 @@ export const useAuth = () => {
     isLoading
   }
 }
+
+
+

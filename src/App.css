@@ -55,6 +55,10 @@
 .ant-pagination-item-active a:is(:hover , :focus){
   color: #fdfdfd !important;
 }
+/* selctor */
+.ant-select:not(.ant-select-customize-input) .ant-select-selector{
+  border-radius:3px !important;  
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

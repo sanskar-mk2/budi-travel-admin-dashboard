@@ -4,7 +4,7 @@ import { Tab, RingProgressSimple, ColumnStackPlot, Pagination } from 'Component'
 import { IconProvider } from 'utils/common.utils';
 import { Tooltip } from 'antd';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from 'react-icons/hi';
-import { IoIosArrowForward } from "react-icons/io"
+import { IoIosArrowForward } from "react-icons/io";
 const Agents = () => {
   const SiteSpeedComponent = React.useMemo(() => {
     return [
