@@ -5,8 +5,8 @@ import { useAuth } from 'hooks';
 import styled from 'styled-components';
 import { Outlet } from "react-router-dom";
 const Layout = () => {
-  // const { session } = useAuth()
-  const session =true ;
+  const { session } = useAuth()
+  // const session =true ;
   return (
     <React.Fragment>
       <Container>
@@ -29,4 +29,4 @@ export default Layout;
 
 const Container = styled.div`
 background-color:#f6fbfe !important;
-`;
+`

@@ -1,12 +1,52 @@
 import React from 'react';
 import { Sidebar, TopHeader } from "Component"
 import styled from "styled-components";
-import { SidebarContants , AgentUser} from 'constants/Sidebar.menu';
-import { ChildSubMenu, ChildSubAgent } from 'Component/Sidebar/Sidebar';
+import { SidebarContants  ,AgentRemainSideConstant} from 'constants/Sidebar.menu';
+import { ChildSubMenu, ChildSubAgent  } from 'Component/Sidebar/Sidebar';
 import { Outlet } from 'react-router-dom';
+import { useFetch } from 'hooks';
+import {BsPeopleFill} from "react-icons/bs";
 const AfterLoginHeader = () => {
+  const onSuccess = React.useCallback((response) => {
+
+  }, []);
+  const onFailure = React.useCallback((response) => {
+
+  }, [])
 
 
+  const { isLoading, data } = useFetch({
+    initialUrl: "/agents",
+    skipOnStart: false,
+    onFailure,
+    onSuccess
+  });
+  const agents = React.useMemo(() => {
+    if (!isLoading) {
+      return data?.agents?.map((i, index) => ({
+        img: undefined ,
+        isLive: 'Live',
+        name:  i?.name,
+        link: `/agent/${i?.id}`,
+        id:i.id,
+      }));
+    }
+  }, [isLoading, data?.agents]);
+  console.log(agents, "it is your name ")
+  const AgentUser = [
+    {
+      link: '/agents',
+      key: '',
+      title: 'Agents',
+      permissionKey: '',
+      tag: null,
+      notification: 12,
+      IconColor: '#FFCB33',
+      icon: <BsPeopleFill />,
+      child:agents,
+    },
+    ...AgentRemainSideConstant
+  ]
   return (
     <React.Fragment>
       <TopHeader />

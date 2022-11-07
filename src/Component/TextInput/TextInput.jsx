@@ -1,5 +1,5 @@
 import React  from "react";
-import {BsFillPersonFill} from "react-icons/bs"
+import {BsFillPersonFill} from "react-icons/bs";
 const  TextInput=({ 
     control , 
     ...props }) =>{

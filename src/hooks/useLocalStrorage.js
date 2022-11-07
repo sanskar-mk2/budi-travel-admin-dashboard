@@ -14,7 +14,7 @@ export const useLocalStorage = () => {
   const setLocalStorage = (key, data) => {
     try {
       if (window && data && key) {
-        return localStorage(key, JSON.stringify(data))
+        return localStorage.setItem(key, JSON.stringify(data))
       } else {
         return null;
       }

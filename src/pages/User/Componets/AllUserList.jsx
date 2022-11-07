@@ -5,11 +5,11 @@ import { IconProvider } from 'utils/common.utils';
 import { SocialShare } from 'utils/ObjectUtils';
 import { Input } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
-import {FaTelegramPlane} from 'react-icons/fa';
-import { Modal } from 'Component';
+import { FaTelegramPlane } from 'react-icons/fa';
+import { Modal, Pagination } from 'Component';
 import { DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
-const Items = () => {
+const AllUserList = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
@@ -34,7 +34,7 @@ const Items = () => {
         <Modal title={"Filter By Date "} state={state} SetState={SetState}>
           <div className="grid w-full">
             <div className="m-auto">
-              <RangePicker  onChange={(e) => console.log(e, "===> DATE PCIKER ")} />
+              <RangePicker onChange={(e) => console.log(e, "===> DATE PCIKER ")} />
             </div>
           </div>
         </Modal>
@@ -66,6 +66,7 @@ const Items = () => {
 
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
+            <div className="lg:float-right md:float-right float-none">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
               <div className='lg:col-span-2 px-1 '>
                 <Input style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
@@ -80,13 +81,14 @@ const Items = () => {
                 <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Filter</Button>
               </div>
               <div className="px-1 " onClick={() => SetShare(!haveToshare)}>
-              <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Share </Button>
+                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Share </Button>
               </div>
               <div className="px-1  ">
                 <CustomeText>
                   <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
                 </CustomeText>
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -137,7 +139,7 @@ const Items = () => {
                         <div className="mx-2 pt-2 ">
                           <CheckBox />
                         </div>
-                       
+
                         <div className="ml-3">
                           <p className="text-gray-900 whitespace-no-wrap mt-2">
                             <CustomeText>Molly Sanders</CustomeText>
@@ -178,13 +180,16 @@ const Items = () => {
               }
             </tbody>
           </table>
+          <div className="pt-2 lg:px-3 md:px-2 px-0">
+            <Pagination />
+          </div>
         </BoxCantainer>
       </div>
     </React.Fragment>
   );
 }
 
-export default Items;
+export default AllUserList;
 
 const BoxCantainer = styled.div`
 background: #FFFFFF;

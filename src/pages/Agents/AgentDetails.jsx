@@ -8,13 +8,29 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
 import { Selector } from 'Component';
 import Items from './Componets/Items';
-
+import { useParams } from 'react-router-dom';
+import { useFetch } from "hooks"
 const AgentDetails = () => {
+  const { id } = useParams();
   const [state, setState] = React.useState(null);
-  React.useEffect(() => {
-    console.log(state, "state === value of selctor ")
-  }, [state])
+  const onSuccess = React.useCallback((response) => {
 
+  }, []);
+  const onFailure = React.useCallback((response) => {
+
+  }, [])
+
+  const { isLoading, data, callFetch: realod } = useFetch({
+    initialUrl: `/agents/${id}`,
+    skipOnStart: false,
+    onFailure,
+    onSuccess
+  });
+  React.useEffect(() => {
+    if (id) {
+      realod()
+    }
+  }, [realod, id]);
 
   const AgentBreadcrumbDetails = React.memo((props) => {
     return (
@@ -52,7 +68,7 @@ const AgentDetails = () => {
                 </CustomeTxtOne>
               </div>
               <span className="px-2">
-                <IconProvider onClick={()=> TxtCopy("agentID")} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
+                <IconProvider onClick={() => TxtCopy("agentID")} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
                   <MdOutlineContentCopy />
                 </IconProvider>
               </span>
@@ -331,7 +347,7 @@ const AgentDetails = () => {
 
           </div>
         </div>
-        <Items/>
+        <Items />
       </div >
     </React.Fragment >
   );
@@ -409,5 +425,6 @@ const Select = styled(Selector)`
 width:80px !important;
 && :hover {
   box-shadow:none !important;
-}
+}import { useFetch } from 'hooks';
+
 `;
