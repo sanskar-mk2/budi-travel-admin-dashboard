@@ -1,26 +1,20 @@
 import React from 'react';
-import { emailValidationSchema } from 'utils/validation';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { AiOutlineMail } from 'react-icons/ai';
-import { Button, Textfield } from "Component";
-import { useAuth } from 'hooks';
-const ForgetPassword = () => {
-  const { isLoading } = useAuth()
+import { useAuth } from "hooks";
+import { RiLockPasswordLine } from 'react-icons/ri';
+import { Textfield, Button } from 'Component';
+const VerifyOtp = () => {
+  const { isLoading } = useAuth();
   const methods = useForm({
-    resolver: yupResolver(emailValidationSchema),
-    mode: "all",
-    defaultValues: {
-      email: ""
+    default: {
+      otp: ""
     }
   });
-
   const { control, handleSubmit, formState: { isDirty, isValid }
   } = methods;
 
-
   const onSubmit = React.useCallback((data) => {
-    console.log(data, " verify otp  ");
+
   }, [])
 
   return (
@@ -41,16 +35,15 @@ const ForgetPassword = () => {
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
                     }) => (
-                      <Textfield type={"Email"} error={error} inputRef={field.ref} {...field} name={"email"} icon={<AiOutlineMail />} placeholder={"Email ID"} className={"w-full pl-6"} />
+                      <Textfield type={"Email"} error={error} inputRef={field.ref} {...field} name={"email"} icon={<RiLockPasswordLine />} placeholder={"Email ID"} className={"w-full pl-6"} />
                     )}
                   />
                 </span>
               </div>
-
               <div className="form-control mt-6">
                 <Button className={`w-full bg-primary-color rounded-full `} type={'submit'} isLoading={isLoading}
-                // isDisabled={!isDirty || !isValid}
-                >{'SENT OTP'}</Button>
+                isDisabled={!isDirty || !isValid}
+                >{'VERIFY OTP'}</Button>
               </div>
             </form>
           </FormProvider>
@@ -60,4 +53,4 @@ const ForgetPassword = () => {
   );
 }
 
-export default ForgetPassword;
+export default VerifyOtp;

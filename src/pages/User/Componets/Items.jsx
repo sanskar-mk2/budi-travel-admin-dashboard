@@ -101,7 +101,7 @@ const Items = () => {
           <Filteration />
           <table className="min-w-full leading-normal">
             <thead >
-              <tr className='border-b-2 border-t-2 border-[#ccccd0]'>
+              <tr className='border-b border-t border-[#ccccd0]'>
                 <th className="px-5 flex py-3   bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   <span className="mx-2  ">
                     <CheckBox />

@@ -142,7 +142,7 @@ const Revenue = () => {
                     <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1'>
                       {
                         Array(4).fill().map((_, i) => (
-                          <div className="p-3">
+                          <div className="p-3" key={i.toString()}>
                             <ResourceType>
                               <RingProgressSimple
                                 props={

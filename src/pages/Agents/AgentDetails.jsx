@@ -12,14 +12,13 @@ import { useParams } from 'react-router-dom';
 import { useFetch } from "hooks"
 const AgentDetails = () => {
   const { id } = useParams();
-  const [state, setState] = React.useState(null);
+  const [setState] = React.useState(null);
   const onSuccess = React.useCallback((response) => {
 
   }, []);
   const onFailure = React.useCallback((response) => {
 
   }, [])
-
   const { isLoading, data, callFetch: realod } = useFetch({
     initialUrl: `/agents/${id}`,
     skipOnStart: false,

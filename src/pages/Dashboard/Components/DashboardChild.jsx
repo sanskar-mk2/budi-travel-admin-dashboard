@@ -230,7 +230,7 @@ const DashboardChild = () => {
     <React.Fragment>
       <div className="grid lg:grid-cols-2  md:grid-cols-1 grid-cols-1 gap-3">
         <div className="">
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 col-span-1 gap-4">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2  gap-4">
             {
               ServiceCardData?.map((props, index, array) => (
                 <ServiceCard {...props} key={index} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Tab, RingProgressSimple, ColumnStackPlot } from 'Component';
+import { Tab, RingProgressSimple, ColumnGraph } from 'Component';
 import { IconProvider } from 'utils/common.utils';
 import { Tooltip } from 'antd';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from 'react-icons/hi';
@@ -14,17 +14,17 @@ const Users = () => {
       {
         label: 'Weekly',
         key: 'weekly',
-        children: <ColumnStackPlot />
+        children: <ColumnGraph />
       },
       {
         label: 'Month',
         key: 'month',
-        children: <ColumnStackPlot />
+        children: <ColumnGraph />
       },
       {
         label: 'Year',
         key: 'year',
-        children: <ColumnStackPlot />
+        children: <ColumnGraph />
       }
     ]
   }, [])
@@ -175,7 +175,6 @@ const Users = () => {
 
         <div className="">
           <AllUserList />
-       
         </div>
       </div>
     </React.Fragment>
