@@ -1,7 +1,9 @@
-import { RiDashboardFill } from 'react-icons/ri';
-import { MdInsertComment } from 'react-icons/md';
-import { MdOutlineLocalOffer } from "react-icons/md";
+import { RiDashboardFill , RiPriceTag2Fill , RiSettings5Fill } from 'react-icons/ri';
+import { MdInsertComment, MdLocalOffer  , MdCategory} from 'react-icons/md';
 import { SiScrollreveal } from 'react-icons/si';
+import { BsPeopleFill } from "react-icons/bs";
+import { FaIdeal } from "react-icons/fa";
+
 export const SidebarContants = [
   {
     link: '/dashboard',
@@ -12,33 +14,24 @@ export const SidebarContants = [
     notification: 12,
     IconColor: 'blue',
     icon: <RiDashboardFill />,
-    child: [{
-      link: '/dashboard-revenue',
-      key: 'Dashboard Revenue',
-      title: 'Dashboard Revenue',
-      permissionKey: '',
-      tag: null,
-      notification: 12,
-      IconColor: 'yellow',
-      icon: <SiScrollreveal />,
-    }],
+    child: [],
   },
   {
-    link: '/agents',
-    key: 'agents',
-    title: 'Agents',
-    permissionKey: '',
+    link: '',
+    key: 'offer',
+    title: 'Offer',
     tag: 'New',
+    permissionKey: '',
+    IconColor: '#2E72B9',
     notification: null,
-    IconColor: 'red;',
-    icon: <MdOutlineLocalOffer />,
+    icon: <MdLocalOffer />,
     child: [],
   },
   {
     link: '',
-    key: '',
-    title: 'Notification',
-    tag: 'Offer',
+    key: 'comment',
+    title: 'Comment',
+    tag: 'Comment',
     permissionKey: '',
     IconColor: 'pink',
     notification: null,
@@ -46,56 +39,85 @@ export const SidebarContants = [
     child: [],
   },
   {
-    link: '',
-    key: '',
-    title: 'Notification',
+    link: '/users',
+    key: 'users',
+    title: 'Users',
     tag: 'Offer',
     permissionKey: '',
-    IconColor: 'pink',
+    IconColor: 'blue',
     notification: null,
-    icon: <MdInsertComment />,
-    child: [],
-  },
-  {
-    link: '',
-    key: '',
-    title: 'Notification',
-    tag: 'Offer',
-    permissionKey: '',
-    IconColor: 'pink',
-    notification: null,
-    icon: <MdInsertComment />,
+    icon: <BsPeopleFill />,
     child: [],
   },
 
-]
-
-
-
-export const AgentUser = [
   {
-    link: null,
-    key: '',
-    title: 'Agent',
+    link: '',
+    key: 'Deals',
+    title: 'Deals',
+    tag: 'Offer',
+    permissionKey: '',
+    IconColor: '#F2994A',
+    notification: null,
+    icon: <FaIdeal />,
+    child: [],
+  },
+  {
+    link: '/dashboard-revenue',
+    key: 'Revenue',
+    title: 'Revenue',
     permissionKey: '',
     tag: null,
     notification: 12,
-    IconColor: 'blue',
-    icon: <RiDashboardFill />,
-    child: [
-      {
-        img: 'https://i.pinimg.com/474x/4b/71/f8/4b71f8137985eaa992d17a315997791e.jpg',
-        isLive: 'Live',
-        name: 'Thomas Edison',
-        link: '/thomas-edison/98'
-      },
-      {
-        img: 'https://i.pinimg.com/474x/4b/71/f8/4b71f8137985eaa992d17a315997791e.jpg',
-        isLive: 'Live',
-        name: 'Ashu Erishon',
-        link: '/thomas-edison/98'
-      }
-    ],
+    IconColor: 'green',
+    icon: <SiScrollreveal />,
   }
 
 ]
+
+export const AgentRemainSideConstant = [
+  {
+    link: null,
+    key: 'Categories',
+    title: 'Categories',
+    permissionKey: '',
+    tag: null,
+    notification: 12,
+    IconColor: 'green',
+    icon: <MdCategory />,
+  }
+  ,
+  {
+    link: null,
+    key: 'Tags',
+    title: 'Tags',
+    permissionKey: '',
+    tag: null,
+    notification: 12,
+    IconColor: '#FF6633',
+    icon: <RiPriceTag2Fill />,
+  }
+  ,
+  {
+    link: null,
+    key: 'Tags',
+    title: 'Comments',
+    permissionKey: '',
+    tag: null,
+    notification: 12,
+    IconColor: '#2EE6CA',
+    icon: <SiScrollreveal />,
+  },
+  {
+    link: null,
+    key: 'Setting',
+    title: 'Setting',
+    permissionKey: '',
+    tag: null,
+    notification: 2,
+    IconColor: '#FFCB33',
+    icon: <RiSettings5Fill />,
+  }
+
+]
+
+

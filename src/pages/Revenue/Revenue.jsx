@@ -4,8 +4,9 @@ import { ColumnStackPlot, Tab, RingProgressSimple } from 'Component';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
 import { IconProvider } from 'utils/common.utils';
 import { Tooltip } from 'antd';
-import { IoIosArrowForward } from "react-icons/io"
-const DashboardRevenue = () => {
+import { IoIosArrowForward } from "react-icons/io";
+import TopAgents from './Components/TopAgents';
+const Revenue = () => {
 
   const SiteSpeedComponent = React.useMemo(() => {
     return [
@@ -63,60 +64,6 @@ const DashboardRevenue = () => {
     }
   }, [SiteSpeedComponent]);
 
-  // top agent 
-
-  const TopAgent = React.memo(() => {
-    return (
-      <React.Fragment>
-        <AgentContainer>
-          <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-1">
-            <div>
-              <div className="flex items-center ">
-                <div className="">
-                  <Img src="https://cdn-icon<div classs-png.flaticon.com/512/147/147142.png" alt="loading... " />
-                </div>
-                <div className="pl-2">
-                  <CustomeTxt>Lenny Wilson</CustomeTxt>
-                  <CustomeText>Lima</CustomeText>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
-                <div className='float-left text-center'>
-                  <CustomeTxt>789 </CustomeTxt>
-                  <CustomeText>Lima</CustomeText>
-                </div>
-                <div className='float-right  text-center'>
-                  <CustomeTxt>489</CustomeTxt>
-                  <CustomeText>Lima</CustomeText>
-                </div>
-              </div>
-            </div>
-            <div className="lg:inline md:inline grid ">
-              <div className="lg:m-0 md:m-0 m-auto">
-                <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
-                  <div className=''>
-                    <AgentRevenueTxt>$4,089</AgentRevenueTxt>
-                    <CustomeText>Lima</CustomeText>
-                  </div>
-                  <div className="grid mt-3 ml-3 ">
-                    <div className="auto l">
-                      <AddBtn >
-                        <IconProvider className={`text-white m-auto text-lg float-right cursor-pointer `} color={`#1B263C`}>
-                          <IoIosArrowForward />
-                        </IconProvider>
-                      </AddBtn>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </AgentContainer>
-      </React.Fragment>
-    )
-  }, [])
   return (
     <React.Fragment>
       <div className="lg:px-4 md:px-3 px-1">
@@ -278,14 +225,14 @@ const DashboardRevenue = () => {
         </div>
 
         <div className="">
-          <TopAgent />
+          <TopAgents />
         </div>
       </div>
     </React.Fragment>
   );
 }
 
-export default DashboardRevenue;
+export default Revenue;
 
 
 

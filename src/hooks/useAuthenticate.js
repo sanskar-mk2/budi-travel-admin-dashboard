@@ -2,6 +2,7 @@ import React from "react";
 import { useFetch, useLocalStorage } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { AUTH_TOKEN, USER } from 'constants/localstorage.constants';
 /*
  * session 
  * isloading login
@@ -14,22 +15,17 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const { getLocalStorage,
     setLocalStorage } = useLocalStorage();
-  const session = React.useMemo(() => {
-    return getLocalStorage()
-  }, [getLocalStorage]);
-  const userValue = React.useMemo(() => {
-    return getLocalStorage()
-  }, [getLocalStorage]);
   const onSuccess = React.useCallback((response) => {
     if (response?.token) {
-      setLocalStorage();
-      setLocalStorage();
+      setLocalStorage(AUTH_TOKEN, response?.token);
+      setLocalStorage(USER, response?.user);
       toast.success(response?.message);
-      navigate("/");
+      console.log(response, " ====> ");
+      navigate("/dashboard");
     }
     else {
       toast.success(response?.message);
-      navigate('/verify-otp');
+      // navigate('/verify-otp');
     }
   }, [navigate, setLocalStorage]);
   const onFailure = React.useCallback((errors) => {
@@ -40,9 +36,16 @@ export const useAuth = () => {
     // 
     // 
   }, []);
+  const session = React.useMemo(() => {
+    return getLocalStorage(AUTH_TOKEN);
+  }, [getLocalStorage]);
+  const userValue = React.useMemo(() => {
+    return getLocalStorage(USER);
+  }, [getLocalStorage]);
+
 
   const { isLoading, callFetch } = useFetch({
-    initialUrl: "/api/login/",
+    initialUrl: "/login/",
     skipOnStart: true,
     onFailure,
     onSuccess,
@@ -53,12 +56,9 @@ export const useAuth = () => {
     formData.append("email", data.email);
     formData.append("password", data.password);
     callFetch({
-      url: "/api/login",
+      url: "/login",
       method: "post",
-      data: {
-        email: "abhijeet",
-        password: "rightnwo"
-      },
+      data: formData
     });
 
   }, [callFetch])

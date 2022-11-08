@@ -2,10 +2,12 @@ import React from "react";
 import { Wrapper } from "Component";
 import Login from "pages/Login/Login";
 import Dashboard from "pages/Dashboard/Dashboard";
-import DashboardRevenue from "pages/Dashboard/DashboardRevenue";
+import Revenue from "pages/Revenue/Revenue";
 import Agents from "pages/Agents/Agents";
 import AgentDetails from "pages/Agents/AgentDetails";
+import Users from "pages/User/Users";
 import UserDetails from "pages/User/UserDetails";
+
 
 const PublicRouteList = [
   {
@@ -36,18 +38,31 @@ const PrivateRouteList = [
   }, {
     path: '/dashboard-revenue',
     component: (<Wrapper>
-      <DashboardRevenue />
+      <Revenue />
     </Wrapper>)
   }
-  , {
+  ,
+  {
     path: '/agents',
+    component: (<Wrapper>
+      <Agents />
+    </Wrapper>)
+  },
+  {
+    path: '/agent/:id',
     component: (<Wrapper>
       <AgentDetails />
     </Wrapper>)
   }
   ,
   {
-    path: '/user',
+    path: '/users',
+    component: (<Wrapper>
+      <Users />
+    </Wrapper>)
+  },
+  {
+    path: '/user/:id',
     component: (<Wrapper>
       <UserDetails />
     </Wrapper>)

@@ -3,6 +3,7 @@ import { CURRENCY_SYMBOL } from "constants/common.constants";
 import moment from "moment";
 import { IconContext } from "react-icons";
 import toast from 'react-hot-toast';
+import ProfileImg from "Assets/profile_pic.jpg"
 export const asyncWrapper = (promise) =>
   promise
     .then((data) => ({ data, error: null }))
@@ -46,7 +47,7 @@ export const TxtCopy = (textBoad) => {
   const node = document.getElementById(textBoad);
   navigator.clipboard.writeText(node.innerText);
   // .then((done) => {
-    toast.success("copied");
+  toast.success("copied");
   // }).catch((error) => {
   //   toast.error("Something gone wrong ");
   // })
@@ -129,5 +130,13 @@ export const toExponent = (num, decimalValue = 3, isCurrency = false) => {
     return ` ${isCurrency ? '$' : ''} ${parseInt(numberFormatter(num))}`;
   } else {
     return ` ${isCurrency ? '$' : ''} ${parseInt(num)?.toExponential(decimalValue)}`;
+  }
+}
+
+export const ImgProvider = (src) => {
+  if (src) {
+    return `${"domain"+src}`;
+  } else {
+    return ProfileImg;
   }
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Tab, RingProgressSimple, ColumnStackPlot, Pagination } from 'Component';
+import { Tab, RingProgressSimple, ColumnStackPlot } from 'Component';
 import { IconProvider } from 'utils/common.utils';
 import { Tooltip } from 'antd';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from 'react-icons/hi';
-import { IoIosArrowForward } from "react-icons/io"
+import { IoIosArrowForward } from "react-icons/io";
+import AllUserList from './Componets/AllUserList';
 const Users = () => {
 
 
@@ -173,7 +174,8 @@ const Users = () => {
         </div>
 
         <div className="">
-          <Pagination />
+          <AllUserList />
+       
         </div>
       </div>
     </React.Fragment>
