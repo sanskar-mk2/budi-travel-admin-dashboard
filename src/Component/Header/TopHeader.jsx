@@ -7,7 +7,7 @@ const TopHeader = ({ SetMenu , sideMenu ,children }) => {
   const TopLayoutSm = React.memo(() => {
     return (
       <React.Fragment>
-        <div className="fixed top-0 w-full z-[99]  h-[55px] lg:hidden md:hidden block pt-2   bg-[#FFFFFF] rounded-md ">
+        <div className="fixed top-0 w-full z-[99]  h-[55px] lg:hidden md:block block pt-2   bg-[#FFFFFF] rounded-md ">
           <div className='grid grid-cols-10 px-3'>
             <div className="col-span-1 grid ">
               <div className="m-auto" onClick={()=>SetMenu(!sideMenu)}>
@@ -32,7 +32,7 @@ const TopHeader = ({ SetMenu , sideMenu ,children }) => {
   const BottomLayoutSm = React.memo(() => {
     return (
       <React.Fragment>
-        <div className="fixed bottom-0 z-[99]  drop-shadow-md w-full h-[55px] lg:hidden md:hidden block pt-2   bg-[#FFFFFF] rounded-md ">
+        <div className="fixed bottom-0 z-[99]  drop-shadow-md w-full h-[55px] lg:hidden md:block block pt-2   bg-[#FFFFFF] rounded-md ">
           <div className='grid grid-cols-4'>
             {
               Array(4).fill().map((icon, i) => (
@@ -51,7 +51,7 @@ const TopHeader = ({ SetMenu , sideMenu ,children }) => {
 
   return (
     <React.Fragment>
-      <div className=" h-[55px] pt-2 m-2 lg:block md:block hidden  bg-[#FFFFFF] rounded-md ">
+      <div className=" h-[55px] pt-2 m-2 lg:block md:hidden hidden  bg-[#FFFFFF] rounded-md ">
         <div className='grid grid-cols-2'>
           <div>
             <div className='grid grid-cols-7'>
