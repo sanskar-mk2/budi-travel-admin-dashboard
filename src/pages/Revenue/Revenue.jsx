@@ -4,7 +4,6 @@ import { ColumnStackPlot, Tab, RingProgressSimple } from 'Component';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
 import { IconProvider } from 'utils/common.utils';
 import { Tooltip } from 'antd';
-import { IoIosArrowForward } from "react-icons/io";
 import TopAgents from './Components/TopAgents';
 const Revenue = () => {
 
@@ -139,7 +138,7 @@ const Revenue = () => {
                       <ResourceText>Hotel</ResourceText>
                     </div>
                     {/* resource  */}
-                    <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1'>
+                    <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2'>
                       {
                         Array(4).fill().map((_, i) => (
                           <div className="p-3" key={i.toString()}>
@@ -242,15 +241,6 @@ box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
 border-radius: 10px;
 padding:0px 15px 15px 15px;
 `;
-const AgentContainer = styled.div`
-background: #FFFFFF;
-box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
-border-radius: 10px;
-margin-top:10px;
-margin-bottom:10px;
-padding:5px 15px;
-`;
-
 
 const Label = styled.span`
 // font-family: 'Open Sans';
@@ -289,41 +279,4 @@ font-weight: 400;
 font-size: 14px;
 line-height: 150%;
 color: #1B263C;
-`;
-
-const Img = styled.img`
-height:70px;
-width:70px;
-border-radius:50%;
-`;
-
-const CustomeTxt = styled.div`
-// font-family: 'Open Sans';
-font-style: normal;
-font-weight: 500;
-font-size: 22px;
-line-height: 30px;
-color: #1B263C;
-`;
-const AgentRevenueTxt = styled.div`
-// font-family: 'Open Sans';
-font-style: normal;
-font-weight: 500;
-font-size: 22px;
-line-height: 30px;
-color: #2B4C9B;
-`;
-
-const AddBtn = styled.button`
-color:white ;
-width:35px;
-height:35px;
-display:grid;
-border-radius:50%;
-transition:all ease 0.3s; 
-background: rgba( 228,226,226, 0.45 );
- backdrop-filter: blur(9px);
-&:hover:hover{
-  opacity:0.8;
-} 
 `;

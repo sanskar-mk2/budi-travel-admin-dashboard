@@ -28,6 +28,7 @@ const AllUserList = () => {
   ))
 
 
+ 
   const Filteration = React.memo(() => {
     return (
       <React.Fragment>
@@ -45,7 +46,7 @@ const AllUserList = () => {
               <div className='grid lg:grid-col-4 md:grid-cols-3 grid-cols-2 gap-2'>
                 {
                   SocialShare?.map((i, index) => (
-                    <div key={index} >
+                    <div key={index}>
                       <ShareButton theme={{ bg: i?.bg, color: i?.color }} >
                         <div className="inline-flex">
                           <IconProvider className={i?.className ?? ''} color={i?.color}>
@@ -66,29 +67,27 @@ const AllUserList = () => {
 
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
-            <div className="lg:float-right md:float-right float-none">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
-              <div className='lg:col-span-2 px-1 '>
+              <div className='lg:col-span-2 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
                 <Input style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
               </div>
 
-              <div className="px-1  ">
+              <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
                   <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} options={["Pending", "Approved", "InActive"]} />
                 </CustomeText>
               </div>
-              <div className="px- " onClick={() => SetState(!state)}>
+              <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>
                 <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Filter</Button>
               </div>
-              <div className="px-1 " onClick={() => SetShare(!haveToshare)}>
+              <div className="px-1 lg:py-0 md:py-0 py-1 " onClick={() => SetShare(!haveToshare)}>
                 <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Share </Button>
               </div>
-              <div className="px-1  ">
+              <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
                   <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
                 </CustomeText>
               </div>
-            </div>
             </div>
           </div>
         </div>
@@ -101,6 +100,7 @@ const AllUserList = () => {
       <div className=" mt-3">
         <BoxCantainer>
           <Filteration />
+          <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
           <table className="min-w-full leading-normal">
             <thead >
               <tr className='border-b border-t border-[#ccccd0]'>
@@ -161,6 +161,7 @@ const AllUserList = () => {
               }
             </tbody>
           </table>
+          </div>
           <div className="pt-2 lg:px-3 md:px-2 px-0">
             <Pagination />
           </div>

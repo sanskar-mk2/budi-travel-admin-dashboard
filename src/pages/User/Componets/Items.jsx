@@ -99,6 +99,7 @@ const Items = () => {
       <div className=" mt-3">
         <BoxCantainer>
           <Filteration />
+          <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
           <table className="min-w-full leading-normal">
             <thead >
               <tr className='border-b border-t border-[#ccccd0]'>
@@ -178,6 +179,7 @@ const Items = () => {
               }
             </tbody>
           </table>
+          </div>
         </BoxCantainer>
       </div>
     </React.Fragment>
@@ -203,8 +205,8 @@ font-weight: 400;
 font-size: 14px;
 line-height: 17px;
 color: #6E7079;
-
 `;
+
 const Status = styled.button`
 width: 56px;
 background: ${props => props?.theme?.bg ?? '#FFF2E2'};

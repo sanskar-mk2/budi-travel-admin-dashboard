@@ -1,6 +1,6 @@
 import { Pagination } from 'antd';
 import React from 'react';
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const PaginationComponent = ({
   labelClassName,
@@ -9,11 +9,11 @@ export const PaginationComponent = ({
 }) => {
   return (
     <React.Fragment>
-      <div className="flex justify-between ">
-        <div className={`  ${labelClassName}`}>
+      <div className="lg:flex md:flex  lg:justify-between md:justify-between  block">
+        <div className={`  py-1 ${labelClassName}`}>
           <CustomeText>{labelText ?? 'Default text '}</CustomeText>
         </div>
-        <div className=''>
+        <div className=' py-1 '>
           <Pagination
             {...props}
             showSizeChanger={props?.showSizeChanger ?? false}
