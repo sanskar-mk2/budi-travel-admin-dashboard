@@ -1,20 +1,26 @@
 import React from 'react';
+import { Drawer, Space } from "antd"
 import { Sidebar, TopHeader } from "Component"
 import styled from "styled-components";
-import { SidebarContants  ,AgentRemainSideConstant} from 'constants/Sidebar.menu';
-import { ChildSubMenu, ChildSubAgent  } from 'Component/Sidebar/Sidebar';
+import { SidebarContants, AgentRemainSideConstant } from 'constants/Sidebar.menu';
+import { ChildSubMenu, ChildSubAgent } from 'Component/Sidebar/Sidebar';
+import { IconProvider } from 'utils/common.utils';
 import { Outlet } from 'react-router-dom';
 import { useFetch } from 'hooks';
-import {BsPeopleFill} from "react-icons/bs";
+import { BsPeopleFill } from "react-icons/bs";
+import { FaTimes } from 'react-icons/fa';
+
 const AfterLoginHeader = () => {
+  const [sideMenu, SetMenu] = React.useState(false);
+  const onClose = () => {
+    SetMenu(false);
+  };
   const onSuccess = React.useCallback((response) => {
 
   }, []);
   const onFailure = React.useCallback((response) => {
 
   }, [])
-
-
   const { isLoading, data } = useFetch({
     initialUrl: "/agents",
     skipOnStart: false,
@@ -24,11 +30,11 @@ const AfterLoginHeader = () => {
   const agents = React.useMemo(() => {
     if (!isLoading) {
       return data?.agents?.map((i, index) => ({
-        img: undefined ,
+        img: undefined,
         isLive: 'Live',
-        name:  i?.name,
+        name: i?.name,
         link: `/agent/${i?.id}`,
-        id:i.id,
+        id: i.id,
       }));
     }
   }, [isLoading, data?.agents]);
@@ -43,49 +49,113 @@ const AfterLoginHeader = () => {
       notification: 12,
       IconColor: '#FFCB33',
       icon: <BsPeopleFill />,
-      child:agents,
+      child: agents,
     },
     ...AgentRemainSideConstant
   ]
+
+
   return (
     <React.Fragment>
-      <TopHeader />
-      <div className=" grid grid-cols-12 gap-2 lg:px-4 md:px-4 px-1">
-        <div className="lg:col-span-2 md:col-span-3 col-span-12">
-          <div className="">
-            <SideBarContainer>
-              {
-                SidebarContants?.map((i, index) => (
-                  <Sidebar props={i} key={index}>
-                    {
-                      i?.child?.map((i, index) => (
-                        <ChildSubMenu key={index} props={i} />
-                      ))
-                    }
-                  </Sidebar>
-                ))
-              }
-            </SideBarContainer>
+      <div className="lg:block md:block hidden">
+        <TopHeader />
+        <div className=" grid grid-cols-12 gap-2 lg:px-4 md:px-4 px-1">
+          <div className="lg:col-span-2 md:col-span-3 col-span-12">
+            <div className="">
+              <SideBarContainer>
+                {
+                  SidebarContants?.map((i, index) => (
+                    <Sidebar props={i} key={index}>
+                      {
+                        i?.child?.map((i, index) => (
+                          <ChildSubMenu key={index} props={i} />
+                        ))
+                      }
+                    </Sidebar>
+                  ))
+                }
+              </SideBarContainer>
+            </div>
+            <div className="mt-3">
+              <SideBarContainer>
+                {
+                  AgentUser?.map((i, index) => (
+                    <Sidebar props={i} key={index}>
+                      {
+                        i?.child?.map((i, index) => (
+                          <ChildSubAgent key={index} props={i} />
+                        ))
+                      }
+                    </Sidebar>
+                  ))
+                }
+              </SideBarContainer>
+            </div>
           </div>
-          <div className="mt-3">
-            <SideBarContainer>
-              {
-                AgentUser?.map((i, index) => (
-                  <Sidebar props={i} key={index}>
-                    {
-                      i?.child?.map((i, index) => (
-                        <ChildSubAgent key={index} props={i} />
-                      ))
-                    }
-                  </Sidebar>
-                ))
-              }
-            </SideBarContainer>
+          <div className="lg:col-span-10 md:col-span-9 col-span-10">
+            <Outlet />
           </div>
         </div>
-        <div className="lg:col-span-10 md:col-span-9 col-span-10">
-          <Outlet />
-        </div>
+      </div>
+      <div className="lg:hidden md:hidden block">
+        <TopHeader SetMenu={SetMenu} sideMenu={sideMenu}>
+          <Drawer
+            placement="left"
+            title={<button>BUDI</button>}
+            size={'270'}
+            onClose={onClose}
+            closable={false}
+            open={sideMenu}
+            extra={
+              <Space>
+                <div onClick={onClose}>
+                  <IconProvider className={` text-lg float-right cursor-pointer `} color={`#000000`}>
+                    <FaTimes />
+                  </IconProvider>
+                </div>
+              </Space>
+            }
+          >
+            <div className="sidebar ">
+              <div className="">
+                <SideBarContainer>
+                  {
+                    SidebarContants?.map((i, index) => (
+                      <Sidebar props={i} SetMenu={SetMenu}  key={index}>
+                        {
+                          i?.child?.map((i, index) => (
+                            <ChildSubMenu SetMenu={SetMenu}  key={index} props={i} />
+                          ))
+                        }
+                      </Sidebar>
+                    ))
+                  }
+                </SideBarContainer>
+              </div>
+              <div className="mt-3">
+                <SideBarContainer>
+                  {
+                    AgentUser?.map((i, index) => (
+                      <Sidebar SetMenu={SetMenu}  props={i} key={index}>
+                        {
+                          i?.child?.map((i, index) => (
+                            <ChildSubAgent SetMenu={SetMenu}  key={index} props={i} />
+                          ))
+                        }
+                      </Sidebar>
+                    ))
+                  }
+                </SideBarContainer>
+              </div>
+            </div>
+          </Drawer>
+          <div className="mt-[65px]">
+            <Outlet />
+            <br/>
+            <br/>
+            <br/>
+          </div>
+        </TopHeader>
       </div>
     </React.Fragment>
   );

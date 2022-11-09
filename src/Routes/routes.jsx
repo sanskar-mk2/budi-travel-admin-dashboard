@@ -7,8 +7,8 @@ import Agents from "pages/Agents/Agents";
 import AgentDetails from "pages/Agents/AgentDetails";
 import Users from "pages/User/Users";
 import UserDetails from "pages/User/UserDetails";
-
-
+import ForgetPassword from "pages/ForgetPassword/ForgetPassword";
+import VerifyOtp from "pages/ForgetPassword/VerifyOtp";
 const PublicRouteList = [
   {
     path: "/login",
@@ -19,13 +19,13 @@ const PublicRouteList = [
   {
     path: "/forget-password",
     component: (<Wrapper>
-      <Login />
+      <ForgetPassword />
     </Wrapper>)
   },
   {
     path: "/otp-verifcation",
     component: (<Wrapper>
-      <Login />
+      <VerifyOtp />
     </Wrapper>)
   }
 ];

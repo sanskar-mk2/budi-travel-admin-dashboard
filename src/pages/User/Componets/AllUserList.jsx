@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { CheckBox, Selector } from 'Component';
+import {  Selector } from 'Component';
 import { IconProvider } from 'utils/common.utils';
 import { SocialShare } from 'utils/ObjectUtils';
 import { Input } from "antd";
@@ -45,7 +45,7 @@ const AllUserList = () => {
               <div className='grid lg:grid-col-4 md:grid-cols-3 grid-cols-2 gap-2'>
                 {
                   SocialShare?.map((i, index) => (
-                    <div key={index}>
+                    <div key={index} >
                       <ShareButton theme={{ bg: i?.bg, color: i?.color }} >
                         <div className="inline-flex">
                           <IconProvider className={i?.className ?? ''} color={i?.color}>
@@ -103,26 +103,21 @@ const AllUserList = () => {
           <Filteration />
           <table className="min-w-full leading-normal">
             <thead >
-              <tr className='border-b-2 border-t-2 border-[#ccccd0]'>
+              <tr className='border-b border-t border-[#ccccd0]'>
                 <th className="px-5 flex py-3   bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  <span className="mx-2  ">
-                    <CheckBox />
-                  </span>
+             
                   <span className='mt-1'>
-                    Product Name
+                    Customer Name
                   </span>
                 </th>
                 <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Unit Price
+                Last Purchase
                 </th>
                 <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Discount
+                  Email
                 </th>
                 <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Total Order
-                </th>
-                <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Action
+                 Country
                 </th>
                 <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Status
@@ -133,46 +128,32 @@ const AllUserList = () => {
             <tbody>
               {
                 Array(5).fill().map((_, index) => (
-                  <tr className=''>
+                  <tr className='' key={index.toString()}>
                     <td className="px-5 py-3   bg-white text-sm">
                       <div className="flex">
-                        <div className="mx-2 pt-2 ">
-                          <CheckBox />
-                        </div>
-
                         <div className="ml-3">
-                          <p className="text-gray-900 whitespace-no-wrap mt-2">
+                          <span className="text-gray-900 whitespace-no-wrap mt-2">
                             <CustomeText>Molly Sanders</CustomeText>
-                          </p>
+                          </span>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3  bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$20,000</CustomeText></p>
+                      <span className="text-gray-900 whitespace-no-wrap"><CustomeText>Today</CustomeText></span>
                     </td>
                     <td className="px-5 py-3  bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$10,000</CustomeText></p>
+                      <span className="text-gray-900 whitespace-no-wrap"><CustomeText>lenwoper@outlook.com</CustomeText></span>
                     </td>
                     <td className="px-5 py-3 bg-white text-sm">
                       <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                         <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                        <span className="relative"><CustomeText>98</CustomeText></span>
+                        <span className="relative"><CustomeText>India</CustomeText></span>
                       </span>
                     </td>
                     <td className="px-5 py-3  bg-white text-sm">
                       <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                         <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                        <span className="relative">
-                          <CustomeText>
-                            <Select size={"small"} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
-                          </CustomeText>
-                        </span>
-                      </span>
-                    </td>
-                    <td className="px-5 py-3  bg-white text-sm">
-                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                        <span className="relative"><Status>Active</Status></span>
+                        <span className="relative"><Status theme={{}}>Active</Status></span>
                       </span>
                     </td>
                   </tr>
@@ -211,11 +192,12 @@ color: #6E7079;
 
 `;
 const Status = styled.button`
-width: 56px;
-background: ${props => props?.theme?.bg ?? '#FFF2E2'};
-color:black;
-border-radius: 8px;
-padding:2px 5px;
+background: ${props => props?.theme?.bg ?? 'rgba(22, 192, 152, 0.38)'};
+width: 80px;
+color:${props=>props?.theme?.color??'#00B087'};
+height: 27px;
+border: ${props=>props?.theme?.color??'1px solid #00B087'};
+border-radius: 4px;
 `;
 const Select = styled(Selector)`
 width: ${props => props?.theme.width ?? '80px !important'};

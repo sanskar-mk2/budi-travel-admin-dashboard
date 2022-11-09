@@ -1,90 +1,115 @@
 import React from 'react';
 import { RiMessage3Fill } from "react-icons/ri";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { HiOutlineDotsHorizontal, HiMenuAlt1 } from "react-icons/hi";
 import { Icon, SearchBar } from "Component";
-import { isMobile } from 'utils/common.utils';
-const TopHeader = () => {
-  const deviceType = isMobile();
+import {  IconProvider } from 'utils/common.utils';
+const TopHeader = ({ SetMenu , sideMenu ,children }) => {
+  const TopLayoutSm = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="fixed top-0 w-full z-[99]  h-[55px] lg:hidden md:hidden block pt-2   bg-[#FFFFFF] rounded-md ">
+          <div className='grid grid-cols-10 px-3'>
+            <div className="col-span-1 grid ">
+              <div className="m-auto" onClick={()=>SetMenu(!sideMenu)}>
+                <IconProvider className={` text-lg float-right cursor-pointer `} color={`#000000`}>
+                  <HiMenuAlt1 />
+                </IconProvider>
+              </div>
+            </div>
+            <div className="col-span-2 grid">
+              <div className="m-auto">
+                BUDI
+              </div>
+            </div>
+            <div className="col-span-7 px-3">
+              <SearchBar />
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }, []);
+  const BottomLayoutSm = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="fixed bottom-0 z-[99]  drop-shadow-md w-full h-[55px] lg:hidden md:hidden block pt-2   bg-[#FFFFFF] rounded-md ">
+          <div className='grid grid-cols-4'>
+            {
+              Array(4).fill().map((icon, i) => (
+                <div key={i} className="m-auto px-1">
+                  <Icon>
+                    <RiMessage3Fill style={{ color: "#6B7A99", fontSize: "20px" }} />
+                  </Icon>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }, []);
+
   return (
     <React.Fragment>
-      {
-        deviceType ? (
-          <React.Fragment>
-            <div className=" h-[55px] pt-2 m-2  bg-[#FFFFFF] rounded-md ">
-              <div className='grid grid-cols-5'>
-                {
-                  Array(4).fill().map((icon, i) => (
-                    <div key={i} className="px-1">
-                      <Icon>
-                        <RiMessage3Fill style={{ color: "#6B7A99", fontSize: "20px" }} />
-                      </Icon>
-                    </div>
-                  ))
-                }
+      <div className=" h-[55px] pt-2 m-2 lg:block md:block hidden  bg-[#FFFFFF] rounded-md ">
+        <div className='grid grid-cols-2'>
+          <div>
+            <div className='grid grid-cols-7'>
+              <div className='col-span-2'>
+                <div className='grid h-[100%]'><strong className="m-auto text-secondry-color text-xl">BUDI</strong></div>
               </div>
-            </div>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <div className=" h-[55px] pt-2 m-2  bg-[#FFFFFF] rounded-md ">
-              <div className='grid grid-cols-2'>
-                <div>
-                  <div className='grid grid-cols-7'>
-                    <div className='col-span-2'>
-                      <div className='grid h-[100%]'><strong className="m-auto text-secondry-color text-xl">BUDI</strong></div>
-                    </div>
+              {
+                ["Dashboard", "Offers", "Users", "Message"].map((name, i, arr) => (
+                  <div key={i} className="relative">
+                    <li className="leading-[40px]  list-none cursor-pointer text-sm  text-secondry-color font-bold hover:text-primary-color">{name}
+                    </li>
                     {
-                      ["Dashboard", "Offers", "Users", "Message"].map((name, i, arr) => (
-                        <div key={i} className="relative">
-                          <li className="leading-[40px]  list-none cursor-pointer text-sm  text-secondry-color font-bold hover:text-primary-color">{name}
-                          </li>
-                          {
-                            // new tag
-                            <span className=" bg-primary-color text-white font-semibold rounded-md px-1 text-[9px]  absolute top-0 right-[30px] cursor-pointer ">
-                              {
-                                (i === arr.length - 1) && (<span className="">NEW</span>)
-                              }
-                            </span>
-                          }
-                          {/* last toggle for other navbar link  */}
-                          <span className="absolute top-0 right-1.5 cursor-pointer ">
-                            {
-                              (i === arr.length - 1) && (<HiOutlineDotsHorizontal />)
-                            }
-                          </span>
-                        </div>
-                      ))
-                    }
-                  </div>
-                </div>
-                <div className=''>
-                  <div className='grid grid-cols-2'>
-                    <div className=''>
-                      <SearchBar />
-                    </div>
-                    <div className="px-3 ">
-                      <div className='grid grid-cols-5'>
+                      // new tag
+                      <span className=" bg-primary-color text-white font-semibold rounded-md px-1 text-[9px]  absolute top-0 right-[30px] cursor-pointer ">
                         {
-                          Array(4).fill().map((icon, i) => (
-                            <div key={i}>
-                              <Icon>
-                                <RiMessage3Fill style={{ color: "#6B7A99", fontSize: "20px" }} />
-                              </Icon>
-                            </div>
-                          ))
+                          (i === arr.length - 1) && (<span className="">NEW</span>)
                         }
-                        <div>
-                        </div>
+                      </span>
+                    }
+                    {/* last toggle for other navbar link  */}
+                    <span className="absolute top-0 right-1.5 cursor-pointer ">
+                      {
+                        (i === arr.length - 1) && (<HiOutlineDotsHorizontal />)
+                      }
+                    </span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+          <div className=''>
+            <div className='grid grid-cols-2'>
+              <div className=''>
+                <SearchBar />
+              </div>
+              <div className="px-3 ">
+                <div className='grid grid-cols-5'>
+                  {
+                    Array(4).fill().map((icon, i) => (
+                      <div key={i}>
+                        <Icon>
+                          <RiMessage3Fill style={{ color: "#6B7A99", fontSize: "20px" }} />
+                        </Icon>
                       </div>
-                    </div>
+                    ))
+                  }
+                  <div>
                   </div>
                 </div>
               </div>
             </div>
-          </React.Fragment>
-        )
-      }
-
+          </div>
+        </div>
+      </div>
+      {/* sm */}
+      <TopLayoutSm />
+      {children}
+      <BottomLayoutSm />
     </React.Fragment>
   );
 }

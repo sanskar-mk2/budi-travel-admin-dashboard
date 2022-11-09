@@ -5,16 +5,18 @@ import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { useNavigate } from 'react-router-dom';
 import { ImgProvider } from 'utils/common.utils';
-const Sidebar = ({ props,
+const Sidebar = ({ SetMenu ,props,
   children
 }) => {
   const [toggle, SetToggle] = React.useState(false);
   const navigate = useNavigate();
-  const redirectIT = (e) => {
-    if (e?.link) {
+
+  const redirectIT = React.useCallback((e)=>{
+    if (e?.link){
       navigate(e?.link);
+      SetMenu(false)
     }
-  }
+  },[SetMenu ,navigate])
 
   const location = React.useMemo(() => {
     if (window) {
@@ -122,13 +124,16 @@ div {
 }
 `;
 
-export const ChildSubMenu = ({ props }) => {
+export const ChildSubMenu = ({SetMenu, props }) => {
   const navigate = useNavigate();
-  const redirectIT = (e) => {
+
+  const redirectIT = React.useCallback((e)=>{
     if (e?.link) {
       navigate(e?.link);
+      SetMenu(false);
     }
-  }
+  },[SetMenu ,navigate])
+
 
   const location = React.useMemo(() => {
     if (window) {
@@ -137,8 +142,8 @@ export const ChildSubMenu = ({ props }) => {
       return undefined;
     }
   })
-  return (
 
+  return (
     <React.Fragment>
       <div className='  w-full my-[10px] '>
         <div onClick={() => redirectIT(props)} className={` activeClass flex justify-between transition-opacity hover:bg-primary-color bg-white px-2  py-3 rounded-md ${location === props?.link && 'text-white bg-primary-color activeClass'}`}>
@@ -163,13 +168,15 @@ export const ChildSubMenu = ({ props }) => {
 }
 
 
-export const ChildSubAgent = React.memo(({ props }) => {
+export const ChildSubAgent = React.memo(({ SetMenu , props }) => {
   const navigate = useNavigate();
-  const redirectIT = (e) => {
+  
+  const redirectIT = React.useCallback((e)=>{
     if (e){
       navigate(e);
+      SetMenu(false);
     }
-  }
+  },[SetMenu ,navigate])
 
   const location = React.useMemo(() => {
     if (window) {

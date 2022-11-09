@@ -33,7 +33,7 @@ const navigate = useNavigate()
               </div>
               {
                 data?.agents?.map((agent, index) => (
-                  <AgentContainer>
+                  <AgentContainer key={index.toString()}>
                     <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-1">
                       <div>
                         <div className="flex items-center ">
