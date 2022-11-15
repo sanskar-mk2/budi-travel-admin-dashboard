@@ -6,7 +6,9 @@ import { FormProvider, useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginValidationSchema } from 'utils/validation';
-import { useAuth} from 'hooks';
+import { useAuth } from 'hooks';
+import { Logo } from 'utils/common.utils';
+
 export default function Login() {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
@@ -31,6 +33,11 @@ export default function Login() {
     <React.Fragment>
       <div className="grid h-[95vh]">
         <div className="m-auto lg:w-[25%] md:w-[40%] w-[85%]">
+          <div className="gird">
+            <div className="m-auto">
+              <Logo />
+            </div>
+          </div>
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control">
@@ -92,7 +99,7 @@ export default function Login() {
               </div>
               <div className="form-control mt-6">
                 <Button className={`w-full bg-primary-color rounded-full `} type={'submit'} isLoading={isLoading}
-                // isDisabled={!isDirty || !isValid}
+                isDisabled={!isDirty || !isValid}
                 >{'LOGIN'}</Button>
               </div>
             </form>
@@ -102,3 +109,4 @@ export default function Login() {
     </React.Fragment>
   )
 }
+

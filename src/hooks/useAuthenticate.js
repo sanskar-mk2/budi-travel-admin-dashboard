@@ -3,14 +3,18 @@ import { useFetch, useLocalStorage } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AUTH_TOKEN, USER } from 'constants/localstorage.constants';
-/*
+
+/**
+ * @returns  
  * session 
- * isloading login
- * verify otp 
- * reset password 
- * logout 
+ * login 
+ * verifyToken
+ * token
+ * forget-password
+ * isLoading
  * 
  */
+
 export const useAuth = () => {
   const navigate = useNavigate();
   const { getLocalStorage,
@@ -20,8 +24,7 @@ export const useAuth = () => {
       setLocalStorage(AUTH_TOKEN, response?.token);
       setLocalStorage(USER, response?.user);
       toast.success(response?.message);
-      console.log(response, " ====> ");
-      navigate("/dashboard");
+      navigate("/");
     }
     else {
       toast.success(response?.message);
@@ -30,11 +33,7 @@ export const useAuth = () => {
   }, [navigate, setLocalStorage]);
   const onFailure = React.useCallback((errors) => {
     // toast.error(errors?.message);
-    // 
     toast.error(errors?.message);
-    console.log(errors, "login errors --> ");
-    // 
-    // 
   }, []);
   const session = React.useMemo(() => {
     return getLocalStorage(AUTH_TOKEN);
