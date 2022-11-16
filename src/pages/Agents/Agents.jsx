@@ -8,7 +8,6 @@ import AgentsList from './Componets/AllAgentsList';
 import { enLangauge } from 'Contents/en-langauge';
 import { useFetch } from 'hooks';
 const Agents = () => {
-
   const onSuccess = React.useCallback((response) => {
 
   }, []);

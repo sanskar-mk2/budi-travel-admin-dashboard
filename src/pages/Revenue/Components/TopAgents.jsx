@@ -6,6 +6,7 @@ import { useFetch } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
+import { BiTargetLock } from 'react-icons/bi';
 const TopAgents = ({ props }) => {
   const navigate = useNavigate()
   const onSuccess = React.useCallback((response) => {
@@ -22,75 +23,124 @@ const TopAgents = ({ props }) => {
   });
 
 
+  const timeFrameFilteration = React.useCallback((e) => {
+    console.log(e.target.value, " timeFrameFilteration ");
+  }, []);
+  const offerAllTime =
+    React.useCallback((e) => {
+      console.log(e.target.value, " profitAll");
+    }, []);
+  const profitAll =
+    React.useCallback((e) => {
+      console.log(e.target.value, " profitAll");
+    }, []);
+  const FilterationComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-3">
+          <div className="p-2 grid" >
+            <select onChange={timeFrameFilteration} className="select m-auto select-bordered select-sm w-full max-w-xs">
+              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_TIME_FRAMED}</option>
+              <option>English</option>
+              <option>Japanese</option>
+              <option>Italian</option>
+            </select>
+          </div>
+
+          <div className="p-2 grid">
+            <select onChange={offerAllTime} className="select m-auto select-bordered select-sm w-full max-w-xs">
+              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_OFFER_ALLD}</option>
+              <option>English</option>
+              <option>Japanese</option>
+              <option>Italian</option>
+            </select>
+          </div>
+
+          <div className="p-2 grid">
+            <select onChange={profitAll} className="select m-auto select-bordered select-sm w-full max-w-xs">
+              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_PROFIT_ALLD}</option>
+              <option>English</option>
+              <option>Japanese</option>
+              <option>Italian</option>
+            </select>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }, []);
+
+
   return (
     <React.Fragment>
-        {
-          isLoading ? (<Skeleton className="mt-3" active />) : (
-            <React.Fragment>
-              <div className="">
-                <div className="pl-2">
-                  <Label>{enLangauge.REVENUE_TOP_AGENT_HEADING}</Label>
-                </div>
-                <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
-                  {
-                    data?.agents?.map((agent, index) => (
-                      <AgentContainer key={index.toString()}>
-                        <div className="grid lg:w-full md:w-full w-[550px] grid-cols-4 ">
-                          <div>
-                            <div className="flex items-center ">
-                              <div className="">
-                                <Img src={ImgProvider(agent?.profile?.profile_picture)} alt="loading... " />
-                              </div>
-                              <div className="pl-2">
-                                <CustomeTxt>{agent?.name.split(" ")[0]}</CustomeTxt>
-                                <CustomeText>{agent?.name.split(" ")[1]}</CustomeText>
-                              </div>
+      {
+        isLoading ? (<Skeleton className="mt-3" active />) : (
+          <React.Fragment>
+            <div className="">
+              <div className="pl-2">
+                <Label>{enLangauge.REVENUE_TOP_AGENT_HEADING}</Label>
+              </div>
+              <div className="my-2">
+                <FilterationComponent />
+              </div>
+              <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
+                {
+                  data?.agents?.map((agent, index) => (
+                    <AgentContainer key={index.toString()}>
+                      <div className="grid lg:w-full md:w-full w-[550px] grid-cols-4 ">
+                        <div>
+                          <div className="flex items-center ">
+                            <div className="">
+                              <Img src={ImgProvider(agent?.profile?.profile_picture)} alt="loading... " />
+                            </div>
+                            <div className="pl-2">
+                              <CustomeTxt>{agent?.name.split(" ")[0]}</CustomeTxt>
+                              <CustomeText>{agent?.name.split(" ")[1]}</CustomeText>
                             </div>
                           </div>
-                          <div className="col-span-2">
-                            <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
-                              <div className='float-left text-center'>
-                                <CustomeTxt>789 </CustomeTxt>
-                                <CustomeText>Lima</CustomeText>
-                              </div>
-                              <div className='float-right  text-center'>
-                                <CustomeTxt>489</CustomeTxt>
-                                <CustomeText>Lima</CustomeText>
-                              </div>
+                        </div>
+                        <div className="col-span-2">
+                          <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
+                            <div className='float-left text-center'>
+                              <CustomeTxt>789 </CustomeTxt>
+                              <CustomeText>Lima</CustomeText>
+                            </div>
+                            <div className='float-right  text-center'>
+                              <CustomeTxt>489</CustomeTxt>
+                              <CustomeText>Lima</CustomeText>
                             </div>
                           </div>
-                          <div className="lg:inline md:inline grid ">
-                            <div className="lg:m-0 md:m-0 m-auto">
-                              <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
-                                <div className=''>
-                                  <AgentRevenueTxt>$4,089</AgentRevenueTxt>
-                                  <CustomeText>Lima</CustomeText>
-                                </div>
-                                <div className="grid mt-3 ml-3 ">
-                                  <div className="auto l">
-                                    <AddBtn onClick={() => navigate(`/agent/${agent?.id}`)}>
-                                      <IconProvider className={`text-white m-auto text-lg float-right cursor-pointer `} color={`#1B263C`}>
-                                        <IoIosArrowForward />
-                                      </IconProvider>
-                                    </AddBtn>
-                                  </div>
+                        </div>
+                        <div className="lg:inline md:inline grid ">
+                          <div className="lg:m-0 md:m-0 m-auto">
+                            <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
+                              <div className=''>
+                                <AgentRevenueTxt>$4,089</AgentRevenueTxt>
+                                <CustomeText>Lima</CustomeText>
+                              </div>
+                              <div className="grid mt-3 ml-3 ">
+                                <div className="auto l">
+                                  <AddBtn onClick={() => navigate(`/agent/${agent?.id}`)}>
+                                    <IconProvider className={`text-white m-auto text-lg float-right cursor-pointer `} color={`#1B263C`}>
+                                      <IoIosArrowForward />
+                                    </IconProvider>
+                                  </AddBtn>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </AgentContainer>
-                    ))
-                  }
-                </div>
+                      </div>
+                    </AgentContainer>
+                  ))
+                }
               </div>
-              <div className="mb-3">
-                {/* <Pagination /> */}
-              </div>
-
-            </React.Fragment>
-          )
-        }
+            </div>
+            <div className="mb-3">
+              {/* <Pagination /> */}
+            </div>
+          </React.Fragment>
+        )
+      }
 
     </React.Fragment >
   );

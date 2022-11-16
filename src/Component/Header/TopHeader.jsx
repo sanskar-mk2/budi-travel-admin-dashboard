@@ -174,5 +174,4 @@ const ToggleTxt = styled.div`
 font-size:13px  !important;
 backgroundColor:${(props) => props?.theme?.bg ?? "transparent"};
 cursor:pointer ;
-font-weight:600;
 `;
