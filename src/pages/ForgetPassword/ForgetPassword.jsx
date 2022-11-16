@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { AiOutlineMail } from 'react-icons/ai';
 import { Button, Textfield } from "Component";
 import { useAuth } from 'hooks';
+import { Logo } from 'utils/common.utils';
 const ForgetPassword = () => {
   const { isLoading } = useAuth()
   const methods = useForm({
@@ -27,6 +28,11 @@ const ForgetPassword = () => {
     <React.Fragment>
       <div className="grid h-[95vh]">
         <div className="m-auto lg:w-[25%] md:w-[40%] w-[85%]">
+        <div className="gird">
+            <div className="m-auto">
+              <Logo />
+            </div>
+          </div>
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control">
@@ -49,7 +55,7 @@ const ForgetPassword = () => {
 
               <div className="form-control mt-6">
                 <Button className={`w-full bg-primary-color rounded-full `} type={'submit'} isLoading={isLoading}
-                // isDisabled={!isDirty || !isValid}
+                isDisabled={!isDirty || !isValid}
                 >{'SENT OTP'}</Button>
               </div>
             </form>

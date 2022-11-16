@@ -1,16 +1,21 @@
 import React from 'react';
-import { RiMessage3Fill } from "react-icons/ri";
 import { HiOutlineDotsHorizontal, HiMenuAlt1 } from "react-icons/hi";
 import { Icon, SearchBar } from "Component";
-import {  IconProvider } from 'utils/common.utils';
-const TopHeader = ({ SetMenu , sideMenu ,children }) => {
+import { IconProvider } from 'utils/common.utils';
+// notification icon 
+import { FaBell } from "react-icons/fa";
+import { MdMessage } from "react-icons/md";
+import { BsFillPeopleFill, BsFillFileBarGraphFill } from "react-icons/bs";
+
+
+const TopHeader = ({ SetMenu, sideMenu, children }) => {
   const TopLayoutSm = React.memo(() => {
     return (
       <React.Fragment>
         <div className="fixed top-0 w-full z-[99]  h-[55px] lg:hidden md:block block pt-2   bg-[#FFFFFF] rounded-md ">
           <div className='grid grid-cols-10 px-3'>
             <div className="col-span-1 grid ">
-              <div className="m-auto" onClick={()=>SetMenu(!sideMenu)}>
+              <div className="m-auto" onClick={() => SetMenu(!sideMenu)}>
                 <IconProvider className={` text-lg float-right cursor-pointer `} color={`#000000`}>
                   <HiMenuAlt1 />
                 </IconProvider>
@@ -29,16 +34,43 @@ const TopHeader = ({ SetMenu , sideMenu ,children }) => {
       </React.Fragment>
     )
   }, []);
+
+  const notificationList = React.useMemo(() => {
+    return [
+      {
+        icon: <FaBell />,
+        Link: '',
+        notificationCount: 10,
+      },
+      {
+        icon: <MdMessage />,
+        Link: '',
+        notificationCount: 14,
+      },
+      {
+        icon: <BsFillPeopleFill />,
+        Link: '',
+        notificationCount: null,
+      },
+      {
+        icon: <BsFillFileBarGraphFill />,
+        Link: '',
+        notificationCount: null,
+      }
+    ]
+  }, [])
   const BottomLayoutSm = React.memo(() => {
     return (
       <React.Fragment>
         <div className="fixed bottom-0 z-[99]  drop-shadow-md w-full h-[55px] lg:hidden md:block block pt-2   bg-[#FFFFFF] rounded-md ">
           <div className='grid grid-cols-4'>
             {
-              Array(4).fill().map((icon, i) => (
-                <div key={i} className="m-auto px-1">
-                  <Icon>
-                    <RiMessage3Fill style={{ color: "#6B7A99", fontSize: "20px" }} />
+              notificationList?.map((icon, i) => (
+                <div key={i} className="m-auto px-1" >
+                  <Icon notification={icon?.notificationCount}>
+                    <IconProvider className={` text-[20px] cursor-pointer `} color={`#6B7A99`}>
+                      {icon.icon}
+                    </IconProvider>
                   </Icon>
                 </div>
               ))
@@ -90,10 +122,12 @@ const TopHeader = ({ SetMenu , sideMenu ,children }) => {
               <div className="px-3 ">
                 <div className='grid grid-cols-5'>
                   {
-                    Array(4).fill().map((icon, i) => (
+                    notificationList?.map((icon, i) => (
                       <div key={i}>
-                        <Icon>
-                          <RiMessage3Fill style={{ color: "#6B7A99", fontSize: "20px" }} />
+                        <Icon notification={icon?.notificationCount}>
+                          <IconProvider className={` text-[20px] cursor-pointer `} color={`#6B7A99`}>
+                            {icon.icon}
+                          </IconProvider>
                         </Icon>
                       </div>
                     ))

@@ -5,26 +5,24 @@ import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { useNavigate } from 'react-router-dom';
 import { ImgProvider } from 'utils/common.utils';
-const Sidebar = ({ SetMenu ,props,
+import { useLocation } from 'react-router-dom';
+const Sidebar = ({ SetMenu, props,
   children
 }) => {
   const [toggle, SetToggle] = React.useState(false);
   const navigate = useNavigate();
+  const path = useLocation();
 
-  const redirectIT = React.useCallback((e)=>{
-    if (e?.link){
+  const redirectIT = React.useCallback((e) => {
+    if (e?.link) {
       navigate(e?.link);
       SetMenu(false)
     }
-  },[SetMenu ,navigate])
+  }, [SetMenu, navigate])
 
   const location = React.useMemo(() => {
-    if (window) {
-      return window.location.pathname;
-    } else {
-      return undefined;
-    }
-  })
+    return path?.pathname;
+  }, [path?.pathname])
 
   return (
     <React.Fragment>
@@ -124,24 +122,20 @@ div {
 }
 `;
 
-export const ChildSubMenu = ({SetMenu, props }) => {
+export const ChildSubMenu = ({ SetMenu, props }) => {
   const navigate = useNavigate();
-
-  const redirectIT = React.useCallback((e)=>{
+  const path = useLocation();
+  const redirectIT = React.useCallback((e) => {
     if (e?.link) {
       navigate(e?.link);
       SetMenu(false);
     }
-  },[SetMenu ,navigate])
+  }, [SetMenu, navigate])
 
 
   const location = React.useMemo(() => {
-    if (window) {
-      return window.location.pathname;
-    } else {
-      return undefined;
-    }
-  })
+    return path?.pathname;
+  }, [path?.pathname])
 
   return (
     <React.Fragment>
@@ -168,23 +162,19 @@ export const ChildSubMenu = ({SetMenu, props }) => {
 }
 
 
-export const ChildSubAgent = React.memo(({ SetMenu , props }) => {
+export const ChildSubAgent = React.memo(({ SetMenu, props }) => {
   const navigate = useNavigate();
-  
-  const redirectIT = React.useCallback((e)=>{
-    if (e){
+const path = useLocation();
+  const redirectIT = React.useCallback((e) => {
+    if (e) {
       navigate(e);
       SetMenu(false);
     }
-  },[SetMenu ,navigate])
+  }, [SetMenu, navigate])
 
   const location = React.useMemo(() => {
-    if (window) {
-      return window.location.pathname;
-    } else {
-      return undefined;
-    }
-  })
+  return path?.pathname ;
+  } , [ path?.pathname])
 
   const LiveMode = React.memo((props) => (
     <React.Fragment>
@@ -204,7 +194,7 @@ export const ChildSubAgent = React.memo(({ SetMenu , props }) => {
 
   return (
     <React.Fragment>
-      <div onClick={()=>redirectIT(props?.link)} className={`my-[10px] agent grid grid-cols-3 gap-2 place-items-center  transition-opacity hover:bg-primary-color ${location === props?.link && 'text-white bg-primary-color activeClass'} bg-white px-0  py-1 rounded-md`}>
+      <div onClick={() => redirectIT(props?.link)} className={`my-[10px] agent grid grid-cols-3 gap-2 place-items-center  transition-opacity hover:bg-primary-color ${location === props?.link && 'text-white bg-primary-color activeClass'} bg-white px-0  py-1 rounded-md`}>
         <ImgIcon src={ImgProvider(props?.img)} alt="loading..." />
         <div className={`w-full  font-semibold inline text-sm break-normal ${location === props?.link ? 'text-white' : ' text-[#6B7A99]'} `} style={{ fontSize: "14px" }}>
           {props?.name}

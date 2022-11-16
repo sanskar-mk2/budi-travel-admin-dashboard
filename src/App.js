@@ -4,7 +4,6 @@ import Layout from 'Component/Layout';
 import { PrivateRouteList, PublicRouteList } from 'Routes/routes';
 import './App.css';
 import "antd/dist/antd.min.css";
-
 import { useAuth } from 'hooks';
 const ProtectedRoute = ({ user, redirectPath = "/login" }) => {
   if (!user) {
@@ -22,7 +21,6 @@ const AuthenticateRoute = ({ user, redirectPath = "/dashboard" }) => {
 };
 function App() {
   const {session} = useAuth();
-  // const  session = true  ;
   return (
     <div className="App">
       <Routes>

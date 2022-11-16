@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, Space } from "antd"
+import { Drawer, Button, Space } from "antd"
 import { Sidebar, TopHeader } from "Component"
 import styled from "styled-components";
 import { SidebarContants, AgentRemainSideConstant } from 'constants/Sidebar.menu';
@@ -9,8 +9,9 @@ import { Outlet } from 'react-router-dom';
 import { useFetch } from 'hooks';
 import { BsPeopleFill } from "react-icons/bs";
 import { FaTimes } from 'react-icons/fa';
-
+import { useAuth } from 'hooks';
 const AfterLoginHeader = () => {
+  const { session, logout } = useAuth()
   const [sideMenu, SetMenu] = React.useState(false);
   const onClose = () => {
     SetMenu(false);
@@ -102,12 +103,13 @@ const AfterLoginHeader = () => {
           <Drawer
             placement="left"
             title={<button>BUDI</button>}
-            size={'270'}
+            size={'230'}
             onClose={onClose}
             closable={false}
             open={sideMenu}
             extra={
               <Space>
+                {session && (<Button onClick={() => logout()}>Logout</Button>)}
                 <div onClick={onClose}>
                   <IconProvider className={` text-lg float-right cursor-pointer `} color={`#000000`}>
                     <FaTimes />
@@ -120,11 +122,11 @@ const AfterLoginHeader = () => {
               <div className="">
                 <SideBarContainer>
                   {
-                    SidebarContants?.map((i, index) => (
-                      <Sidebar props={i} SetMenu={SetMenu}  key={index}>
+                    SidebarContants?.slice(0 , 3).map((i, index) => (
+                      <Sidebar props={i} SetMenu={SetMenu} key={index}>
                         {
                           i?.child?.map((i, index) => (
-                            <ChildSubMenu SetMenu={SetMenu}  key={index} props={i} />
+                            <ChildSubMenu SetMenu={SetMenu} key={index} props={i} />
                           ))
                         }
                       </Sidebar>
@@ -136,10 +138,10 @@ const AfterLoginHeader = () => {
                 <SideBarContainer>
                   {
                     AgentUser?.map((i, index) => (
-                      <Sidebar SetMenu={SetMenu}  props={i} key={index}>
+                      <Sidebar SetMenu={SetMenu} props={i} key={index}>
                         {
                           i?.child?.map((i, index) => (
-                            <ChildSubAgent SetMenu={SetMenu}  key={index} props={i} />
+                            <ChildSubAgent SetMenu={SetMenu} key={index} props={i} />
                           ))
                         }
                       </Sidebar>
@@ -151,9 +153,9 @@ const AfterLoginHeader = () => {
           </Drawer>
           <div className="mt-[65px]">
             <Outlet />
-            <br/>
-            <br/>
-            <br/>
+            <br />
+            <br />
+            <br />
           </div>
         </TopHeader>
       </div>

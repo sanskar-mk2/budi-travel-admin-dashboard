@@ -1,9 +1,17 @@
 // import NoImage from "Asset/.png";
+import React from "react";
 import { CURRENCY_SYMBOL } from "constants/common.constants";
 import moment from "moment";
 import { IconContext } from "react-icons";
 import toast from 'react-hot-toast';
-import ProfileImg from "Assets/profile_pic.jpg"
+import ProfileImg from "Assets/profile_pic.jpg";
+import LogoImg from "Assets/budiLogo.png";
+import styled from "styled-components";
+
+
+
+export const Logo = () => <LogoIcon src={LogoImg} alt="budi" />;
+
 export const asyncWrapper = (promise) =>
   promise
     .then((data) => ({ data, error: null }))
@@ -135,8 +143,18 @@ export const toExponent = (num, decimalValue = 3, isCurrency = false) => {
 
 export const ImgProvider = (src) => {
   if (src) {
-    return `${"domain"+src}`;
+    return `${"domain" + src}`;
   } else {
     return ProfileImg;
   }
 }
+
+
+const LogoIcon = styled.img`
+width:140px;
+height:auto;
+margin:auto;
+&& @media only screen and (max-width:550px){
+width:140px;
+}
+`;
