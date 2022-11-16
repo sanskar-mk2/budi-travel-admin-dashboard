@@ -3,9 +3,19 @@ import styled from 'styled-components';
 import { ColumnStackPlot, Tab, RingProgressSimple } from 'Component';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
 import { IconProvider } from 'utils/common.utils';
-import { Tooltip } from 'antd';
+import { enLangauge } from 'Contents/en-langauge';
+import { Tooltip, Skeleton } from 'antd';
 import TopAgents from './Components/TopAgents';
+import { useFetch } from 'hooks';
+
 const Revenue = () => {
+
+
+
+  const { isLoading, data } = useFetch({
+    initialUrl: "/agents",
+    skipOnStart: false
+  });
 
   const SiteSpeedComponent = React.useMemo(() => {
     return [
@@ -70,102 +80,109 @@ const Revenue = () => {
           <div className="lg:col-span-3 md:col-span-3 col-span-1">
             <div className="">
               <BoxCantainer>
-                <div className="p-[15px]">
-                  <div className="grid  grid-cols-6  ">
-                    <div className='col-span-5 '>
-                      <span className="text-white font-semibold">
-                        <Label>Total Revenue </Label>
-                      </span>
+                {
+                  isLoading ? (<Skeleton className="mt-3" active />) : (
+                    <div className="p-[15px]">
+                      <div className="grid  grid-cols-6  ">
+                        <div className='col-span-5 '>
+                          <span className="text-white font-semibold">
+                            <Label>{enLangauge.REVENUE_TOTAL_REVENUE} </Label>
+                          </span>
+                        </div>
+                        <div className=" col-span-1">
+                          <Tooltip placement="leftTop" color="black" title={
+                            <React.Fragment>
+                              <button>Click </button>
+                              <p className="cursor-pointer">lorem ipsum </p>
+                            </React.Fragment>} arrowPointAtCenter>
+                            <span>
+                              <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                                <HiOutlineDotsHorizontal />
+                              </IconProvider>
+                            </span>
+                          </Tooltip>
+                        </div>
+                      </div>
+                      <div className="grid p-4">
+                        <div className="m-auto">
+                          <RingProgressSimple
+                            props={
+                              {
+                                textClassName: 'text-[18px] font-semibold ',
+                                bg: 'bg-[#1EB8D2]',
+                                content: 'text-[#fff]',
+                                borderWidth: 'border-4',
+                                border: 'border-[#1EB8D2]'
+                              }
+                            } value={78} />
+                        </div>
+                      </div>
                     </div>
-                    <div className=" col-span-1">
-                      <Tooltip placement="leftTop" color="black" title={
-                        <React.Fragment>
-                          <button>Click </button>
-                          <p className="cursor-pointer">lorem ipsum </p>
-                        </React.Fragment>} arrowPointAtCenter>
-                        <span>
-                          <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
-                            <HiOutlineDotsHorizontal />
-                          </IconProvider>
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className="grid p-4">
-                    <div className="m-auto">
-                      <RingProgressSimple
-                        props={
-                          {
-                            textClassName: 'text-[18px] font-semibold ',
-                            bg: 'bg-[#1EB8D2]',
-                            content: 'text-[#fff]',
-                            borderWidth: 'border-4',
-                            border: 'border-[#1EB8D2]'
-                          }
-                        } value={78} />
-                    </div>
-                  </div>
-                </div>
+                  )
+                }
               </BoxCantainer>
             </div>
           </div>
           <div className="lg:col-span-9 md:col-span-9 col-span-1 lg:pl-3 md:pl-2 pl-0">
             <div className="">
               <BoxCantainer>
-                <div className='p-[15px]'>
-                  <div className="grid  grid-cols-6  ">
-                    <div className='col-span-5 '>
-                      <span className="text-white font-semibold">
-                        <Label> Revenue Source</Label>
-                      </span>
+                {
+                  isLoading ? (<Skeleton className="mt-3" active />) : (
+                    <div className='p-[15px]'>
+                      <div className="grid  grid-cols-6  ">
+                        <div className='col-span-5 '>
+                          <span className="text-white font-semibold">
+                            <Label>{enLangauge.REVENUE_REVENUE_SOURCE}</Label>
+                          </span>
+                        </div>
+                        <div className=" col-span-1 ">
+                          <Tooltip placement="leftTop" color="black" title={
+                            <React.Fragment>
+                              <button>Click </button>
+                              <p className="cursor-pointer">lorem ipsum </p>
+                            </React.Fragment>} arrowPointAtCenter>
+                            <span>
+                              <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                                <HiOutlineDotsHorizontal />
+                              </IconProvider>
+                            </span>
+                          </Tooltip>
+                        </div>
+                      </div>
+                      <div className="resourceType">
+                        <div className="grid lg:gird-cols-7 md:grid-cols-4 grid-cols-2 ">
+                          <ResourceText>Hotel</ResourceText>
+                        </div>
+                        {/* resource  */}
+                        <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2'>
+                          {
+                            Array(4).fill().map((_, i) => (
+                              <div className="p-3" key={i.toString()}>
+                                <ResourceType>
+                                  <RingProgressSimple
+                                    props={
+                                      {
+                                        textClassName: 'text-[18px] text-[#34B53A] font-semibold ',
+                                        bg: 'bg-[#E2FBD7]',
+                                        content: 'text-[#34B53A]',
+                                        borderWidth: 'border-4',
+                                        border: 'border-[#E2FBD7]',
+                                        size: '8rem'
+                                      }
+                                    } value={28} />
+                                </ResourceType>
+                              </div>
+                            ))
+                          }
+                        </div>
+                        <section>
+                          <CustomeText>
+                            <p>Every large design company whether it’s a multi-national branding corporation or a regular down at heel tatty magazine publisher needs to fill holes in the workforce.</p>
+                          </CustomeText>
+                        </section>
+                      </div>
                     </div>
-                    <div className=" col-span-1 ">
-                      <Tooltip placement="leftTop" color="black" title={
-                        <React.Fragment>
-                          <button>Click </button>
-                          <p className="cursor-pointer">lorem ipsum </p>
-                        </React.Fragment>} arrowPointAtCenter>
-                        <span>
-                          <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
-                            <HiOutlineDotsHorizontal />
-                          </IconProvider>
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className="resourceType">
-                    <div className="grid lg:gird-cols-7 md:grid-cols-4 grid-cols-2 ">
-                      <ResourceText>Hotel</ResourceText>
-                    </div>
-                    {/* resource  */}
-                    <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2'>
-                      {
-                        Array(4).fill().map((_, i) => (
-                          <div className="p-3" key={i.toString()}>
-                            <ResourceType>
-                              <RingProgressSimple
-                                props={
-                                  {
-                                    textClassName: 'text-[18px] text-[#34B53A] font-semibold ',
-                                    bg: 'bg-[#E2FBD7]',
-                                    content: 'text-[#34B53A]',
-                                    borderWidth: 'border-4',
-                                    border: 'border-[#E2FBD7]',
-                                    size: '8rem'
-                                  }
-                                } value={28} />
-                            </ResourceType>
-                          </div>
-                        ))
-                      }
-                    </div>
-                    <section>
-                      <CustomeText>
-                        <p>Every large design company whether it’s a multi-national branding corporation or a regular down at heel tatty magazine publisher needs to fill holes in the workforce.</p>
-                      </CustomeText>
-                    </section>
-                  </div>
-                </div>
+                  )}
               </BoxCantainer>
             </div>
           </div>
@@ -175,54 +192,62 @@ const Revenue = () => {
           <div className="lg:col-span-3 md:col-span-3 col-span-1">
             <div className="">
               <BoxCantainer>
-                <div className="p-[15px]">
-                  <div className="grid  grid-cols-6  ">
-                    <div className='col-span-5 '>
-                      <span className="text-white font-semibold">
-                        <Label>Insights</Label>
-                      </span>
+                {
+                  isLoading ? (<Skeleton className="mt-3" active />) : (
+
+                    <div className="p-[15px]">
+                      <div className="grid  grid-cols-6  ">
+                        <div className='col-span-5 '>
+                          <span className="text-white font-semibold">
+                            <Label>Insights</Label>
+                          </span>
+                        </div>
+                        <div className=" col-span-1 ">
+                          <Tooltip placement="leftTop" color="black" title={
+                            <React.Fragment>
+                              <button>Click </button>
+                              <p className="cursor-pointer">lorem ipsum </p>
+                            </React.Fragment>} arrowPointAtCenter>
+                            <span>
+                              <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                                <HiOutlineDotsHorizontal />
+                              </IconProvider>
+                            </span>
+                          </Tooltip>
+                        </div>
+                      </div>
+                      <div className="grid p-4">
+                        <div className="m-auto">
+                          <RingProgressSimple
+                            props={
+                              {
+                                textClassName: 'text-[18px] text-[#34B53A] font-semibold ',
+                                bg: 'bg-[#E2FBD7]',
+                                content: 'text-[#34B53A]',
+                                borderWidth: 'border-4',
+                                border: 'border-[#E2FBD7]'
+                              }
+                            } value={28} />
+                        </div>
+                      </div>
                     </div>
-                    <div className=" col-span-1 ">
-                      <Tooltip placement="leftTop" color="black" title={
-                        <React.Fragment>
-                          <button>Click </button>
-                          <p className="cursor-pointer">lorem ipsum </p>
-                        </React.Fragment>} arrowPointAtCenter>
-                        <span>
-                          <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
-                            <HiOutlineDotsHorizontal />
-                          </IconProvider>
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className="grid p-4">
-                    <div className="m-auto">
-                      <RingProgressSimple
-                        props={
-                          {
-                            textClassName: 'text-[18px] text-[#34B53A] font-semibold ',
-                            bg: 'bg-[#E2FBD7]',
-                            content: 'text-[#34B53A]',
-                            borderWidth: 'border-4',
-                            border: 'border-[#E2FBD7]'
-                          }
-                        } value={28} />
-                    </div>
-                  </div>
-                </div>
+                  )
+                }
               </BoxCantainer>
             </div>
           </div>
           <div className="lg:col-span-9 md:col-span-9 col-span-1 lg:pl-3 md:pl-2 pl-0">
             <div className="">
               <BoxCantainer>
-                <Tab props={SiteSpeedProps} />
+                {
+                  isLoading ? (<Skeleton className="mt-3" active />) : (
+                    <Tab props={SiteSpeedProps} />
+                  )
+                }
               </BoxCantainer>
             </div>
           </div>
         </div>
-
         <div className="">
           <TopAgents />
         </div>

@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { Tab, RingProgressSimple, ColumnGraph } from 'Component';
 import { IconProvider } from 'utils/common.utils';
-import { Tooltip } from 'antd';
+import { Tooltip, Skeleton } from 'antd';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from 'react-icons/hi';
-
 import AllUserList from './Componets/AllUserList';
 import { useFetch } from 'hooks';
+import { enLangauge } from 'Contents/en-langauge';
 const Users = () => {
 
   const { isLoading, data } = useFetch({
@@ -17,8 +17,6 @@ const Users = () => {
     }
   });
 
-
-  
   const SiteSpeedComponent = React.useMemo(() => {
     return [
       {
@@ -43,7 +41,7 @@ const Users = () => {
   const SiteSpeedTabLeftComponent = React.memo(() => {
     return (
       <React.Fragment>
-        <CustomeLabel>Activities</CustomeLabel>
+        <CustomeLabel>{enLangauge.USERS_ACTIVITIES}</CustomeLabel>
       </React.Fragment>
     )
   }, []);
@@ -85,40 +83,46 @@ const Users = () => {
             <div className="">
               <BoxCantainer>
                 <div className="p-[15px]">
-                  <div className="grid  grid-cols-6  ">
-                    <div className='col-span-5 '>
-                      <span className="text-white font-semibold">
-                        <Label>Insights</Label>
-                      </span>
-                    </div>
-                    <div className=" col-span-1 ">
-                      <Tooltip placement="leftTop" color="black" title={
-                        <React.Fragment>
-                          <button>Click </button>
-                          <p className="cursor-pointer">lorem ipsum </p>
-                        </React.Fragment>} arrowPointAtCenter>
-                        <span>
-                          <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
-                            <HiOutlineDotsHorizontal />
-                          </IconProvider>
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className="grid p-4">
-                    <div className="m-auto">
-                      <RingProgressSimple
-                        props={
-                          {
-                            textClassName: 'text-[18px] text-[#34B53A] font-semibold ',
-                            bg: 'bg-[#E2FBD7]',
-                            content: 'text-[#34B53A]',
-                            borderWidth: 'border-4',
-                            border: 'border-[#E2FBD7]'
-                          }
-                        } value={28} />
-                    </div>
-                  </div>
+                  {
+                    isLoading ? (<Skeleton className='m-1' active />) : (
+                      <React.Fragment>
+                        <div className="grid  grid-cols-6  ">
+                          <div className='col-span-5 '>
+                            <span className="text-white font-semibold">
+                              <Label>{enLangauge.USERS_INSIGHTS}</Label>
+                            </span>
+                          </div>
+                          <div className=" col-span-1 ">
+                            <Tooltip placement="leftTop" color="black" title={
+                              <React.Fragment>
+                                <button>Click </button>
+                                <p className="cursor-pointer">lorem ipsum </p>
+                              </React.Fragment>} arrowPointAtCenter>
+                              <span>
+                                <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                                  <HiOutlineDotsHorizontal />
+                                </IconProvider>
+                              </span>
+                            </Tooltip>
+                          </div>
+                        </div>
+                        <div className="grid p-4">
+                          <div className="m-auto">
+                            <RingProgressSimple
+                              props={
+                                {
+                                  textClassName: 'text-[18px] text-[#34B53A] font-semibold ',
+                                  bg: 'bg-[#E2FBD7]',
+                                  content: 'text-[#34B53A]',
+                                  borderWidth: 'border-4',
+                                  border: 'border-[#E2FBD7]'
+                                }
+                              } value={28} />
+                          </div>
+                        </div>
+                      </React.Fragment>)
+                  }
+
                 </div>
               </BoxCantainer>
             </div>
@@ -126,7 +130,11 @@ const Users = () => {
           <div className="lg:col-span-9 md:col-span-9 col-span-1 lg:pl-3 md:pl-2 pl-0">
             <div className="">
               <BoxCantainer>
-                <Tab props={SiteSpeedProps} />
+                {
+                  isLoading ? (<Skeleton className='m-1' active />) : (
+                    <Tab props={SiteSpeedProps} />
+                  )
+                }
               </BoxCantainer>
             </div>
           </div>

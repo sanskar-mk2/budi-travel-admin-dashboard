@@ -6,7 +6,7 @@ import { FaIdeal } from "react-icons/fa";
 
 export const SidebarContants = [
   {
-    link: '/dashboard',
+    link: '/',
     key: '',
     title: 'Dashboard',
     permissionKey: '',
