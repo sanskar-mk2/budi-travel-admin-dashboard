@@ -4,10 +4,16 @@ import { ServiceCardData } from 'utils/ObjectUtils';
 import { IconProvider } from 'utils/common.utils';
 import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from "react-icons/hi";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { Tooltip } from 'antd';
+import { Tooltip, Skeleton } from 'antd';
 import { ColumnGraph, Tab, BarGraph } from 'Component';
 import SiteSpeed from './SiteSpeed';
+import { useFetch } from 'hooks';
 const DashboardChild = () => {
+
+  const { isLoading } = useFetch({
+    initialUrl: "agents",
+    skipOnStart: false
+  });
   const ServiceCard = React.memo((props) => {
     return (
       <React.Fragment>
@@ -69,7 +75,7 @@ const DashboardChild = () => {
         children: <ColumnGraph />
       },
       {
-        label: 'Month',
+        label: '6 Month',
         key: 'month',
         children: <ColumnGraph />
       },
@@ -231,26 +237,36 @@ const DashboardChild = () => {
       <div className="grid lg:grid-cols-2  md:grid-cols-1 grid-cols-1 gap-3">
         <div className="">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2  gap-4">
-            {
-              ServiceCardData?.map((props, index, array) => (
+            {ServiceCardData?.map((props, index, array) => (
+              isLoading ? (<Skeleton className="m-3" active />) : (
                 <ServiceCard {...props} key={index} />
-              ))
+              )
+            )
+            )
             }
           </div>
           <div className='mt-8'>
             <BoxCantainer>
-              <Tab props={TabOneProps} />
+              {isLoading ?
+                (<Skeleton className="mt-3" active />) : (<Tab props={TabOneProps} />)
+              }
             </BoxCantainer>
           </div>
           <div className='mt-8'>
             <BoxCantainer>
-              <Tab props={TabTwoProps} />
+              {isLoading ?
+                (<Skeleton className="mt-3" active />) : (
+                  <Tab props={TabTwoProps} />
+                )}
             </BoxCantainer>
           </div>
         </div>
         <div className="lg:pl-3 md:pl-0 pl-0">
           <BoxCantainer>
-            <Tab props={SiteSpeedProps} />
+            {isLoading ?
+              (<Skeleton className="mt-3" active />) : (
+                <Tab props={SiteSpeedProps} />
+              )}
           </BoxCantainer>
         </div>
       </div>

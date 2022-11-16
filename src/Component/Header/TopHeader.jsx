@@ -2,13 +2,18 @@ import React from 'react';
 import { HiOutlineDotsHorizontal, HiMenuAlt1 } from "react-icons/hi";
 import { Icon, SearchBar } from "Component";
 import { IconProvider } from 'utils/common.utils';
+import { Tooltip } from "antd";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SidebarContants } from 'constants/Sidebar.menu';
+import styled from 'styled-components';
 // notification icon 
 import { FaBell } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { BsFillPeopleFill, BsFillFileBarGraphFill } from "react-icons/bs";
 
-
 const TopHeader = ({ SetMenu, sideMenu, children }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const TopLayoutSm = React.memo(() => {
     return (
       <React.Fragment>
@@ -80,6 +85,20 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
       </React.Fragment>
     )
   }, []);
+  const redirectIT = React.useCallback((e) => {
+    if (e) {
+      navigate(e);
+    }
+  }, [navigate])
+  const ToggleComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        {
+          SidebarContants?.map((name, i, arr) => (<div onClick={() => redirectIT(name?.link)} className={location?.pathname === name.link ? "text-[#1eb8d2] cursor-pointer" : "text-white cursor-pointer"}><ToggleTxt >{name?.title}</ToggleTxt></div>))
+        }
+      </React.Fragment>
+    )
+  })
 
   return (
     <React.Fragment>
@@ -91,22 +110,23 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
                 <div className='grid h-[100%]'><strong className="m-auto text-secondry-color text-xl">BUDI</strong></div>
               </div>
               {
-                ["Dashboard", "Offers", "Users", "Message"].map((name, i, arr) => (
+                SidebarContants?.slice(0, 4).map((name, i, arr) => (
                   <div key={i} className="relative">
-                    <li className="leading-[40px]  list-none cursor-pointer text-sm  text-secondry-color font-bold hover:text-primary-color">{name}
+                    <li onClick={() => redirectIT(name?.link)} className={` ${location?.pathname === name?.link ? 'text-primary-color' : 'text-secondry-color '} leading-[40px]  list-none cursor-pointer text-sm  font-bold hover:text-primary-color`}>{name?.title}
                     </li>
                     {
-                      // new tag
                       <span className=" bg-primary-color text-white font-semibold rounded-md px-1 text-[9px]  absolute top-0 right-[30px] cursor-pointer ">
                         {
-                          (i === arr.length - 1) && (<span className="">NEW</span>)
+                          (<span className="">{name?.tag}</span>)
                         }
                       </span>
                     }
-                    {/* last toggle for other navbar link  */}
                     <span className="absolute top-0 right-1.5 cursor-pointer ">
                       {
-                        (i === arr.length - 1) && (<HiOutlineDotsHorizontal />)
+                        (i === arr.length - 1) && (
+                          <Tooltip placement="bottom" title={<ToggleComponent />}>
+                            <HiOutlineDotsHorizontal />
+                          </Tooltip>)
                       }
                     </span>
                   </div>
@@ -144,8 +164,15 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
       <TopLayoutSm />
       {children}
       <BottomLayoutSm />
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
 export default TopHeader;
+
+const ToggleTxt = styled.div`
+font-size:13px  !important;
+backgroundColor:${(props) => props?.theme?.bg ?? "transparent"};
+cursor:pointer ;
+font-weight:600;
+`;

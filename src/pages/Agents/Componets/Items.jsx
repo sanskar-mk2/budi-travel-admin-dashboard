@@ -8,6 +8,7 @@ import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
 import { DatePicker } from 'antd';
+import { enLangauge } from 'Contents/en-langauge';
 const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
@@ -76,10 +77,10 @@ const Items = () => {
                 </CustomeText>
               </div>
               <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>
-                <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Filter</Button>
+                <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.AGENT_DETAIL_FILTER}</Button>
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 " onClick={() => SetShare(!haveToshare)}>
-                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Share </Button>
+                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.AGENT_DETAIL_SHARE} </Button>
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
@@ -107,23 +108,23 @@ const Items = () => {
                       <CheckBox />
                     </span>
                     <span className='mt-1'>
-                      Product Name
+                     {enLangauge.AGENT_DETAIL_TABLE_HEADER_PRODUCT_NAME}
                     </span>
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Unit Price
+                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_UNIT_PRICE}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Discount
+                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_DISCOUNT}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Total Order
+                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_TOTAL_ORDER}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Action
+                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_ACTION}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Status
+                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_STATUS}
                   </th>
                   <th className="px-5 py-3  bg-gray-100" />
                 </tr>
@@ -172,7 +173,7 @@ const Items = () => {
                       <td className="px-5 py-3  bg-white text-sm">
                         <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                           <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                          <span className="relative"><Status>Active</Status></span>
+                          <span className="relative"><Status>{enLangauge.AGENT_DETAIL_TABLE_STATUS_ACTIVE}</Status></span>
                         </span>
                       </td>
                     </tr>

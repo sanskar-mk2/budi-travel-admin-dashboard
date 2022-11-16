@@ -6,6 +6,7 @@ import { Pagination } from 'Component';
 import { useFetch } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from 'antd';
+import { enLangauge } from 'Contents/en-langauge';
 const AgentsList = ({ props }) => {
   const navigate = useNavigate()
   const onSuccess = React.useCallback((response) => {
@@ -29,7 +30,7 @@ const AgentsList = ({ props }) => {
           <React.Fragment>
             <div className="">
               <div className="pl-2">
-                <Label>Agents</Label>
+                <Label>{enLangauge.AGENTS_HEADING}</Label>
               </div>
               <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
 

@@ -9,7 +9,8 @@ import { BsHandbag } from "react-icons/bs";
 import { Selector } from 'Component';
 import Items from './Componets/Items';
 import { useParams } from 'react-router-dom';
-import { useFetch } from "hooks"
+import { useFetch } from "hooks";
+import { enLangauge } from 'Contents/en-langauge';
 const AgentDetails = () => {
   const { id } = useParams();
   const [setState] = React.useState(null);
@@ -19,7 +20,7 @@ const AgentDetails = () => {
   const onFailure = React.useCallback((response) => {
 
   }, [])
-  const { isLoading, data, callFetch: realod } = useFetch({
+  const { isLoading , data , callFetch: realod } = useFetch({
     initialUrl: `/agents/${id}`,
     skipOnStart: false,
     onFailure,
@@ -125,7 +126,7 @@ const AgentDetails = () => {
                 </div>
                 <div className="">
                   <div className="float-right mt-1">
-                    <Status>Active</Status>
+                    <Status>{enLangauge.AGENT_DETAIL_ACTIVE}</Status>
                   </div>
                 </div>
                 <div className="pt-3 ">
@@ -182,7 +183,7 @@ const AgentDetails = () => {
                   <div className="float-left">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Home Address
+                        {enLangauge.AGENT_DETAIL_HOME_ADDRESS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -196,7 +197,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Billing Address
+                       {enLangauge.AGENT_DETAIL_BILLING_ADDRESS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -236,7 +237,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        All offer
+                    {enLangauge.AGENT_DETAIL_ALL_OFFERS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -250,7 +251,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Accomdation offer
+                    {enLangauge.AGENT_DETAIL_ACCOMDATION_OFFER}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -264,7 +265,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Car Rentals
+                      {enLangauge.AGENT_DETAIL_ACCOMDATION_OFFER}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -303,7 +304,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        All offer
+                      {enLangauge.AGENT_DETAIL_CAR_RENTALS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -317,7 +318,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Accomdation offer
+                      {enLangauge.AGENT_DETAIL_ACCOMDATION_OFFER}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -331,7 +332,7 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Car Rentals
+                      {enLangauge.AGENT_DETAIL_CAR_RENTALS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -343,7 +344,6 @@ const AgentDetails = () => {
                 </div>
               </div>
             </BoxCantainer>
-
           </div>
         </div>
         <Items />
