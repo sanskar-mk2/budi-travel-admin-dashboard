@@ -5,9 +5,10 @@ import { IconProvider } from 'utils/common.utils';
 import { SocialShare } from 'utils/ObjectUtils';
 import { Input } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
-import {FaTelegramPlane} from 'react-icons/fa';
+import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
 import { DatePicker } from 'antd';
+import { enLangauge } from 'Contents/en-langauge';
 const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
@@ -34,7 +35,7 @@ const Items = () => {
         <Modal title={"Filter By Date "} state={state} SetState={SetState}>
           <div className="grid w-full">
             <div className="m-auto">
-              <RangePicker  onChange={(e) => console.log(e, "===> DATE PCIKER ")} />
+              <RangePicker onChange={(e) => console.log(e, "===> DATE PCIKER ")} />
             </div>
           </div>
         </Modal>
@@ -62,8 +63,8 @@ const Items = () => {
           </div>
         </Modal >
         <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-5 md:grid-cols-3 grid-cols-1 mb-[15px]">
-          <div className="lg:col-span-2">
-
+          <div className="lg:col-span-2 pt-1">
+<TableHeader>{enLangauge.USER_DETAIL_TABEL_TITLE}</TableHeader>
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
@@ -80,7 +81,7 @@ const Items = () => {
                 <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Filter</Button>
               </div>
               <div className="px-1 " onClick={() => SetShare(!haveToshare)}>
-              <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Share </Button>
+                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>Share </Button>
               </div>
               <div className="px-1  ">
                 <CustomeText>
@@ -100,85 +101,76 @@ const Items = () => {
         <BoxCantainer>
           <Filteration />
           <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
-          <table className="min-w-full leading-normal">
-            <thead >
-              <tr className='border-b border-t border-[#ccccd0]'>
-                <th className="px-5 flex py-3   bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  <span className="mx-2  ">
-                    <CheckBox />
-                  </span>
-                  <span className='mt-1'>
-                    Product Name
-                  </span>
-                </th>
-                <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Unit Price
-                </th>
-                <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Discount
-                </th>
-                <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Total Order
-                </th>
-                <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Action
-                </th>
-                <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-5 py-3  bg-gray-100" />
-              </tr>
-            </thead>
-            <tbody>
-              {
-                Array(5).fill().map((_, index) => (
-                  <tr className=''>
-                    <td className="px-5 py-3   bg-white text-sm">
-                      <div className="flex">
-                        <div className="mx-2 pt-2 ">
-                          <CheckBox />
+            <table className="min-w-full leading-normal">
+              <thead >
+                <tr className='border-b border-t border-[#ccccd0]'>
+                  <th className="px-5 flex py-3   bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    <span className="mx-2  ">
+                      <CheckBox />
+                    </span>
+                    <span className='mt-1'>
+                      {enLangauge.USER_DETAIL_TABEL_HEADER_ORDER_DATE}
+                    </span>
+                  </th>
+                  <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    {enLangauge.USER_DETAIL_TABEL_HEADER_ORDER_TYPE}
+                  </th>
+                  <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    {enLangauge.USER_DETAIL_TABEL_HEADER_TRACKING_ID}
+                  </th>
+                  <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    {enLangauge.USER_DETAIL_TABEL_HEADER_ORDER_TOTAL}
+                  </th>
+                  <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    {enLangauge.USER_DETAIL_TABEL_HEADER_ACTION}
+                  </th>
+                  <th className="px-5 py-3  bg-gray-100" />
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  Array(5).fill().map((_, index) => (
+                    <tr className=''>
+                      <td className="px-5 py-3   bg-white text-sm">
+                        <div className="flex">
+                          <div className="mx-2 pt-2 ">
+                            <CheckBox />
+                          </div>
+
+                          <div className="ml-3">
+                            <p className="text-gray-900 whitespace-no-wrap mt-2">
+                              <CustomeText>Molly Sanders</CustomeText>
+                            </p>
+                          </div>
                         </div>
-                       
-                        <div className="ml-3">
-                          <p className="text-gray-900 whitespace-no-wrap mt-2">
-                            <CustomeText>Molly Sanders</CustomeText>
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-5 py-3  bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$20,000</CustomeText></p>
-                    </td>
-                    <td className="px-5 py-3  bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$10,000</CustomeText></p>
-                    </td>
-                    <td className="px-5 py-3 bg-white text-sm">
-                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                        <span className="relative"><CustomeText>98</CustomeText></span>
-                      </span>
-                    </td>
-                    <td className="px-5 py-3  bg-white text-sm">
-                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                        <span className="relative">
-                          <CustomeText>
-                            <Select size={"small"} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
-                          </CustomeText>
+                      </td>
+                      <td className="px-5 py-3  bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$20,000</CustomeText></p>
+                      </td>
+                      <td className="px-5 py-3  bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$10,000</CustomeText></p>
+                      </td>
+                      <td className="px-5 py-3 bg-white text-sm">
+                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                          <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
+                          <span className="relative"><CustomeText>98</CustomeText></span>
                         </span>
-                      </span>
-                    </td>
-                    <td className="px-5 py-3  bg-white text-sm">
-                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                        <span className="relative"><Status>Active</Status></span>
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+                      </td>
+                      <td className="px-5 py-3  bg-white text-sm">
+                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                          <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
+                          <span className="relative">
+                            <CustomeText>
+                              <Select size={"small"} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
+                            </CustomeText>
+                          </span>
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
           </div>
         </BoxCantainer>
       </div>
@@ -228,4 +220,15 @@ background:${props => props?.theme.bg};
 color:${props => props?.theme?.color};
 border-radius:3px;
 width:100%;
+`;
+
+
+const TableHeader = styled.div`
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 22px;
+color: #45464E;
+
 `;

@@ -63,7 +63,7 @@ const Items = () => {
         </Modal >
         <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-5 md:grid-cols-3 grid-cols-1 mb-[15px]">
           <div className="lg:col-span-2">
-
+            <TableHeader>{enLangauge.AGENT_DETAIL_TABLE_HEADER_TITLE} </TableHeader>
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
@@ -108,23 +108,23 @@ const Items = () => {
                       <CheckBox />
                     </span>
                     <span className='mt-1'>
-                     {enLangauge.AGENT_DETAIL_TABLE_HEADER_PRODUCT_NAME}
+                      {enLangauge.AGENT_DETAIL_TABLE_HEADER_PRODUCT_NAME}
                     </span>
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_UNIT_PRICE}
+                    {enLangauge.AGENT_DETAIL_TABLE_HEADER_UNIT_PRICE}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_DISCOUNT}
+                    {enLangauge.AGENT_DETAIL_TABLE_HEADER_DISCOUNT}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_TOTAL_ORDER}
+                    {enLangauge.AGENT_DETAIL_TABLE_HEADER_TOTAL_ORDER}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_ACTION}
+                    {enLangauge.AGENT_DETAIL_TABLE_HEADER_ACTION}
                   </th>
                   <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  {enLangauge.AGENT_DETAIL_TABLE_HEADER_STATUS}
+                    {enLangauge.AGENT_DETAIL_TABLE_HEADER_STATUS}
                   </th>
                   <th className="px-5 py-3  bg-gray-100" />
                 </tr>
@@ -227,4 +227,14 @@ background:${props => props?.theme.bg};
 color:${props => props?.theme?.color};
 border-radius:3px;
 width:100%;
+`;
+
+const TableHeader = styled.div`
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 22px;
+color: #45464E;
+
 `;

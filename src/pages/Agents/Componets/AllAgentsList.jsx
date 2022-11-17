@@ -21,7 +21,53 @@ const AgentsList = ({ props }) => {
     onFailure,
     onSuccess
   });
-  console.log(data, " it is data has been started ", isLoading);
+
+
+  const timeFrameFilteration = React.useCallback((e) => {
+    console.log(e.target.value, " timeFrameFilteration ");
+  }, []);
+  const offerAllTime =
+    React.useCallback((e) => {
+      console.log(e.target.value, " profitAll");
+    }, []);
+  const profitAll =
+    React.useCallback((e) => {
+      console.log(e.target.value, " profitAll");
+    }, []);
+  const FilterationComponent = React.memo(() => {
+    return (
+      <React.Fragment>
+        <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-3">
+          <div className="p-2 grid" >
+            <select onChange={timeFrameFilteration} className="select m-auto select-bordered select-sm w-full max-w-xs">
+              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_TIME_FRAMED}</option>
+              <option>English</option>
+              <option>Japanese</option>
+              <option>Italian</option>
+            </select>
+          </div>
+
+          <div className="p-2 grid">
+            <select onChange={offerAllTime} className="select m-auto select-bordered select-sm w-full max-w-xs">
+              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_OFFER_ALLD}</option>
+              <option>English</option>
+              <option>Japanese</option>
+              <option>Italian</option>
+            </select>
+          </div>
+
+          <div className="p-2 grid">
+            <select onChange={profitAll} className="select m-auto select-bordered select-sm w-full max-w-xs">
+              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_PROFIT_ALLD}</option>
+              <option>English</option>
+              <option>Japanese</option>
+              <option>Italian</option>
+            </select>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }, []);
 
   return (
     <React.Fragment>
@@ -31,6 +77,9 @@ const AgentsList = ({ props }) => {
             <div className="">
               <div className="pl-2">
                 <Label>{enLangauge.AGENTS_HEADING}</Label>
+              </div>
+              <div className="my-2">
+                <FilterationComponent />
               </div>
               <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
 

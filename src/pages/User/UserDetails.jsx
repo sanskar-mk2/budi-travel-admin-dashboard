@@ -9,10 +9,11 @@ import { BsHandbag } from "react-icons/bs";
 import { Selector } from 'Component';
 import Items from './Componets/Items';
 import { numberFormatter } from 'utils/common.utils';
+import { enLangauge } from 'Contents/en-langauge';
 const UserDetails = () => {
   const [state, setState] = React.useState(null);
   React.useEffect(() => {
-    console.log(state, "state === value of selctor ")
+    console.log(state, " ===> ")
   }, [state])
 
 
@@ -24,10 +25,10 @@ const UserDetails = () => {
             <AiFillHome />
           </IconProvider>
           <Breadcrumb.Item >
-            <BreadcrumbLabel theme={{ color: '#2B4C9B' }}>Agent</BreadcrumbLabel>
+            <BreadcrumbLabel theme={{ color: '#2B4C9B' }}>{enLangauge.USER_DETAIL_USERS}</BreadcrumbLabel>
           </Breadcrumb.Item>
           <Breadcrumb.Item >
-            <BreadcrumbLabel>View Agent</BreadcrumbLabel>
+            <BreadcrumbLabel> {enLangauge.USER_DETAIL_VIEW_CUSTOMER}</BreadcrumbLabel>
           </Breadcrumb.Item >
         </Breadcrumb>
         <div className='lg:flex lg:justify-between md:flex md:justify-between block'>
@@ -35,7 +36,7 @@ const UserDetails = () => {
             <div className='flex justify-between'>
               <div>
                 <CustomeTxtOne theme={{ color: "black" }}>
-                  Agent Since
+                  {enLangauge.USER_DETAIL_CUSTOMER_SINCE}
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   12 Sept 2022 - 12:55 pm
@@ -43,7 +44,7 @@ const UserDetails = () => {
               </div>
               <div className="pl-3">
                 <CustomeTxtOne theme={{ color: "black" }}>
-                  Agent ID
+                {enLangauge.USER_DETAIL_USER_ID}
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   <span id="agentID">
@@ -61,12 +62,12 @@ const UserDetails = () => {
           <div className='lg:flex md:flex lg:justify-end md:justify-end'>
             <div className='grid px-2'>
               <div className="m-auto">
-                <CustomeButton theme={{ bg: "#2B4C9B", color: "#fff" }}>Edit Agents</CustomeButton>
+                <CustomeButton theme={{ bg: "#2B4C9B", color: "#fff" }}>{enLangauge.USER_DETAIL_EDIT_CUSTOMER}</CustomeButton>
               </div>
             </div>
             <div className='grid px-2'>
               <div className="m-auto">
-                <CustomeButton theme={{ bg: "#E95050", color: "#fff" }}>Suspend Agents</CustomeButton>
+                <CustomeButton theme={{ bg: "#E95050", color: "#fff" }}>{enLangauge.USER_DETAIL_SUSPEND_CUSTOMER}</CustomeButton>
               </div>
             </div>
           </div>
@@ -94,7 +95,7 @@ const UserDetails = () => {
                           <div>
                             <span>
                               <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                                Last Order
+                                Last Order{}
                               </Title>
                             </span>
                             <span>
@@ -117,7 +118,7 @@ const UserDetails = () => {
                   <div className="float-left">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Phone Number
+                         {enLangauge.USER_DETAIL_PHONE_NUM}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -131,7 +132,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Email ID
+                      {enLangauge.USER_DETAIL_EMAIL_ID}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -167,7 +168,7 @@ const UserDetails = () => {
                   <div className="float-left">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Home Address
+                         {enLangauge.USER_DETAILS_HOME_ADDRESS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -181,7 +182,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Billing Address
+                      {enLangauge.USER_DETAILS_BILLING_ADDRESS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -221,7 +222,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        All offer
+                       {enLangauge.USER_DETAIL_ALL_ORDER}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -235,7 +236,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Accomdation offer
+                         {enLangauge.USER_DETAIL_PENDING}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -249,7 +250,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Car Rentals
+                          {enLangauge.USER_DETAIL_COMPLETED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -288,7 +289,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        All offer
+                         {enLangauge.USER_DETAIL_CANCELED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -302,7 +303,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Accomdation offer
+                          {enLangauge.USER_DETAIL_RETUNRED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -316,7 +317,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                        Car Rentals
+                        Car Rentals {enLangauge.USER_DETAIL_DAMAGED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
