@@ -20,12 +20,14 @@ const AgentDetails = () => {
   const onFailure = React.useCallback((response) => {
 
   }, [])
+  
   const { isLoading, data, callFetch: realod } = useFetch({
     initialUrl: `/agents/${id}`,
     skipOnStart: false,
     onFailure,
     onSuccess
   });
+
   React.useEffect(() => {
     if (id) {
       realod()

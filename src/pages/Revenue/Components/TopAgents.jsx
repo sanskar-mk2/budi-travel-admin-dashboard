@@ -6,7 +6,7 @@ import { useFetch } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
-import { BiTargetLock } from 'react-icons/bi';
+// import { BiTargetLock } from 'react-icons/bi';
 const TopAgents = ({ props }) => {
   const navigate = useNavigate()
   const onSuccess = React.useCallback((response) => {
@@ -84,7 +84,7 @@ const TopAgents = ({ props }) => {
               </div>
               <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
                 {
-                  data?.agents?.map((agent, index) => (
+                  data?.agents?.data?.map((agent, index) => (
                     <AgentContainer key={index.toString()}>
                       <div className="grid lg:w-full md:w-full w-[550px] grid-cols-4 ">
                         <div>

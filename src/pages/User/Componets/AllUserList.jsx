@@ -6,19 +6,44 @@ import { SocialShare } from 'utils/ObjectUtils';
 import { Input, Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
-import { Modal, Pagination } from 'Component';
+import { Modal, PaginationContainer } from 'Component';
 import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge'
 import { useFetch } from "hooks";
+import { Pagination } from 'antd';
 const { RangePicker } = DatePicker;
 const AllUserList = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
 
   const { isLoading, data } = useFetch({
-    initialUrl: "/agents",
-    skipOnStart: false
+    initialUrl: "/users",
+    skipOnStart: false,
+    config: {
+      method: "get"
+    }
   });
+
+  console.log(isLoading , "====", data , "====> it is your name ")
+  const searchingFilter = React.useCallback((e) => {
+    const searchValue = e?.target?.value;
+  }, [])
+
+  const dateRangeFilteration = React.useCallback((e) => {
+    const [start, end] = e;
+    console.log(start, end, "====> ")
+  }, [])
+
+  const selectionFilterOne = React.useCallback((e) => {
+    const values = e;
+    console.log(e);
+  }, [])
+
+  const selectionFilterTwo = React.useCallback((e) => {
+    const values = e;
+    console.log(e);
+  }, [])
+
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
       <span>
@@ -35,6 +60,9 @@ const AllUserList = () => {
   ))
 
 
+  const paginationAction = React.useCallback((a, b) => {
+    console.log(a, "=====", b)
+  }, [])
 
   const Filteration = React.memo(() => {
     return (
@@ -42,7 +70,7 @@ const AllUserList = () => {
         <Modal title={"Filter By Date "} state={state} SetState={SetState}>
           <div className="grid w-full">
             <div className="m-auto">
-              <RangePicker onChange={(e) => console.log(e, "===> DATE PCIKER ")} />
+              <RangePicker onChange={dateRangeFilteration} />
             </div>
           </div>
         </Modal>
@@ -76,11 +104,11 @@ const AllUserList = () => {
           <div className="lg:col-span-3  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
               <div className='lg:col-span-2 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
-                <Input style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
+                <Input onChange={searchingFilter} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
-                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} options={["Pending", "Approved", "InActive"]} />
+                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} onChange={selectionFilterOne} options={["Pending", "Approved", "InActive"]} />
                 </CustomeText>
               </div>
               <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>
@@ -91,7 +119,7 @@ const AllUserList = () => {
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
-                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
+                  <Select onChange={selectionFilterTwo} size={"defaut"} theme={{ width: "100%" }} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
                 </CustomeText>
               </div>
             </div>
@@ -136,13 +164,13 @@ const AllUserList = () => {
                     </thead>
                     <tbody>
                       {
-                        Array(5).fill().map((_, index) => (
+                        data?.users.map((data, index) => (
                           <tr className='' key={index.toString()}>
                             <td className="px-5 py-3   bg-white text-sm">
                               <div className="flex">
                                 <div className="ml-3">
                                   <span className="text-gray-900 whitespace-no-wrap mt-2">
-                                    <CustomeText>Molly Sanders</CustomeText>
+                                    <CustomeText>{data?.name}</CustomeText>
                                   </span>
                                 </div>
                               </div>
@@ -151,7 +179,7 @@ const AllUserList = () => {
                               <span className="text-gray-900 whitespace-no-wrap"><CustomeText>Today</CustomeText></span>
                             </td>
                             <td className="px-5 py-3  bg-white text-sm">
-                              <span className="text-gray-900 whitespace-no-wrap"><CustomeText>lenwoper@outlook.com</CustomeText></span>
+                              <span className="text-gray-900 whitespace-no-wrap"><CustomeText>{data?.email}</CustomeText></span>
                             </td>
                             <td className="px-5 py-3 bg-white text-sm">
                               <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
@@ -172,7 +200,11 @@ const AllUserList = () => {
                   </table>
                 </div>
                 <div className="pt-2 lg:px-3 md:px-2 px-0">
-                  <Pagination />
+                  <PaginationContainer>
+                    <Pagination showSizeChanger={false}
+                      defaultCurrent={1}
+                      total={840} onChange={paginationAction} />
+                  </PaginationContainer>
                 </div>
               </React.Fragment>
             )
