@@ -2,11 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 import { IoIosArrowForward } from "react-icons/io";
 import { IconProvider, ImgProvider } from 'utils/common.utils';
-import { Pagination } from 'Component';
+import { PaginationContainer } from 'Component';
 import { useFetch } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
+import { Pagination } from 'antd';
 const AgentsList = ({ props }) => {
   const navigate = useNavigate()
   const onSuccess = React.useCallback((response) => {
@@ -15,13 +16,22 @@ const AgentsList = ({ props }) => {
   const onFailure = React.useCallback((response) => {
 
   }, [])
-  const { isLoading, data } = useFetch({
+  const { isLoading, data, callFetch } = useFetch({
     initialUrl: "/agents",
     skipOnStart: false,
     onFailure,
     onSuccess
   });
 
+  console.log(data, "")
+  const paginationAction = React.useCallback((a, b) => {
+    if (a) {
+      callFetch({
+        url: `/agents?page=${a}`,
+        method: "get"
+      })
+    }
+  }, [callFetch])
 
   const timeFrameFilteration = React.useCallback((e) => {
     console.log(e.target.value, " timeFrameFilteration ");
@@ -71,76 +81,87 @@ const AgentsList = ({ props }) => {
 
   return (
     <React.Fragment>
-      {
-        isLoading ? (<Skeleton className="mt-3" active />) : (
-          <React.Fragment>
-            <div className="">
-              <div className="pl-2">
-                <Label>{enLangauge.AGENTS_HEADING}</Label>
-              </div>
-              <div className="my-2">
-                <FilterationComponent />
-              </div>
-              <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
 
-                {
-                  data?.agents?.map((agent, index) => (
-                    <AgentContainer key={index.toString()}>
-                      <div className="grid grid-cols-4 lg:w-full md:w-full w-[550px] ">
-                        <div>
-                          <div className="flex items-center ">
-                            <div className="">
-                              <Img src={ImgProvider(agent?.profile?.profile_picture)} alt="loading... " />
-                            </div>
-                            <div className="pl-2">
-                              <CustomeTxt>{agent?.name.split(" ")[0]}</CustomeTxt>
-                              <CustomeText>{agent?.name.split(" ")[1]}</CustomeText>
-                            </div>
+      <React.Fragment>
+        <div className="">
+          <div className="pl-2">
+            <Label>{enLangauge.AGENTS_HEADING}</Label>
+          </div>
+          <div className="my-2">
+            <FilterationComponent />
+          </div>
+          <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
+            {
+              isLoading ? (
+                <React.Fragment>
+                  <Skeleton className="mt-3" active />
+                  <br />
+                  <Skeleton className="mt-3" active />
+                </React.Fragment>
+              ) : (
+                data?.agents?.data?.map((agent, index) => (
+                  <AgentContainer key={index.toString()}>
+                    <div className="grid grid-cols-4 lg:w-full md:w-full w-[550px] ">
+                      <div>
+                        <div className="flex items-center ">
+                          <div className="">
+                            <Img src={ImgProvider(agent?.profile?.profile_picture)} alt="loading... " />
+                          </div>
+                          <div className="pl-2">
+                            <CustomeTxt>{agent?.name.split(" ")[0]}</CustomeTxt>
+                            <CustomeText>{agent?.name.split(" ")[1]}</CustomeText>
                           </div>
                         </div>
-                        <div className="col-span-2">
-                          <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
-                            <div className='float-left text-center'>
-                              <CustomeTxt>789 </CustomeTxt>
-                              <CustomeText>Lima</CustomeText>
-                            </div>
-                            <div className='float-right  text-center'>
-                              <CustomeTxt>489</CustomeTxt>
-                              <CustomeText>Lima</CustomeText>
-                            </div>
+                      </div>
+                      <div className="col-span-2">
+                        <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
+                          <div className='float-left text-center'>
+                            <CustomeTxt>789 </CustomeTxt>
+                            <CustomeText>Lima</CustomeText>
+                          </div>
+                          <div className='float-right  text-center'>
+                            <CustomeTxt>489</CustomeTxt>
+                            <CustomeText>Lima</CustomeText>
                           </div>
                         </div>
-                        <div className="lg:inline md:inline grid ">
-                          <div className="lg:m-0 md:m-0 m-auto">
-                            <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
-                              <div className=''>
-                                <AgentRevenueTxt>$4,089</AgentRevenueTxt>
-                                <CustomeText>Lima</CustomeText>
-                              </div>
-                              <div className="grid mt-3 ml-3 ">
-                                <div className="auto l">
-                                  <AddBtn onClick={() => navigate(`/agent/${agent?.id}`)}>
-                                    <IconProvider className={`text-white m-auto text-lg float-right cursor-pointer `} color={`#1B263C`}>
-                                      <IoIosArrowForward />
-                                    </IconProvider>
-                                  </AddBtn>
-                                </div>
+                      </div>
+                      <div className="lg:inline md:inline grid ">
+                        <div className="lg:m-0 md:m-0 m-auto">
+                          <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
+                            <div className=''>
+                              <AgentRevenueTxt>$4,089</AgentRevenueTxt>
+                              <CustomeText>Lima</CustomeText>
+                            </div>
+                            <div className="grid mt-3 ml-3 ">
+                              <div className="auto l">
+                                <AddBtn onClick={() => navigate(`/agent/${agent?.id}`)}>
+                                  <IconProvider className={`text-white m-auto text-lg float-right cursor-pointer `} color={`#1B263C`}>
+                                    <IoIosArrowForward />
+                                  </IconProvider>
+                                </AddBtn>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </AgentContainer>
-                  ))
-                }
-              </div>
-            </div>
+                    </div>
+                  </AgentContainer>
+                ))
+              )
+            }
             <div className="mb-3">
-              <Pagination />
+              <PaginationContainer labelText={"Total : "
+                + "" + data?.agents?.total + " of Page " + data?.agents?.current_page
+              } >
+                <Pagination showSizeChanger={false}
+                  defaultCurrent={1}
+                  total={data?.agents?.total} onChange={paginationAction} />
+              </PaginationContainer>
             </div>
-          </React.Fragment>
-        )
-      }
+          </div>
+        </div>
+
+      </React.Fragment>
     </React.Fragment>
   );
 }

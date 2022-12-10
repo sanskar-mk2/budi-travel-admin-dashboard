@@ -70,7 +70,9 @@ export const clientWithHeaders = ({
 
 request.interceptors.request.use(
   (req) => {
+    req.headers.Accept ="application/json";
     if (isPublicApi(req.url) || req.isPublic) {
+   
       delete req.headers.Authorization;
     }
     if (
@@ -79,16 +81,17 @@ request.interceptors.request.use(
         null
       )
     ) {
+      req.headers["Accept"] ="application/json";
       req.headers.Authorization = `Bearer ${getLocalStorage(
         AUTH_TOKEN,
         null
       )}`;
+      
     }
     return req;
   },
   (error) => {}
 );
-
 request.interceptors.response.use(
   (res) => {
     return res;

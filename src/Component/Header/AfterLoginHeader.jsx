@@ -28,9 +28,11 @@ const AfterLoginHeader = () => {
     onFailure,
     onSuccess
   });
+
+  console.log(data ,"agent api ==> ")
   const agents = React.useMemo(() => {
     if (!isLoading) {
-      return data?.agents?.map((i, index) => ({
+      return data?.agents?.data?.map((i, index) => ({
         img: undefined,
         isLive: 'Live',
         name: i?.name,
@@ -122,7 +124,7 @@ const AfterLoginHeader = () => {
               <div className="">
                 <SideBarContainer>
                   {
-                    SidebarContants?.slice(0 , 3).map((i, index) => (
+                    SidebarContants?.slice(0, 3).map((i, index) => (
                       <Sidebar props={i} SetMenu={SetMenu} key={index}>
                         {
                           i?.child?.map((i, index) => (

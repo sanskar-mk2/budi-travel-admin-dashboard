@@ -32,7 +32,7 @@ const PublicRouteList = [
 const PrivateRouteList = [
   {
     path: "/",
-    component: (<Wrapper>
+  component: (<Wrapper>
       <Dashboard />
     </Wrapper>)
   }, {

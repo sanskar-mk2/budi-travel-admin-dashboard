@@ -15,6 +15,9 @@ const Layout = () => {
           reverseOrder={false}
           toastOptions={{
             style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
             },
           }} />
         {

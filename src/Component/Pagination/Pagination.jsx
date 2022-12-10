@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const PaginationComponent = ({
   labelClassName,
   labelText,
-  props
+  children
 }) => {
   return (
     <React.Fragment>
@@ -14,12 +14,9 @@ export const PaginationComponent = ({
           <CustomeText>{labelText ?? 'Default text '}</CustomeText>
         </div>
         <div className=' py-1 '>
-          <Pagination
-            {...props}
-            showSizeChanger={props?.showSizeChanger ?? false}
-            defaultCurrent={props?.defaultCurrent6}
-            total={props?.total ?? 500}
-          />
+          {
+            children
+          }
         </div>
       </div>
     </React.Fragment>

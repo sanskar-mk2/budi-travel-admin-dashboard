@@ -150,6 +150,7 @@ export const ImgProvider = (src) => {
 }
 
 
+
 const LogoIcon = styled.img`
 width:140px;
 height:auto;
