@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fc6e7cac.css",
+    "main.js": "/static/js/main.afa5193e.js",
+    "static/js/787.a7f05235.chunk.js": "/static/js/787.a7f05235.chunk.js",
+    "static/media/budiLogo.png": "/static/media/budiLogo.7d37a7c736bc8a82120a.png",
+    "index.html": "/index.html",
+    "main.fc6e7cac.css.map": "/static/css/main.fc6e7cac.css.map",
+    "main.afa5193e.js.map": "/static/js/main.afa5193e.js.map",
+    "787.a7f05235.chunk.js.map": "/static/js/787.a7f05235.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fc6e7cac.css",
+    "static/js/main.afa5193e.js"
+  ]
+}
