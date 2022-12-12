@@ -32,8 +32,9 @@ export const useAuth = () => {
     }
   }, [navigate, setLocalStorage]);
   const onFailure = React.useCallback((errors) => {
-    // toast.error(errors?.message);
-    toast.error(errors?.message);
+    if(errors.message){
+      toast.error(errors?.message);
+    }
   }, []);
   const session = React.useMemo(() => {
     return getLocalStorage(AUTH_TOKEN);

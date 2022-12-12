@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import ProfileImg from "Assets/profile_pic.jpg";
 import LogoImg from "Assets/budiLogo.png";
 import styled from "styled-components";
+import { imgBaseUrl } from "constants/config.constants";
 
 
 
@@ -53,19 +54,12 @@ export const isMobile = () => {
 }
 export const TxtCopy = (textBoad) => {
   const node = document.getElementById(textBoad);
-  navigator.clipboard.writeText(node.innerText);
-  // .then((done) => {
-  toast.success("copied");
-  // }).catch((error) => {
-  //   toast.error("Something gone wrong ");
-  // })
+  navigator.clipboard.writeText(node.innerText).then((done) => {
+    toast.success("Copied");
+  }).catch((error) => {
+    toast.error("Something gone wrong ");
+  })
 }
-export const getImageUrl = (path) => {
-  if (path) return `https//hello${path}`;
-
-  return null;
-};
-
 
 
 export const getProductNameByLang = (detail, language = "end") => {
@@ -111,6 +105,7 @@ export const contactNumberFormatter = (phoneNumberString) => {
   return phoneNumberString;
 }
 
+
 export const weekFirstDateLastDate = () => {
   let wDate = new Date();
   let dDay = wDate.getDay() > 0 ? wDate.getDay() : 7;
@@ -129,7 +124,6 @@ export const monthFirstDateLastDate = () => {
 
 
 
-
 export const preciseNum = (num, decimal) => {
   return parseInt(num)?.toFixed(decimal ?? 2);
 }
@@ -143,13 +137,34 @@ export const toExponent = (num, decimalValue = 3, isCurrency = false) => {
 
 export const ImgProvider = (src) => {
   if (src) {
-    return `${"domain" + src}`;
+    return `${imgBaseUrl + src}`;
   } else {
     return ProfileImg;
   }
 }
 
-
+export const phoneFormat = (input, prefix) => {
+  if (!input || isNaN(input)) return ` must be number  ${input}`
+  if (typeof (input) !== 'string') input = input.toString()
+  if (input.length === 10) {
+    if (prefix) {
+      return `${prefix} ${input.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}`;
+    } else {
+      return input.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+    }
+  } else if (input.length < 10) {
+    return 'must be 10 digit'
+  } else if (input.length > 10) {
+    return 'must be  10 digit number'
+  } else {
+    return 'something went wrong'
+  }
+}
+export const redirectOut = (e) => {
+  if (window) {
+    window.open(e);
+  }
+}
 
 const LogoIcon = styled.img`
 width:140px;

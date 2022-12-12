@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Breadcrumb } from 'antd';
 import { AiFillHome } from "react-icons/ai";
-import { IconProvider, TxtCopy } from 'utils/common.utils';
+import { IconProvider, TxtCopy, ImgProvider, redirectOut, phoneFormat } from 'utils/common.utils';
 import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
@@ -20,9 +20,9 @@ const AgentDetails = () => {
   const onFailure = React.useCallback((response) => {
 
   }, [])
-  
+
   const { isLoading, data, callFetch: realod } = useFetch({
-    initialUrl: `/agents/${id}`,
+    initialUrl: `/user/${id}`,
     skipOnStart: false,
     onFailure,
     onSuccess
@@ -53,7 +53,7 @@ const AgentDetails = () => {
             <div className='flex justify-between'>
               <div>
                 <CustomeTxtOne theme={{ color: "black" }}>
-              {enLangauge.AGENT_DETAIL_AGENT_SINCE}
+                  {enLangauge.AGENT_DETAIL_AGENT_SINCE}
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   12 Sept 2022 - 12:55 pm
@@ -61,7 +61,7 @@ const AgentDetails = () => {
               </div>
               <div className="pl-3">
                 <CustomeTxtOne theme={{ color: "black" }}>
-                {enLangauge.AGENT_DETAIL_AGENT_ID}
+                  {enLangauge.AGENT_DETAIL_AGENT_ID}
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   <span id="agentID">
@@ -69,8 +69,8 @@ const AgentDetails = () => {
                   </span>
                 </CustomeTxtOne>
               </div>
-              <span className="px-2">
-                <IconProvider onClick={() => TxtCopy("agentID")} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
+              <span onClick={() => TxtCopy("agentID")} className="px-2">
+                <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
                   <MdOutlineContentCopy />
                 </IconProvider>
               </span>
@@ -104,11 +104,11 @@ const AgentDetails = () => {
                   <div className="float-left">
                     <div className="flex  ">
                       <div className="pt-1">
-                        <Img src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000" alt="loading.." />
+                        <Img src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading.." />
                       </div>
                       <div>
                         <div className="pl-3">
-                          <Title>Lorem Snackpo</Title>
+                          <Title>{data?.user?.name}</Title>
                           <div>
                             <span>
                               <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
@@ -135,11 +135,11 @@ const AgentDetails = () => {
                   <div className="float-left">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                       {enLangauge.AGENT_DETAIL_PHONE_NUM}
+                        {enLangauge.USER_DETAIL_PHONE_NUM}
                       </Title>
-                      <span>
+                      <span className='cursor-pointer' onClick={() => redirectOut(`tel:+${9080}`)}>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          +91 962-114-4328
+                          {phoneFormat(9621144328, "+11")}
                         </Title>
                       </span>
                     </div>
@@ -149,11 +149,11 @@ const AgentDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                      {enLangauge.AGENT_DETAIL_EMAIL_ID}
+                        {enLangauge.USER_DETAIL_EMAIL_ID}
                       </Title>
-                      <span>
+                      <span className='cursor-pointer' onClick={() => redirectOut(`mailto:${data?.user?.email}`)}>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          lenwoper@gmail.com
+                          {data?.user?.email}
                         </Title>
                       </span>
                     </div>
