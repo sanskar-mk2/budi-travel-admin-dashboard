@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Breadcrumb } from 'antd';
+import {  Breadcrumb } from 'antd';
 import { AiFillHome } from "react-icons/ai";
-import { IconProvider, TxtCopy } from 'utils/common.utils';
+import { IconProvider , TxtCopy, redirectOut, phoneFormat , ImgProvider } from 'utils/common.utils';
 import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
@@ -10,12 +10,30 @@ import { Selector } from 'Component';
 import Items from './Componets/Items';
 import { numberFormatter } from 'utils/common.utils';
 import { enLangauge } from 'Contents/en-langauge';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useFetch } from "hooks";
+import { toast } from 'react-hot-toast';
 const UserDetails = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [state, setState] = React.useState(null);
-  React.useEffect(() => {
-    console.log(state, " ===> ")
-  }, [state])
 
+  const { isLoading, data, callFetch } = useFetch({
+    initialUrl: `/user/${id}`,
+    skipOnStart: true,
+    config: {
+      method: "get"
+    }
+  });
+
+
+  React.useEffect(() => {
+    if (id) {
+      callFetch()
+    }
+  }, [callFetch, id])
+
+  console.log(data, " it is your name here right now ")
 
   const AgentBreadcrumbDetails = React.memo((props) => {
     return (
@@ -44,7 +62,7 @@ const UserDetails = () => {
               </div>
               <div className="pl-3">
                 <CustomeTxtOne theme={{ color: "black" }}>
-                {enLangauge.USER_DETAIL_USER_ID}
+                  {enLangauge.USER_DETAIL_USER_ID}
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   <span id="agentID">
@@ -52,8 +70,8 @@ const UserDetails = () => {
                   </span>
                 </CustomeTxtOne>
               </div>
-              <span className="px-2">
-                <IconProvider onClick={()=> TxtCopy("agentID")} className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
+              <span className="px-2" onClick={() => TxtCopy("agentID")}>
+                <IconProvider  className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
                   <MdOutlineContentCopy />
                 </IconProvider>
               </span>
@@ -87,15 +105,15 @@ const UserDetails = () => {
                   <div className="float-left">
                     <div className="flex  ">
                       <div className="pt-1">
-                        <Img src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000" alt="loading.." />
+                        <Img src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading.." />
                       </div>
                       <div>
                         <div className="pl-3">
-                          <Title>Lorem Snackpo</Title>
+                          <Title>{data?.user?.name}</Title>
                           <div>
                             <span>
                               <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                                Last Order{}
+                                Last Order{ }
                               </Title>
                             </span>
                             <span>
@@ -118,11 +136,11 @@ const UserDetails = () => {
                   <div className="float-left">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                         {enLangauge.USER_DETAIL_PHONE_NUM}
+                        {enLangauge.USER_DETAIL_PHONE_NUM}
                       </Title>
-                      <span>
+                      <span className='cursor-pointer' onClick={() => redirectOut(`tel:+${9080}`)}>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          +91 962-114-4328
+                         {phoneFormat(9621144328 , "+11")}
                         </Title>
                       </span>
                     </div>
@@ -132,11 +150,11 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                      {enLangauge.USER_DETAIL_EMAIL_ID}
+                        {enLangauge.USER_DETAIL_EMAIL_ID}
                       </Title>
-                      <span>
+                      <span className='cursor-pointer' onClick={() => redirectOut(`mailto:${data?.user?.email}`)}>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                          lenwoper@gmail.com
+                          {data?.user?.email}
                         </Title>
                       </span>
                     </div>
@@ -168,7 +186,7 @@ const UserDetails = () => {
                   <div className="float-left">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                         {enLangauge.USER_DETAILS_HOME_ADDRESS}
+                        {enLangauge.USER_DETAILS_HOME_ADDRESS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -182,7 +200,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                      {enLangauge.USER_DETAILS_BILLING_ADDRESS}
+                        {enLangauge.USER_DETAILS_BILLING_ADDRESS}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -222,7 +240,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                       {enLangauge.USER_DETAIL_ALL_ORDER}
+                        {enLangauge.USER_DETAIL_ALL_ORDER}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -236,7 +254,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                         {enLangauge.USER_DETAIL_PENDING}
+                        {enLangauge.USER_DETAIL_PENDING}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -250,7 +268,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                          {enLangauge.USER_DETAIL_COMPLETED}
+                        {enLangauge.USER_DETAIL_COMPLETED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -289,7 +307,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                         {enLangauge.USER_DETAIL_CANCELED}
+                        {enLangauge.USER_DETAIL_CANCELED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -303,7 +321,7 @@ const UserDetails = () => {
                   <div className="">
                     <div>
                       <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                          {enLangauge.USER_DETAIL_RETUNRED}
+                        {enLangauge.USER_DETAIL_RETUNRED}
                       </Title>
                       <span>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
@@ -332,7 +350,7 @@ const UserDetails = () => {
 
           </div>
         </div>
-        <Items/>
+        <Items />
       </div >
     </React.Fragment >
   );

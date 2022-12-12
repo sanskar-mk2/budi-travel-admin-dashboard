@@ -9,13 +9,15 @@ import { useFetch } from 'hooks';
 import { enLangauge } from 'Contents/en-langauge';
 const Users = () => {
 
-  const { isLoading, data } = useFetch({
+  const { isLoading, data  } = useFetch({
     initialUrl: "/users",
     skipOnStart: false,
     config: {
       methods: "get"
     }
   });
+
+
 
   const SiteSpeedComponent = React.useMemo(() => {
     return [

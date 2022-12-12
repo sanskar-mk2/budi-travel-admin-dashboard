@@ -6,7 +6,7 @@ import {
   stringifyError
 } from 'utils/common.utils'
 import { AUTH_TOKEN } from "constants/localstorage.constants";
-const baseURL = 'http://74.208.150.111/api/admin';
+import { baseURL } from "constants/config.constants";
 const axiosConfig = {
   baseURL,
 };

@@ -11,27 +11,28 @@ import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge'
 import { useFetch } from "hooks";
 import { Pagination } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 const { RangePicker } = DatePicker;
+
 const AllUserList = () => {
+  const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
 
-  const { isLoading, data } = useFetch({
+  const { isLoading, data, callFetch } = useFetch({
     initialUrl: "/users",
     skipOnStart: false,
     config: {
       method: "get"
     }
   });
-
-  console.log(isLoading , "====", data , "====> it is your name ")
   const searchingFilter = React.useCallback((e) => {
     const searchValue = e?.target?.value;
   }, [])
 
   const dateRangeFilteration = React.useCallback((e) => {
     const [start, end] = e;
-    console.log(start, end, "====> ")
   }, [])
 
   const selectionFilterOne = React.useCallback((e) => {
@@ -43,6 +44,19 @@ const AllUserList = () => {
     const values = e;
     console.log(e);
   }, [])
+
+  const paginationAction = React.useCallback((page, b) => {
+    callFetch({
+      url: `/page?page=${page}`,
+      method: 'get'
+    })
+  }, [callFetch])
+
+  const redirectIT = React.useCallback((e)=>{
+    if(e){
+      navigate(e)
+    }
+  },[navigate]);
 
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
@@ -59,10 +73,6 @@ const AllUserList = () => {
     </button>
   ))
 
-
-  const paginationAction = React.useCallback((a, b) => {
-    console.log(a, "=====", b)
-  }, [])
 
   const Filteration = React.memo(() => {
     return (
@@ -133,82 +143,89 @@ const AllUserList = () => {
     <React.Fragment>
       <div className=" mt-3">
         <BoxCantainer>
-          {
-            isLoading ? (<Skeleton active />) : (
-              <React.Fragment>
-                <Filteration />
-                <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
-                  <table className="min-w-full leading-normal">
-                    <thead >
-                      <tr className='border-b border-t border-[#ccccd0]'>
-                        <th className="px-5 flex py-3   bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+          <React.Fragment>
+            <Filteration />
+            <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
+              {
+                isLoading ? (
+                <React.Fragment>
+                  <Skeleton active />
+                  <br />
+                  <Skeleton active />
+                </React.Fragment>) : (
+                  <React.Fragment>
+                    <table className="min-w-full leading-normal">
+                      <thead >
+                        <tr className='border-b border-t border-[#ccccd0]'>
+                          <th className="px-5 flex py-3   bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
 
-                          <span className='mt-1'>
-                            {enLangauge.USERS_TABLE_HEADER_CUSTOMER_NAME}
-                          </span>
-                        </th>
-                        <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                          {enLangauge.USERS_TABLE_HEADER_LAST_PURCHASE}
-                        </th>
-                        <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                          {enLangauge.USERS_TABLE_HEADER_EMAIL}
-                        </th>
-                        <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                          {enLangauge.USERS_TABLE_HEADER_COUNTRY}
-                        </th>
-                        <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                          {enLangauge.USERS_TABLE_HEADER_STATUS}
-                        </th>
-                        <th className="px-5 py-3  bg-gray-100" />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        data?.users.map((data, index) => (
-                          <tr className='' key={index.toString()}>
-                            <td className="px-5 py-3   bg-white text-sm">
-                              <div className="flex">
-                                <div className="ml-3">
-                                  <span className="text-gray-900 whitespace-no-wrap mt-2">
-                                    <CustomeText>{data?.name}</CustomeText>
-                                  </span>
+                            <span className='mt-1'>
+                              {enLangauge.USERS_TABLE_HEADER_CUSTOMER_NAME}
+                            </span>
+                          </th>
+                          <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            {enLangauge.USERS_TABLE_HEADER_LAST_PURCHASE}
+                          </th>
+                          <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            {enLangauge.USERS_TABLE_HEADER_EMAIL}
+                          </th>
+                          <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            {enLangauge.USERS_TABLE_HEADER_COUNTRY}
+                          </th>
+                          <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            {enLangauge.USERS_TABLE_HEADER_STATUS}
+                          </th>
+                          <th className="px-5 py-3  bg-gray-100" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          data?.users?.data?.map((data, index) => (
+                            <tr className='' key={index.toString()}>
+                              <td className="px-5 py-3   bg-white text-sm">
+                                <div className="flex">
+                                  <div className="ml-3">
+                                    <span className="text-gray-900 whitespace-no-wrap mt-2 cursor-pointer" onClick={()=>redirectIT(`/user/${data?.id}`)}>
+                                      <CustomeText>{data?.name}</CustomeText>
+                                    </span>
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                            <td className="px-5 py-3  bg-white text-sm">
-                              <span className="text-gray-900 whitespace-no-wrap"><CustomeText>Today</CustomeText></span>
-                            </td>
-                            <td className="px-5 py-3  bg-white text-sm">
-                              <span className="text-gray-900 whitespace-no-wrap"><CustomeText>{data?.email}</CustomeText></span>
-                            </td>
-                            <td className="px-5 py-3 bg-white text-sm">
-                              <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                                <span className="relative"><CustomeText>India</CustomeText></span>
-                              </span>
-                            </td>
-                            <td className="px-5 py-3  bg-white text-sm">
-                              <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                                <span className="relative"><Status theme={{}}>Active</Status></span>
-                              </span>
-                            </td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-                <div className="pt-2 lg:px-3 md:px-2 px-0">
-                  <PaginationContainer>
-                    <Pagination showSizeChanger={false}
-                      defaultCurrent={1}
-                      total={840} onChange={paginationAction} />
-                  </PaginationContainer>
-                </div>
-              </React.Fragment>
-            )
-          }
+                              </td>
+                              <td className="px-5 py-3  bg-white text-sm">
+                                <span className="text-gray-900 whitespace-no-wrap"><CustomeText>Today</CustomeText></span>
+                              </td>
+                              <td className="px-5 py-3  bg-white text-sm">
+                                <span className="text-gray-900 whitespace-no-wrap"><CustomeText>{data?.email}</CustomeText></span>
+                              </td>
+                              <td className="px-5 py-3 bg-white text-sm">
+                                <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                  <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
+                                  <span className="relative"><CustomeText>India</CustomeText></span>
+                                </span>
+                              </td>
+                              <td className="px-5 py-3  bg-white text-sm">
+                                <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                  <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
+                                  <span className="relative"><Status theme={{}}>Active</Status></span>
+                                </span>
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                  </React.Fragment>
+                )
+              }
+            </div>
+            <div className="pt-2 lg:px-3 md:px-2 px-0">
+              <PaginationContainer>
+                <Pagination showSizeChanger={false}
+                  defaultCurrent={1}
+                  total={data?.users?.total} onChange={paginationAction} />
+              </PaginationContainer>
+            </div>
+          </React.Fragment>
         </BoxCantainer>
       </div>
     </React.Fragment>
