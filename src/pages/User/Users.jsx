@@ -9,7 +9,7 @@ import { useFetch } from 'hooks';
 import { enLangauge } from 'Contents/en-langauge';
 const Users = () => {
 
-  const { isLoading, data  } = useFetch({
+  const { isLoading,   } = useFetch({
     initialUrl: "/users",
     skipOnStart: false,
     config: {
