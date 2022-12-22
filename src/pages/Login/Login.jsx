@@ -79,7 +79,7 @@ export default function Login() {
                   </label>
                   <div className="flex justify-between">
                     <div className="">
-                      <span className="text-xs">Rember me </span>
+                      <span className="text-xs">Remember me </span>
                     </div>
                     <div className="pt-1 pl-1">
                       <Controller
