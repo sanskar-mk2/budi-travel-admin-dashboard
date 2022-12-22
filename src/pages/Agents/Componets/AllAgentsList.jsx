@@ -155,6 +155,7 @@ const AgentsList = ({ props }) => {
               } >
                 <Pagination showSizeChanger={false}
                   defaultCurrent={1}
+                  defaultPageSize={10}
                   total={data?.agents?.total} onChange={paginationAction} />
               </PaginationContainer>
             </div>

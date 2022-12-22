@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useAsyncDebounce } from 'react-table';
+// import { useAsyncDebounce } from 'react-table';
 import { API_ERROR_MESSAGE } from 'constants/common.constants';
 import { asyncWrapper, isFunction } from 'utils/common.utils';
 import axios from 'axios';
@@ -54,7 +54,13 @@ const useFetch = ({
     setFetchIndex(prevFetchIndex => prevFetchIndex + 1);
   }, []);
 
-  const callFetch = useAsyncDebounce(updateView, 200);
+  // const callFetch = useAsyncDebounce(updateView, 200);
+  
+  const callFetch = (arg) => {
+    setTimeout(() => {
+      updateView(arg)
+    }, 200)
+  }
 
   React.useEffect(() => {
     const cancelTokenSource = axios.CancelToken.source();

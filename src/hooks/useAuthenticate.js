@@ -37,7 +37,7 @@ export const useAuth = () => {
     }
   }, []);
   const session = React.useMemo(() => {
-    return getLocalStorage(AUTH_TOKEN);
+    return getLocalStorage(AUTH_TOKEN)??false;
   }, [getLocalStorage]);
   const userValue = React.useMemo(() => {
     return getLocalStorage(USER);
