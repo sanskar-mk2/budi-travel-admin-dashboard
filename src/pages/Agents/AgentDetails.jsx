@@ -21,18 +21,14 @@ const AgentDetails = () => {
 
   }, [])
 
-  const { isLoading, data, callFetch: realod } = useFetch({
+  const { isLoading, data,  } = useFetch({
     initialUrl: `/user/${id}`,
     skipOnStart: false,
     onFailure,
     onSuccess
   });
 
-  React.useEffect(() => {
-    if (id) {
-      realod()
-    }
-  }, [realod, id]);
+
 
   const AgentBreadcrumbDetails = React.memo((props) => {
     return (

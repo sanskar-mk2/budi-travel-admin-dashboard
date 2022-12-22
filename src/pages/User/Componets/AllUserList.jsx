@@ -28,21 +28,21 @@ const AllUserList = () => {
     }
   });
   const searchingFilter = React.useCallback((e) => {
-    const searchValue = e?.target?.value;
+    // const searchValue = e?.target?.value;
   }, [])
 
   const dateRangeFilteration = React.useCallback((e) => {
-    const [start, end] = e;
+    // const [start, end] = e;
   }, [])
 
   const selectionFilterOne = React.useCallback((e) => {
-    const values = e;
-    console.log(e);
+    // const values = e;
+    // console.log(e);
   }, [])
 
   const selectionFilterTwo = React.useCallback((e) => {
-    const values = e;
-    console.log(e);
+    // const values = e;
+    // console.log(e);
   }, [])
 
   const paginationAction = React.useCallback((page, b) => {
@@ -222,6 +222,7 @@ const AllUserList = () => {
               <PaginationContainer>
                 <Pagination showSizeChanger={false}
                   defaultCurrent={1}
+                  defaultPageSize={10}
                   total={data?.users?.total} onChange={paginationAction} />
               </PaginationContainer>
             </div>

@@ -323,6 +323,7 @@ const Items = () => {
             }>
               <Pagination showSizeChanger={false}
                 defaultCurrent={1}
+                defaultPageSize={10}
                 total={data?.unapproved_agents?.total}
                 onChange={paginationAction} />
             </PaginationContainer>
