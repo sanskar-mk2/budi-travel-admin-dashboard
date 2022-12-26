@@ -95,6 +95,16 @@ export const AgentRemainSideConstant = [
     notification: 12,
     IconColor: '#FF6633',
     icon: <RiPriceTag2Fill />,
+  },
+  {
+    link: '/support',
+    key: 'Setting',
+    title: 'support',
+    permissionKey: '',
+    tag: null,
+    notification: 2,
+    IconColor: '#FFCB33',
+    icon: <RiSettings5Fill />,
   }
   ,
   {

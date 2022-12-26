@@ -9,6 +9,8 @@ import Users from "pages/User/Users";
 import UserDetails from "pages/User/UserDetails";
 import ForgetPassword from "pages/ForgetPassword/ForgetPassword";
 import VerifyOtp from "pages/ForgetPassword/VerifyOtp";
+import TicketList from "pages/Supports/components/TicketsList";
+import TicketDetail from "pages/Supports/TicketDetail";
 const PublicRouteList = [
   {
     path: "/login",
@@ -65,6 +67,18 @@ const PrivateRouteList = [
     path: '/user/:id',
     component: (<Wrapper>
       <UserDetails />
+    </Wrapper>)
+  },
+  {
+    path: '/support',
+    component: (<Wrapper>
+      <TicketList />
+    </Wrapper>)
+  } ,
+  {
+    path: '/ticket-detail/:id',
+    component: (<Wrapper>
+      <TicketDetail />
     </Wrapper>)
   }
 ];

@@ -1,5 +1,4 @@
 
-import { UserOutlined } from '@ant-design/icons';
 import { AutoComplete, Input } from 'antd';
 import React from 'react';
 import styled from "styled-components"
@@ -29,23 +28,23 @@ const renderItem = (title, count) => ({
     >
       {title}
       <span>
-        <UserOutlined /> {count}
+        {count}
       </span>
     </div>
   ),
 });
 const options = [
   {
-    label: renderTitle('Libraries'),
-    options: [renderItem('AntDesign', 10000), renderItem('AntDesign UI', 10600)],
+    label: renderTitle('Budi'),
+    options: [renderItem('Budi', 10000), renderItem('Budi UI', 10600)],
   },
   {
-    label: renderTitle('Solutions'),
-    options: [renderItem('AntDesign UI FAQ', 60100), renderItem('AntDesign FAQ', 30010)],
+    label: renderTitle('Budi'),
+    options: [renderItem('Budi UI FAQ', 60100), renderItem('Budi FAQ', 30010)],
   },
   {
     label: renderTitle('Articles'),
-    options: [renderItem('AntDesign design language', 100000)],
+    options: [renderItem('Budi  Admin', 100000)],
   },
 ];
 export const SearchBar = () => (
