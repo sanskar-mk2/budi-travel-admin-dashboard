@@ -8,6 +8,8 @@ const Selector = ({
   setState,
   defaultOption,
   width,
+  name,
+  error,
   ...props
 }) => {
 
@@ -15,13 +17,12 @@ const Selector = ({
     setState(e);
   }, [setState]);
 
-  if (control) {
-    (
+  if (name) {
+    return (
       <React.Fragment>
-        <div className={``}>
+        <div className={`w-full`}>
           <Select
-            defaultValue={defaultOption}
-            control={control}
+            value={defaultOption}
             {...props}
             style={{
               width: width
@@ -33,7 +34,7 @@ const Selector = ({
               ))
             }
           </Select>
-          <p className=" px-2 mb-0 pt-1 text-xs text-error-color">{props?.error?.message}</p>
+          <p className=" px-2 mb-0 pt-1 text-xs text-error-color">{error?.message}</p>
         </div>
       </React.Fragment>
     )

@@ -1,8 +1,11 @@
-import {  Modal } from 'antd';
+import { Modal } from 'antd';
 import React from "react";
-const ModalComp = ({ state , SetState, title,  children , ...pops }) => {
+const ModalComp = ({ onSubmit, state, SetState, title, children, ...pops }) => {
   const handleOk = () => {
     SetState(false);
+    if (onSubmit) {
+      onSubmit()
+    }
   };
   const handleCancel = () => {
     SetState(false);

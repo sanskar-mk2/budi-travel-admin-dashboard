@@ -21,7 +21,9 @@ import { BarGraph } from "./ChartUtils/BarGraph";
 import { Tab } from "./Tab/Tab";
 import { PaginationComponent as PaginationContainer } from "./Pagination/Pagination";
 // import ModalComp as Modal from "./Modal/Modal";
-import Modal  from "./Modal/Modal";
+import Modal from "./Modal/Modal";
+import InputFieldLatest from "./FormUtils/Form/Input";
+import TextFieldArea from "./FormUtils/Form/TextArea";
 
 
 export {
@@ -31,6 +33,8 @@ export {
   Icon,
   SearchBar,
   TextArea,
+  TextFieldArea,
+  InputFieldLatest,
   Textfield,
   Selector,
   Button,

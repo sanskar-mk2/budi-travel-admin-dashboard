@@ -1,0 +1,377 @@
+import React from 'react'
+import { useFetch } from 'hooks'
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import moment from 'moment/moment';
+import { Skeleton, Tooltip } from 'antd';
+import { Modal, TextFieldArea, Selector } from 'Component';
+import { InputFieldLatest } from 'Component';
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { IconProvider, ImgProvider, redirectOut, phoneFormat } from 'utils/common.utils';
+import { enLangauge } from 'Contents/en-langauge';
+import { FormProvider, useForm, Controller } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
+// import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-hot-toast';
+export default function TicketDetail() {
+    const navigate = useNavigate()
+    const [state, SetState] = React.useState(false);
+    const { id } = useParams()
+    const methods = useForm({
+        // resolver: yupResolver(loginValidationSchema),
+        mode: "all",
+        defaultValues: {
+            title: "",
+            status: "",
+            message: ""
+        }
+    });
+    const { control, handleSubmit,
+        // formState: { isDirty, isValid }
+    } = methods;
+
+    const onSuccess = React.useCallback((response) => {
+        if (response?.message) {
+            toast.success(response?.message)
+            navigate('/support')
+        }
+    }, [navigate])
+    const onFailure = React.useCallback((error) => {
+        if (error?.message) {
+            toast.error(error?.message)
+        }
+    }, [])
+    const { isLoading, data } = useFetch({
+        initialUrl: `/support/support_ticket/${id}`,
+        skipOnStart: false,
+        config: {
+            method: 'get'
+        }
+    });
+
+    const { isLoading: isLoadingProfile, data: dataProfile, callFetch: callFetchSec } = useFetch({
+        initialUrl: `/user/${data?.support?.user_id}`,
+        skipOnStart: true,
+        config: {
+            method: "get"
+        },
+        onSuccess,
+        onFailure
+    });
+    React.useEffect(() => {
+        if (data?.support?.user_id) {
+            callFetchSec({
+                url: `/user/${data?.support?.user_id}`,
+                method: 'get'
+            })
+        }
+
+    }, [data?.support?.user_id])
+
+    const onSubmit = React.useCallback((data) => {
+        const formData = new FormData()
+        formData.append("message", data?.message)
+        formData.append("support_id", id)
+        callFetchSec({
+            url: '/support/reply',
+            method: 'post',
+            data: formData
+        })
+    }, [callFetchSec, id]);
+
+    const TabOneRightComponent = React.memo(() => {
+        return (
+            <React.Fragment>
+                <div className="">
+                    <Tooltip placement="leftTop" color="black" title={
+                        <React.Fragment>
+                            <div>
+                                <button> Update </button>
+                            </div>
+                            <div>
+                                <button>  Delete </button>
+                            </div>
+                        </React.Fragment>} arrowPointAtCenter>
+                        <span>
+                            <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
+                                <HiOutlineDotsVertical />
+                            </IconProvider>
+                        </span>
+                    </Tooltip>
+                </div>
+            </React.Fragment>
+        )
+    }, [])
+
+    return (
+        <div>
+            <div className='grid grid-cols-12 gap-3'>
+                <Modal onSubmit={handleSubmit(onSubmit)} title={" Replay  "} state={state} SetState={SetState}>
+                    <FormProvider {...methods}>
+                        <div className="grid w-full">
+
+                            <div className='grid grid-cols-12 gap-3'>
+                                <div className='lg:col-span-8'>
+                                    <Controller
+                                        control={control}
+                                        name="title"
+                                        render={({
+                                            field,
+                                            fieldState: { invalid, isTouched, isDirty, error },
+                                        }) => (
+                                            <InputFieldLatest error={error} inputRef={field.ref} {...field} name={"title"} placeholder={"Title "} />
+                                        )}
+                                    />
+                                </div>
+                                <div className='lg:col-span-4'>
+                                    <Controller
+                                        control={control}
+                                        name="status"
+                                        render={({
+                                            field,
+                                            fieldState: { invalid, isTouched, isDirty, error },
+                                        }) => (
+                                            <Select width={"100%"} error={error} name={"status"} defaultOption={"Filter"} options={["Resolved", "DeActivate"]}  {...field} />
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            <Controller
+                                control={control}
+                                name="message"
+                                render={({
+                                    field,
+                                    fieldState: { invalid, isTouched, isDirty, error },
+                                }) => (
+                                    <TextFieldArea {...field} error={error} name={"message"} placeholder="Message" />
+                                )}
+                            />
+                        </div>
+                    </FormProvider>
+                </Modal>
+                <div className='col-span-4'>
+                    <BoxCantainer>
+                        {
+                            (isLoadingProfile | isLoading) ? (<Skeleton className='m-1' active />) : (
+                                <React.Fragment>
+                                    <div className=" border-b mb-3 border-[#eae9e9] pb-2 h-auto grid grid-cols-2 gap-2 content-between pt-2">
+                                        <div className="">
+                                            <div className="float-left">
+                                                <div className="flex  ">
+                                                    <div className="pt-1">
+                                                        <Img src={ImgProvider(dataProfile?.user?.profile?.profile_picture)} alt="loading.." />
+                                                    </div>
+                                                    <div>
+                                                        <div className="pl-3">
+                                                            <Title theme={{ fontSize: "12px" }}>{dataProfile?.user?.name}</Title>
+                                                            <div>
+                                                                <span>
+                                                                    <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
+                                                                        {enLangauge.AGENT_DETAIL_LAST_ORDER}
+                                                                    </Title>
+                                                                </span>
+                                                                <span>
+
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            <div className="float-right mt-1">
+                                                <Status>{enLangauge.AGENT_DETAIL_ACTIVE}</Status>
+                                            </div>
+                                        </div>
+                                        <div className="pt-3 ">
+                                            <div className="float-left">
+                                                <div>
+                                                    <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
+                                                        {enLangauge.USER_DETAIL_PHONE_NUM}
+                                                    </Title>
+                                                    <span className='cursor-pointer' onClick={() => redirectOut(`tel:+${9080}`)}>
+                                                        <Title theme={{ color: "black", fontSize: "12px" }}>
+                                                            {phoneFormat(9621144328, "+11")}
+                                                        </Title>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="pt-3 ">
+                                            <div className="">
+                                                <div>
+                                                    <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
+                                                        {enLangauge.USER_DETAIL_EMAIL_ID}
+                                                    </Title>
+                                                    <span className='cursor-pointer' onClick={() => redirectOut(`mailto:${data?.user?.email}`)}>
+                                                        <Title theme={{ color: "black", fontSize: "12px" }}>
+                                                            {dataProfile?.user?.email}
+                                                        </Title>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/*  */}
+                                    <div className='flex  justify-between'>
+                                        <div className=''>
+                                            <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>{
+                                                moment(data?.created_at).format('MMMM Do YYYY, h:mm:ss a')
+                                            }</CustomeText></span>
+                                        </div>
+                                        <div className=''>
+                                            <Status theme={{}}>Active</Status>
+                                        </div>
+                                    </div>
+
+                                    <span className="text-gray-900 whitespace-no-wrap"><CustomeText>
+                                        <div className=''>
+                                            <span className=' px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                topic
+                                            </span>
+                                            <span className=' text-[#000] font-semibold italic '>
+                                                {
+                                                    data?.support?.topic
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className='mt-3 mb-2'>
+                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                subject
+                                            </span>
+                                            <span className='italic font-semibold'>
+                                                {
+                                                    data?.support?.subject
+                                                }
+                                            </span>
+                                        </div>
+                                        {data?.support?.message}
+
+                                    </CustomeText>
+                                        <div className=' flex justify-between'>
+                                            <div>
+                                            </div>
+                                            <div>
+                                                <Status onClick={() => SetState(true)} theme={{}}>Replay Now</Status>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </React.Fragment>
+                            )
+                        }
+
+
+                    </BoxCantainer>
+                </div>
+                <div className='col-span-8'>
+                    {
+                        isLoading ? (<Skeleton className='m-1' active />) : (
+                            <BoxCantainer>
+                                <div className='border-b mb-3 border-[#eae9e9] pb-2'>
+                                    <div className='flex mb-2 justify-between '>
+                                        <div className=''>
+                                            <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>{
+                                                moment(data?.created_at).format('MMMM Do YYYY, h:mm:ss a')
+                                            }</CustomeText></span>
+                                        </div>
+                                        <div className=''>
+                                            <TabOneRightComponent />
+                                        </div>
+                                    </div>
+
+                                    <span className="  text-gray-900 whitespace-no-wrap"><CustomeText>
+                                        <div className='mb-3'>
+                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                By
+                                            </span>
+                                            <span className=' text-[#000] font-semibold italic '>
+                                                {
+                                                    data?.support?.topic
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className=''>
+                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                topic
+                                            </span>
+                                            <span className=' text-[#000] font-semibold italic '>
+                                                {
+                                                    data?.support?.topic
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className='mt-3 mb-2'>
+                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                subject
+                                            </span>
+                                            <span className='italic font-semibold'>
+                                                {
+                                                    data?.support?.subject
+                                                }
+                                            </span>
+                                        </div>
+                                        {data?.support?.message}
+
+                                    </CustomeText>
+                                    </span>
+                                </div>
+                            </BoxCantainer>
+                        )
+
+                    }
+
+                </div>
+            </div>
+        </div >
+    )
+}
+
+
+const BoxCantainer = styled.div`
+background: #FFFFFF;
+box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
+border-radius: 10px;
+padding:15px 15px 15px 15px;
+&& @media only screen and (max-width:760px){
+  overflow-x:scroll; 
+ }
+`;
+const Status = styled.button`
+background: ${props => props?.theme?.bg ?? 'rgba(22, 192, 152, 0.38)'};
+width: 80px;
+color:${props => props?.theme?.color ?? '#00B087'};
+height: 27px;
+border: ${props => props?.theme?.color ?? '1px solid #00B087'};
+border-radius: 4px;
+`;
+const CustomeText = styled.div`
+// font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+color: #6E7079;
+`;
+
+
+const Title = styled.div`
+// font-family: 'Open Sans';
+font-style: normal;
+margin-bottom:0.5px;
+font-weight: 400;
+font-size: ${porps => porps?.theme?.fontSize ?? '14px'};
+color: ${props => props?.theme?.color ?? '#9295A3'};
+
+`;
+const Img = styled.img`
+width: 45px;
+height: 45px;
+border-radius:3px;
+`;
+
+const Select = styled(Selector)`
+width: ${props => props?.theme.width ?? '100% !important'};
+border-radius:7px;
+color:black !important;
+`;
