@@ -20,7 +20,7 @@ const TextFieldArea = ({
                 <div>
                     <TextArea {...props} required={isRequired} className={` rounded-md textarea-bordered ${className}`} rows={rows ?? 4} placeholder={placeholder} />
                 </div>
-                <p className=" px-2 mb-0 pt-1 text-xs text-primary-color">{error?.message}</p>
+                <p className=" px-2 mb-0 pt-1 text-xs  text-error-color">{error?.message}</p>
             </div>
         </div>
     )

@@ -6,19 +6,22 @@ import moment from 'moment/moment';
 import { Skeleton, Tooltip } from 'antd';
 import { Modal, TextFieldArea, Selector } from 'Component';
 import { InputFieldLatest } from 'Component';
+import { BsFillChatTextFill } from "react-icons/bs"
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IconProvider, ImgProvider, redirectOut, phoneFormat } from 'utils/common.utils';
+import { IconProvider, ImgProvider, redirectOut, phoneFormat, TxtCopy } from 'utils/common.utils';
 import { enLangauge } from 'Contents/en-langauge';
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-// import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-hot-toast';
+import { ticketReplayValidationSchema } from 'utils/validation';
+
 export default function TicketDetail() {
     const navigate = useNavigate()
     const [state, SetState] = React.useState(false);
     const { id } = useParams()
     const methods = useForm({
-        // resolver: yupResolver(loginValidationSchema),
+        resolver: yupResolver(ticketReplayValidationSchema),
         mode: "all",
         defaultValues: {
             title: "",
@@ -58,20 +61,23 @@ export default function TicketDetail() {
         onSuccess,
         onFailure
     });
+    const userid = React.useMemo(()=>{
+            return data?.support?.user_id?? null
+    },[data])
     React.useEffect(() => {
-        if (data?.support?.user_id) {
+        if (userid) {
             callFetchSec({
-                url: `/user/${data?.support?.user_id}`,
+                url: `/user/${userid}`,
                 method: 'get'
             })
         }
-
-    }, [data?.support?.user_id])
+    }, [ userid])
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
         formData.append("message", data?.message)
         formData.append("support_id", id)
+        console.log(data)
         callFetchSec({
             url: '/support/reply',
             method: 'post',
@@ -79,6 +85,12 @@ export default function TicketDetail() {
         })
     }, [callFetchSec, id]);
 
+
+    const redirectIT = React.useCallback((e) => {
+        if (e) {
+            navigate(e)
+        }
+    }, [navigate])
     const TabOneRightComponent = React.memo(() => {
         return (
             <React.Fragment>
@@ -111,7 +123,7 @@ export default function TicketDetail() {
                         <div className="grid w-full">
 
                             <div className='grid grid-cols-12 gap-3'>
-                                <div className='lg:col-span-8'>
+                                <div className='col-span-8'>
                                     <Controller
                                         control={control}
                                         name="title"
@@ -123,7 +135,7 @@ export default function TicketDetail() {
                                         )}
                                     />
                                 </div>
-                                <div className='lg:col-span-4'>
+                                <div className='col-span-4'>
                                     <Controller
                                         control={control}
                                         name="status"
@@ -131,7 +143,7 @@ export default function TicketDetail() {
                                             field,
                                             fieldState: { invalid, isTouched, isDirty, error },
                                         }) => (
-                                            <Select width={"100%"} error={error} name={"status"} defaultOption={"Filter"} options={["Resolved", "DeActivate"]}  {...field} />
+                                            <Select width={"100%"} error={error} name={"status"} inputRef={field.ref} defaultOption={field?.value} options={["Resolved", "DeActivate"]}  {...field} />
                                         )}
                                     />
                                 </div>
@@ -149,14 +161,14 @@ export default function TicketDetail() {
                         </div>
                     </FormProvider>
                 </Modal>
-                <div className='col-span-4'>
+                <div className='lg:col-span-4 md:grid-cols-12 col-span-12'>
                     <BoxCantainer>
                         {
-                            (isLoadingProfile | isLoading) ? (<Skeleton className='m-1' active />) : (
+                            ((isLoadingProfile && isLoading)) ? (<Skeleton className='m-1' active />) : (
                                 <React.Fragment>
                                     <div className=" border-b mb-3 border-[#eae9e9] pb-2 h-auto grid grid-cols-2 gap-2 content-between pt-2">
                                         <div className="">
-                                            <div className="float-left">
+                                            <div className="float-left cursor-pointer" onClick={()=>redirectIT(`/user/${data?.support?.user_id}`)}>
                                                 <div className="flex  ">
                                                     <div className="pt-1">
                                                         <Img src={ImgProvider(dataProfile?.user?.profile?.profile_picture)} alt="loading.." />
@@ -165,14 +177,6 @@ export default function TicketDetail() {
                                                         <div className="pl-3">
                                                             <Title theme={{ fontSize: "12px" }}>{dataProfile?.user?.name}</Title>
                                                             <div>
-                                                                <span>
-                                                                    <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                                                                        {enLangauge.AGENT_DETAIL_LAST_ORDER}
-                                                                    </Title>
-                                                                </span>
-                                                                <span>
-
-                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -253,7 +257,18 @@ export default function TicketDetail() {
                                             <div>
                                             </div>
                                             <div>
-                                                <Status onClick={() => SetState(true)} theme={{}}>Replay Now</Status>
+                                                <Status theme={{ bg: "white" }} onClick={() => SetState(true)} >
+                                                    <div className='flex justify-between px-2 '>
+                                                        <div className=''>
+                                                            <IconProvider className={""}>
+                                                                <BsFillChatTextFill />
+                                                            </IconProvider>
+                                                        </div>
+                                                        <div className='text-sm mt-[-4px]'>
+                                                            Replay
+                                                        </div>
+                                                    </div>
+                                                </Status>
                                             </div>
                                         </div>
                                     </span>
@@ -264,63 +279,109 @@ export default function TicketDetail() {
 
                     </BoxCantainer>
                 </div>
-                <div className='col-span-8'>
-                    {
-                        isLoading ? (<Skeleton className='m-1' active />) : (
-                            <BoxCantainer>
-                                <div className='border-b mb-3 border-[#eae9e9] pb-2'>
-                                    <div className='flex mb-2 justify-between '>
-                                        <div className=''>
-                                            <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>{
-                                                moment(data?.created_at).format('MMMM Do YYYY, h:mm:ss a')
-                                            }</CustomeText></span>
+                <div className='lg:col-span-8 md:col-span-12 col-span-12'>
+                    <BoxCantainer>
+                        {
+                            data?.support?.replies.length>=1 && (
+                                <div>
+                                    <Status style={{ border: "1px solid transparent" }} theme={{ bg: "white", border: "1px solid transparent" }} onClick={() => SetState(true)} >
+                                        <div className='flex justify-between px-2 '>
+                                            <div className=''>
+                                                <IconProvider className={" text-xl "}>
+                                                    <BsFillChatTextFill />
+                                                </IconProvider>
+                                            </div>
+                                            <div className='text-sm  pl-1 mt-[-1px] font-semibold '>
+                                                Replies
+                                            </div>
                                         </div>
-                                        <div className=''>
-                                            <TabOneRightComponent />
-                                        </div>
-                                    </div>
-
-                                    <span className="  text-gray-900 whitespace-no-wrap"><CustomeText>
-                                        <div className='mb-3'>
-                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
-                                                By
-                                            </span>
-                                            <span className=' text-[#000] font-semibold italic '>
-                                                {
-                                                    data?.support?.topic
-                                                }
-                                            </span>
-                                        </div>
-                                        <div className=''>
-                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
-                                                topic
-                                            </span>
-                                            <span className=' text-[#000] font-semibold italic '>
-                                                {
-                                                    data?.support?.topic
-                                                }
-                                            </span>
-                                        </div>
-                                        <div className='mt-3 mb-2'>
-                                            <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
-                                                subject
-                                            </span>
-                                            <span className='italic font-semibold'>
-                                                {
-                                                    data?.support?.subject
-                                                }
-                                            </span>
-                                        </div>
-                                        {data?.support?.message}
-
-                                    </CustomeText>
-                                    </span>
+                                    </Status>
                                 </div>
-                            </BoxCantainer>
-                        )
+                            )
+                        }
+                        {
+                            isLoading ? (<Skeleton className='m-1' active />) : (
+                                data?.support?.replies?.map((replayies, index) => (
+                                    <div className='border-b mb-3 border-[#eae9e9] pb-2'>
+                                        <div className='flex mb-0 justify-between '>
+                                            <div className=''>
+                                                <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>
+                                                    {
+                                                        moment(replayies?.created_at).format('MMMM Do YYYY, h:mm:ss a')
+                                                    }
+                                                </CustomeText></span>
+                                            </div>
+                                            <div className=''>
+                                                <TabOneRightComponent />
+                                            </div>
+                                        </div>
 
-                    }
+                                        <span className="  text-gray-900 whitespace-no-wrap">
+                                            <CustomeText>
+                                                <div className=' flex justify-between'>
+                                                    <div>
+                                                        <div className="flex justify-between cursor-pointer  mb-2" onClick={() => redirectIT(`/user/${replayies?.user_id}`)}>
+                                                            <div className="pt-1">
+                                                                <Img src={ImgProvider()} alt="loading.." />
+                                                            </div>
+                                                            <div>
+                                                                <div className="pl-3 mt-2">
+                                                                    <Title theme={{ fontSize: "12px" }}>{replayies?.user?.name}</Title>
+                                                                    <div>
+                                                                        <span>
+                                                                            <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
+                                                                                {replayies?.user?.email}
+                                                                            </Title>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
 
+                                                    </div>
+                                                </div>
+
+                                                <div className='mb-3'>
+                                                    <span onClick={() => TxtCopy(`${index}-ticket`)} className=' cursor-pointer  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                        Support ID
+                                                    </span>
+                                                    <span id={`${index}-ticket`} className=' text-[#000] font-semibold italic '>
+                                                        {
+                                                            replayies?.support_id
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div className=''>
+                                                    <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                        topic
+                                                    </span>
+                                                    <span className=' text-[#000] font-semibold italic '>
+                                                        {
+                                                            data?.support?.topic
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div className='mt-3 mb-2'>
+                                                    <span className='  px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
+                                                        subject
+                                                    </span>
+                                                    <span className='italic font-semibold'>
+                                                        {
+                                                            data?.support?.subject
+                                                        }
+                                                    </span>
+                                                </div>
+                                                {replayies?.message}
+
+                                            </CustomeText>
+                                        </span>
+                                    </div>
+                                ))
+                            )
+                        }
+                    </BoxCantainer>
                 </div>
             </div>
         </div >
