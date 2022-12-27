@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  Breadcrumb } from 'antd';
+import { Breadcrumb } from 'antd';
 import { AiFillHome } from "react-icons/ai";
-import { IconProvider , TxtCopy, redirectOut, phoneFormat , ImgProvider } from 'utils/common.utils';
+import { IconProvider, TxtCopy, redirectOut, phoneFormat, ImgProvider } from 'utils/common.utils';
 import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
@@ -10,30 +10,26 @@ import { Selector } from 'Component';
 import Items from './Componets/Items';
 import { numberFormatter } from 'utils/common.utils';
 import { enLangauge } from 'Contents/en-langauge';
-import { useParams, useNavigate } from 'react-router-dom';
+import {
+  useParams,
+  //  useNavigate 
+} from 'react-router-dom';
 import { useFetch } from "hooks";
-import { toast } from 'react-hot-toast';
 const UserDetails = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
-  const [state, setState] = React.useState(null);
+  const [
+    // state,
+    setState] = React.useState(null);
 
-  const { isLoading, data, callFetch } = useFetch({
+  const { data, callFetch } = useFetch({
     initialUrl: `/user/${id}`,
-    skipOnStart: true,
+    skipOnStart: false,
     config: {
       method: "get"
     }
   });
 
-
-  React.useEffect(() => {
-    if (id) {
-      callFetch()
-    }
-  }, [callFetch, id])
-
-  console.log(data, " it is your name here right now ")
 
   const AgentBreadcrumbDetails = React.memo((props) => {
     return (
@@ -71,7 +67,7 @@ const UserDetails = () => {
                 </CustomeTxtOne>
               </div>
               <span className="px-2" onClick={() => TxtCopy("agentID")}>
-                <IconProvider  className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
+                <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#2E72B9`}>
                   <MdOutlineContentCopy />
                 </IconProvider>
               </span>
@@ -140,7 +136,7 @@ const UserDetails = () => {
                       </Title>
                       <span className='cursor-pointer' onClick={() => redirectOut(`tel:+${9080}`)}>
                         <Title theme={{ color: "black", fontSize: "12px" }}>
-                         {phoneFormat(9621144328 , "+11")}
+                          {phoneFormat(9621144328, "+11")}
                         </Title>
                       </span>
                     </div>
