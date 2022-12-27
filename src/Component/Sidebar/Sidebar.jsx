@@ -14,11 +14,15 @@ const Sidebar = ({ SetMenu, props,
   const path = useLocation();
 
   const redirectIT = React.useCallback((e) => {
+    try{
     if (e?.link) {
       navigate(e?.link);
       SetMenu(false)
     }
-  }, [SetMenu, navigate])
+  }catch(error){
+
+  }
+  }, [ navigate ,SetMenu])
 
   const location = React.useMemo(() => {
     return path?.pathname;

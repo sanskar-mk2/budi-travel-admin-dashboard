@@ -11,9 +11,16 @@ const loginValidationSchema = yup.object().shape({
 const emailValidationSchema = yup.object().shape({
 email:yup.string().email().required("")
 })
+
+const ticketReplayValidationSchema = yup.object({
+  title:yup.string("Please provide valide value").required("Please provide valide value"),
+  status:yup.string("Please provide valide value").required("Please provide valide value"),
+  message:yup.string("Please provide valide value").required("Please provide valide value")
+})
 export {
   loginValidationSchema,
-  emailValidationSchema
+  emailValidationSchema,
+  ticketReplayValidationSchema
 };
 
 

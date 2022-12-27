@@ -22,12 +22,16 @@ const Selector = ({
       <React.Fragment>
         <div className={`w-full`}>
           <Select
-            value={defaultOption}
+   
+            defaultValue={defaultOption}
             {...props}
             style={{
-              width: width
+              width: width,
+              color:"#000"
             }}
+            placeholder={defaultOption}
           >
+            <Option value={null} style={{color:"black"}}>{defaultOption}</Option>
             {
               options?.map((i, index) => (
                 <Option value={i} key={index}>{i}</Option>
