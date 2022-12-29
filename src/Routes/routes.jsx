@@ -11,6 +11,8 @@ import ForgetPassword from "pages/ForgetPassword/ForgetPassword";
 import VerifyOtp from "pages/ForgetPassword/VerifyOtp";
 import TicketList from "pages/Supports/components/TicketsList";
 import TicketDetail from "pages/Supports/TicketDetail";
+import TermsCondition from "pages/TermConditions/TermsCondition";
+import Policy from "pages/Policy/policy";
 const PublicRouteList = [
   {
     path: "/login",
@@ -79,6 +81,18 @@ const PrivateRouteList = [
     path: '/ticket-detail/:id',
     component: (<Wrapper>
       <TicketDetail />
+    </Wrapper>)
+  },
+  {
+    path: '/term-condition',
+    component: (<Wrapper>
+      <TermsCondition />
+    </Wrapper>)
+  },
+  {
+    path: '/privacy',
+    component: (<Wrapper>
+      <Policy />
     </Wrapper>)
   }
 ];
