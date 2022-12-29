@@ -14,13 +14,19 @@ email:yup.string().email().required("")
 
 const ticketReplayValidationSchema = yup.object({
   title:yup.string("Please provide valide value").required("Please provide valide value"),
-  status:yup.string("Please provide valide value").required("Please provide valide value"),
   message:yup.string("Please provide valide value").required("Please provide valide value")
 })
+
+const documentValidationSchema = yup.object({
+  title:yup.string('string type value').required('it is required '),
+  content:yup.string('string type value').required('it is required ')
+})
+
 export {
   loginValidationSchema,
   emailValidationSchema,
-  ticketReplayValidationSchema
+  ticketReplayValidationSchema,
+  documentValidationSchema
 };
 
 

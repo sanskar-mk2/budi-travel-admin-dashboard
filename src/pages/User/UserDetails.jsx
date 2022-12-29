@@ -10,6 +10,7 @@ import { Selector } from 'Component';
 import Items from './Componets/Items';
 import { numberFormatter } from 'utils/common.utils';
 import { enLangauge } from 'Contents/en-langauge';
+
 import {
   useParams,
   //  useNavigate 
@@ -22,7 +23,7 @@ const UserDetails = () => {
     // state,
     setState] = React.useState(null);
 
-  const { data, callFetch } = useFetch({
+  const { data } = useFetch({
     initialUrl: `/user/${id}`,
     skipOnStart: false,
     config: {

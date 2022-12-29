@@ -3,7 +3,7 @@ import { useFetch } from 'hooks'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment/moment';
-import { Skeleton, Tooltip } from 'antd';
+import { Skeleton, Tooltip, Popconfirm } from 'antd';
 import { Modal, TextFieldArea, Selector } from 'Component';
 import { InputFieldLatest } from 'Component';
 import { BsFillChatTextFill } from "react-icons/bs"
@@ -25,7 +25,6 @@ export default function TicketDetail() {
         mode: "all",
         defaultValues: {
             title: "",
-            status: "",
             message: ""
         }
     });
@@ -44,15 +43,30 @@ export default function TicketDetail() {
             toast.error(error?.message)
         }
     }, [])
-    const { isLoading, data } = useFetch({
+
+    const onSuccessFirst = React.useCallback((response) => {
+        if (response?.message) {
+            toast.success(response?.message)
+            navigate('/support')
+        }
+    }, [navigate])
+    const onFailureFirst = React.useCallback((error) => {
+        if (error?.message) {
+            toast.error(error?.message)
+        }
+    }, [])
+
+    const { isLoading, data, callFetch } = useFetch({
         initialUrl: `/support/support_ticket/${id}`,
         skipOnStart: false,
         config: {
             method: 'get'
-        }
+        },
+        onSuccessFirst,
+        onFailureFirst,
     });
 
-    const { isLoading: isLoadingProfile, data: dataProfile, callFetch: callFetchSec } = useFetch({
+    const {  data: dataProfile, callFetch: callFetchSec } = useFetch({
         initialUrl: `/user/${data?.support?.user_id}`,
         skipOnStart: true,
         config: {
@@ -61,9 +75,10 @@ export default function TicketDetail() {
         onSuccess,
         onFailure
     });
-    const userid = React.useMemo(()=>{
-            return data?.support?.user_id?? null
-    },[data])
+
+    const userid = React.useMemo(() => {
+        return data?.support?.user_id ?? null
+    }, [data])
     React.useEffect(() => {
         if (userid) {
             callFetchSec({
@@ -71,7 +86,7 @@ export default function TicketDetail() {
                 method: 'get'
             })
         }
-    }, [ userid])
+    }, [userid])
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
@@ -91,6 +106,23 @@ export default function TicketDetail() {
             navigate(e)
         }
     }, [navigate])
+
+    const confirmCloseTicket = React.useCallback(() => {
+        const data = new FormData();
+        data.append("resolved", true);
+        callFetch({
+            url: `/support/support_ticket/${id}`,
+            method: 'put',
+            data: data
+        })
+    }, [callFetch])
+
+    const cancel = React.useCallback(() => {
+        toast.error("Cancled !")
+    }, [])
+
+
+
     const TabOneRightComponent = React.memo(() => {
         return (
             <React.Fragment>
@@ -123,7 +155,7 @@ export default function TicketDetail() {
                         <div className="grid w-full">
 
                             <div className='grid grid-cols-12 gap-3'>
-                                <div className='col-span-8'>
+                                <div className='col-span-12'>
                                     <Controller
                                         control={control}
                                         name="title"
@@ -132,18 +164,6 @@ export default function TicketDetail() {
                                             fieldState: { invalid, isTouched, isDirty, error },
                                         }) => (
                                             <InputFieldLatest error={error} inputRef={field.ref} {...field} name={"title"} placeholder={"Title "} />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col-span-4'>
-                                    <Controller
-                                        control={control}
-                                        name="status"
-                                        render={({
-                                            field,
-                                            fieldState: { invalid, isTouched, isDirty, error },
-                                        }) => (
-                                            <Select width={"100%"} error={error} name={"status"} inputRef={field.ref} defaultOption={field?.value} options={["Resolved", "DeActivate"]}  {...field} />
                                         )}
                                     />
                                 </div>
@@ -164,11 +184,11 @@ export default function TicketDetail() {
                 <div className='lg:col-span-4 md:grid-cols-12 col-span-12'>
                     <BoxCantainer>
                         {
-                            ((isLoadingProfile && isLoading)) ? (<Skeleton className='m-1' active />) : (
+                            !dataProfile ? (<Skeleton className='m-1' active />) : (
                                 <React.Fragment>
                                     <div className=" border-b mb-3 border-[#eae9e9] pb-2 h-auto grid grid-cols-2 gap-2 content-between pt-2">
                                         <div className="">
-                                            <div className="float-left cursor-pointer" onClick={()=>redirectIT(`/user/${data?.support?.user_id}`)}>
+                                            <div className="float-left cursor-pointer" onClick={() => redirectIT(`/user/${data?.support?.user_id}`)}>
                                                 <div className="flex  ">
                                                     <div className="pt-1">
                                                         <Img src={ImgProvider(dataProfile?.user?.profile?.profile_picture)} alt="loading.." />
@@ -218,18 +238,51 @@ export default function TicketDetail() {
                                         </div>
                                     </div>
                                     {/*  */}
-                                    <div className='flex  justify-between'>
-                                        <div className=''>
+                                    <div className='flex  justify-between pb-2'>
+                                        <div className='mb-1'>
+                                            <span className=' px-3 mr-2 rounded-[15px] leading-[18px] text-xs italic font-semibold capitalize bg-[#d4d5d6]'>
+                                                Created at
+                                            </span>
                                             <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>{
                                                 moment(data?.created_at).format('MMMM Do YYYY, h:mm:ss a')
                                             }</CustomeText></span>
                                         </div>
+                                        {
+                                            data?.resolved && (
+                                                <div className='mb-1'>
+                                                    <span className=' px-3 mr-2 rounded-[15px] leading-[18px] text-xs italic font-semibold capitalize bg-[#d4d5d6]'>
+                                                        Closed at
+                                                    </span>
+                                                    <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>{
+                                                        moment(data?.created_at).format('MMMM Do YYYY, h:mm:ss a')
+                                                    }</CustomeText></span>
+                                                </div>
+                                            )
+                                        }
                                         <div className=''>
-                                            <Status theme={{}}>Active</Status>
+                                            {
+                                                data?.resolved ? (
+                                                    <Status theme={{ border: "1px solid #f72323", bg: '#d8acac', color: "#f72323" }}>Closed</Status>
+                                                ) : (
+                                                    <Popconfirm
+                                                        title={<p className='mt-1 text-xs'>Are you sure to Closed ?</p>}
+                                                        description="Are you sure to Closed ?"
+                                                        onConfirm={confirmCloseTicket}
+                                                        onCancel={cancel}
+                                                        placement="leftTop"
+                                                        okText="Close"
+                                                        cancelText="Cancel"
+                                                    >
+                                                        <Status theme={{}}>Active</Status>
+                                                    </Popconfirm>
+                                                )
+                                            }
+
+
                                         </div>
                                     </div>
 
-                                    <span className="text-gray-900 whitespace-no-wrap"><CustomeText>
+                                    <span className="text-gray-900 whitespace-no-wrap "><CustomeText>
                                         <div className=''>
                                             <span className=' px-3 mr-2 rounded-[15px] leading-[18px] text-sm italic capitalize bg-[#d4d5d6]'>
                                                 topic
@@ -275,14 +328,12 @@ export default function TicketDetail() {
                                 </React.Fragment>
                             )
                         }
-
-
                     </BoxCantainer>
                 </div>
                 <div className='lg:col-span-8 md:col-span-12 col-span-12'>
                     <BoxCantainer>
                         {
-                            data?.support?.replies.length>=1 && (
+                            data?.support?.replies.length >= 1 && (
                                 <div>
                                     <Status style={{ border: "1px solid transparent" }} theme={{ bg: "white", border: "1px solid transparent" }} onClick={() => SetState(true)} >
                                         <div className='flex justify-between px-2 '>
@@ -403,7 +454,7 @@ background: ${props => props?.theme?.bg ?? 'rgba(22, 192, 152, 0.38)'};
 width: 80px;
 color:${props => props?.theme?.color ?? '#00B087'};
 height: 27px;
-border: ${props => props?.theme?.color ?? '1px solid #00B087'};
+border: ${props => props?.theme?.border ?? '1px solid #00B087'};
 border-radius: 4px;
 `;
 const CustomeText = styled.div`

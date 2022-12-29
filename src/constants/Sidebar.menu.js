@@ -1,9 +1,10 @@
-import { RiDashboardFill , RiPriceTag2Fill , RiSettings5Fill } from 'react-icons/ri';
-import { MdInsertComment, MdLocalOffer  , MdCategory} from 'react-icons/md';
+import { RiDashboardFill, RiPriceTag2Fill, RiSettings5Fill } from 'react-icons/ri';
+import { MdInsertComment, MdLocalOffer, MdCategory } from 'react-icons/md';
 import { SiScrollreveal } from 'react-icons/si';
-import { BsPeopleFill } from "react-icons/bs";
+import { BsPeopleFill, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { FaIdeal } from "react-icons/fa";
-
+import { MdPrivacyTip } from "react-icons/md";
+import { BiSupport } from "react-icons/bi"
 export const SidebarContants = [
   {
     link: '/',
@@ -104,18 +105,7 @@ export const AgentRemainSideConstant = [
     tag: null,
     notification: 2,
     IconColor: '#FFCB33',
-    icon: <RiSettings5Fill />,
-  }
-  ,
-  {
-    link: null,
-    key: 'Tags',
-    title: 'Comments',
-    permissionKey: '',
-    tag: null,
-    notification: 12,
-    IconColor: '#2EE6CA',
-    icon: <SiScrollreveal />,
+    icon: <BiSupport />,
   },
   {
     link: null,
@@ -123,10 +113,33 @@ export const AgentRemainSideConstant = [
     title: 'Setting',
     permissionKey: '',
     tag: null,
-    notification: 2,
+    notification: null,
     IconColor: '#FFCB33',
     icon: <RiSettings5Fill />,
   }
+  ,
+  {
+    link: '/term-condition',
+    key: 'Setting',
+    title: 'Terms & Condition',
+    permissionKey: '',
+    tag: null,
+    notification: null,
+    IconColor: 'green',
+    icon: <BsFillBookmarkCheckFill />,
+  }
+  ,
+  {
+    link: '/privacy',
+    key: 'Privacy',
+    title: 'Privacy',
+    permissionKey: '',
+    tag: null,
+    notification: null,
+    IconColor: 'pink',
+    icon: <MdPrivacyTip />,
+  }
+
 
 ]
 
