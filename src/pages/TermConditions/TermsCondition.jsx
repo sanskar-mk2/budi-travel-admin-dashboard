@@ -1,8 +1,11 @@
 import React from 'react';
 import { useFetch } from 'hooks';
-import { Modal , TextFieldArea, InputFieldLatest } from 'Component';
+import { Modal, TextFieldArea, InputFieldLatest } from 'Component';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { Popconfirm, Skeleton } from 'antd';
+import styled from 'styled-components';
+import moment from 'moment';
 export default function TermsCondition() {
     const [state, SetState] = React.useState(false)
     const methods = useForm({
@@ -14,11 +17,12 @@ export default function TermsCondition() {
     })
     const { control, handleSubmit, setValue,
         //  formState:  { isDirty, isValid } 
-        } = methods;
+    } = methods;
 
     const onSuccess = React.useCallback((response) => {
         if (response?.message) {
             toast.success(response?.message)
+            // callFetch()
         }
     }, [])
     const onFailure = React.useCallback((error) => {
@@ -27,7 +31,7 @@ export default function TermsCondition() {
         }
     }, [])
 
-    const { isLoading, data , callFetch } = useFetch({
+    const { isLoading, data, callFetch } = useFetch({
         initialUrl: '/documents/terms_and_conditions',
         skipOnStart: false,
         config: {
@@ -39,18 +43,19 @@ export default function TermsCondition() {
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
-        formData.append("message" , data?.title);
-        formData.append("content" , data?.content);
+        formData.append("message", data?.title);
+        formData.append("content", data?.content);
         callFetch({
-         url:'/documents/terms_and_conditions',
-         method:"post",
-         data:formData
+            url: '/documents/terms_and_conditions',
+            method: "post",
+            data: formData
         })
+
     }, [callFetch])
 
     React.useEffect(() => {
-        if(data){
-            setValue("title", data?.data?.title , {
+        if (data) {
+            setValue("title", data?.data?.title, {
                 isTouched: true,
                 isValid: true
             })
@@ -60,7 +65,15 @@ export default function TermsCondition() {
             })
         }
 
-    }, [setValue , data])
+    }, [setValue, data])
+
+    const confirm = React.useCallback(() => {
+        SetState(true)
+    }, [])
+
+    const cancel = React.useCallback(() => {
+
+    }, [])
 
     return (
         <div>
@@ -90,13 +103,101 @@ export default function TermsCondition() {
                                 field,
                                 fieldState: { invalid, isTouched, isDirty, error },
                             }) => (
-                                <TextFieldArea rows={10} {...field} error={error} name={"content"} placeholder="Message" />
+                                <TextFieldArea rows={6} {...field} error={error} name={"content"} placeholder="Message" />
                             )}
                         />
                     </div>
                 </FormProvider>
             </Modal>
-            <button onClick={() => SetState(true)}>Click</button>
+            <div className='grid grid-cols-12 gap-3'>
+                <div className='lg:col-span-3 md:col-span-3 col-span-12'>
+                    <BoxCantainer>
+                        {
+                            isLoading ? (<Skeleton active />) : (
+                                <React.Fragment>
+                                    <div className='flex justify-between'>
+                                        <div className=" font-semibold mb-1 text-gray-900 whitespace-no-wrap">
+                                            <span className=' px-3 mr-2 rounded-[15px] leading-[18px] text-xs italic font-semibold capitalize bg-[#d4d5d6]'>
+                                                Updated at
+                                            </span>
+                                            <CustomeText style={{ fontWeight: "600", fontSize: "13px" }}>{
+                                                moment(data?.data?.updated_at).format('MMMM Do YYYY, h:mm:ss a')
+                                            }
+                                            </CustomeText>
+                                        </div>
+
+                                        <Popconfirm
+                                            title={<p className='mt-1 text-xs'>Update the Terms & condition ?</p>}
+                                            description="Are you sure to delete this task?"
+                                            onConfirm={confirm}
+                                            onCancel={cancel}
+                                            placement="leftTop"
+                                            okText="Update"
+                                            cancelText="Cancel"
+                                        >
+                                            <Status theme={{}}>Update</Status>
+                                        </Popconfirm>
+                                    </div>
+                                </React.Fragment>
+                            )
+                        }
+                    </BoxCantainer>
+                </div>
+                <div className='lg:col-span-9 md:col-span-9 col-span-12'>
+                    <BoxCantainer>
+                        {
+                            isLoading ? (<Skeleton active />) : (
+                                <React.Fragment>
+                                    <div className=''>
+                                    </div>
+                                    <section>
+                                        <article className='font-semibold mb-2 text-gray-900 '>
+                                            <CustomeText style={{ fontWeight: "600", fontSize: "19px" }}>
+                                                {data?.data?.title}
+                                            </CustomeText>
+                                        </article>
+                                        <article>
+                                            <CustomeText>
+                                                {data?.data?.content}
+                                            </CustomeText>
+                                        </article>
+                                    </section>
+                                </React.Fragment>
+                            )
+                        }
+                    </BoxCantainer>
+                </div>
+            </div>
         </div>
     )
 }
+
+
+const Status = styled.button`
+background: ${props => props?.theme?.bg ?? 'transparent'};
+width: 80px;
+color:${props => props?.theme?.color ?? '#1aaac3'};
+height: 27px;
+border: ${props => props?.theme?.color ?? '1px solid #1aaac3'};
+border-radius: 4px;
+&:hover{
+background:#1aaac3 !important;
+color:white !important;
+}
+`;
+const BoxCantainer = styled.div`
+background: #FFFFFF;
+padding-top:5px;
+box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
+border-radius: 10px;
+padding:10px 15px 15px 15px;
+`;
+
+const CustomeText = styled.div`
+// font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+color: #6E7079;
+`;

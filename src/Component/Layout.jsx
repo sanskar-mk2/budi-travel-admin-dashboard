@@ -4,11 +4,16 @@ import { AfterLoginHeader } from 'Component';
 import { useAuth } from 'hooks';
 import styled from 'styled-components';
 import { Outlet } from "react-router-dom";
+import { ConfigProvider } from 'antd';
+
 const Layout = () => {
   const { session } = useAuth()
   // const session =true ;
   return (
     <React.Fragment>
+      <ConfigProvider theme={{
+        token:''
+      }}>
       <Container>
         <Toaster
           position="top-center"
@@ -24,6 +29,7 @@ const Layout = () => {
           session ? (<AfterLoginHeader />) : (<Outlet />)
         }
       </Container>
+      </ConfigProvider>
     </React.Fragment>
   );
 }

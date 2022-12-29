@@ -2,10 +2,8 @@ import React from 'react';
 import styled from "styled-components";
 import { Selector } from 'Component';
 import { IconProvider } from 'utils/common.utils';
-import { SocialShare } from 'utils/ObjectUtils';
 import { Input, Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
-import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal, PaginationContainer } from 'Component';
 import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge'
@@ -40,23 +38,14 @@ const TicketList = () => {
     // console.log(e);
   }, [])
 
-  const selectionFilterTwo = React.useCallback((e) => {
-    // const values = e;
-    // console.log(e);
-  }, [])
 
   const paginationAction = React.useCallback((page, b) => {
     callFetch({
-      url: `/page?page=${page}`,
+      url: `/support/support_tickets?page=${page}`,
       method: 'get'
     })
   }, [callFetch])
 
-  const redirectIT = React.useCallback((e) => {
-    if (e) {
-      navigate(e)
-    }
-  }, [navigate]);
 
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
@@ -139,9 +128,7 @@ const TicketList = () => {
                           <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {enLangauge.TICKET_TABLE_HEADER_MSG}
                           </th>
-                          <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            {enLangauge.TICKET_TABLE_HEADER_RESOLVED}
-                          </th>
+                      
                           <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {enLangauge.TICKET_TABLE_HEADER_RESOLVE_AT}
                           </th>
@@ -158,8 +145,8 @@ const TicketList = () => {
                               <td className="px-5 py-3   bg-white text-sm">
                                 <div className="flex">
                                   <div className="ml-3">
-                                    <span onClick={()=>navigate(`/ticket-detail/${data?.id}`)} className="text-gray-900 whitespace-no-wrap mt-2 cursor-pointer" >
-                                      <CustomeText>{data?.user_id}</CustomeText>
+                                    <span onClick={() => navigate(`/ticket-detail/${data?.id}`)} className="text-gray-900 whitespace-no-wrap mt-2 cursor-pointer" >
+                                      <CustomeText>{data?.id}</CustomeText>
                                     </span>
                                   </div>
                                 </div>
@@ -197,21 +184,20 @@ const TicketList = () => {
                               <td className="px-5 py-3 bg-white text-sm">
                                 <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                   <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                                  <span className="relative cursor-pointer"><CustomeText>{data?.resolved}</CustomeText></span>
-                                </span>
-                              </td>
-                              <td className="px-5 py-3 bg-white text-sm">
-                                <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                  <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                                  <span className="relative"><CustomeText>India</CustomeText></span>
+                                  <span className="relative"><CustomeText>{moment(data?.update_at).format('MMMM Do YYYY, h:mm:ss a')}</CustomeText></span>
                                 </span>
                               </td>
                               <td className="px-5 py-3  bg-white text-sm">
                                 <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                   <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
                                   <span className="relative">
-                                    <Status theme={{}}>Active</Status>
-                                    </span>
+                                    {
+                                      !data?.resolved ? (<Status theme={{}}>Active</Status>) : (
+                                        <Status theme={{ border: "1px solid #f72323", bg: '#d8acac', color: "#f72323" }}>Closed</Status>
+                                      )
+                                    }
+
+                                  </span>
                                 </span>
                               </td>
                             </tr>
@@ -224,11 +210,13 @@ const TicketList = () => {
               }
             </div>
             <div className="pt-2 lg:px-3 md:px-2 px-0">
-              <PaginationContainer>
+              <PaginationContainer labelText={"Total : "
+                + "" + data?.supports?.total + " of Page " + data?.supports?.current_page
+              }  >
                 <Pagination showSizeChanger={false}
                   defaultCurrent={1}
                   defaultPageSize={10}
-                  total={data?.users?.total} onChange={paginationAction} />
+                  total={data?.supports?.total} onChange={paginationAction} />
               </PaginationContainer>
             </div>
           </React.Fragment>
@@ -264,7 +252,7 @@ background: ${props => props?.theme?.bg ?? 'rgba(22, 192, 152, 0.38)'};
 width: 80px;
 color:${props => props?.theme?.color ?? '#00B087'};
 height: 27px;
-border: ${props => props?.theme?.color ?? '1px solid #00B087'};
+border: ${props => props?.theme?.border ?? '1px solid #00B087'};
 border-radius: 4px;
 `;
 const Select = styled(Selector)`
@@ -274,12 +262,4 @@ width: ${props => props?.theme.width ?? '80px !important'};
 }import { IconProvider } from 'utils/common.utils';
 import { useFetch } from 'hooks';
 
-`;
-
-const ShareButton = styled.button`
-padding:3px 10px;
-background:${props => props?.theme.bg};
-color:${props => props?.theme?.color};
-border-radius:3px;
-width:100%;
 `;
