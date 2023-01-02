@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.7164cc7c.css",
-    "main.js": "/static/js/main.056c942b.js",
+    "main.css": "/static/css/main.fa013010.css",
+    "main.js": "/static/js/main.b26b94c8.js",
     "static/js/787.a7f05235.chunk.js": "/static/js/787.a7f05235.chunk.js",
     "static/media/budiLogo.png": "/static/media/budiLogo.7d37a7c736bc8a82120a.png",
     "index.html": "/index.html",
-    "main.7164cc7c.css.map": "/static/css/main.7164cc7c.css.map",
-    "main.056c942b.js.map": "/static/js/main.056c942b.js.map",
+    "main.fa013010.css.map": "/static/css/main.fa013010.css.map",
+    "main.b26b94c8.js.map": "/static/js/main.b26b94c8.js.map",
     "787.a7f05235.chunk.js.map": "/static/js/787.a7f05235.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7164cc7c.css",
-    "static/js/main.056c942b.js"
+    "static/css/main.fa013010.css",
+    "static/js/main.b26b94c8.js"
   ]
 }
