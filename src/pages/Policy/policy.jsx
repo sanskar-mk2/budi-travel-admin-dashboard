@@ -10,6 +10,7 @@ import { documentValidationSchema } from 'utils/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 export default function Policy() {
     const [state, SetState] = React.useState(false)
+    const [reload, setReload] = React.useState(false)
     const methods = useForm({
         resolver: yupResolver(documentValidationSchema),
         mode: "all",
@@ -24,8 +25,10 @@ export default function Policy() {
 
     const onSuccess = React.useCallback((response) => {
         if (response?.message) {
-            toast.success(response?.message)
-            // callFetch()
+            if (response?.message === "Privacy Policy updated successfully") {
+                toast.success(response?.message)
+                setReload(true)
+            }
         }
     }, [])
     const onFailure = React.useCallback((error) => {
@@ -44,7 +47,15 @@ export default function Policy() {
         onFailure
     })
 
-
+    React.useEffect(() => {
+        if (reload) {
+            setReload(false)
+            callFetch({
+                url:'/documents/privacy_policy',
+                method:"get"
+            })
+        }
+    }, [reload , callFetch])
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
