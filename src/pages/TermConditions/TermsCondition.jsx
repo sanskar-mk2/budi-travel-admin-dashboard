@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 export default function TermsCondition() {
     const [state, SetState] = React.useState(false)
+    const [reload, setReload] = React.useState(false)
     const methods = useForm({
         mode: "all",
         defaultValues: {
@@ -21,8 +22,10 @@ export default function TermsCondition() {
 
     const onSuccess = React.useCallback((response) => {
         if (response?.message) {
-            toast.success(response?.message)
-            // callFetch()
+            if (response?.message === "Term and Conditions updated successfully") {
+                toast.success(response?.message)
+                setReload(true)
+            }
         }
     }, [])
     const onFailure = React.useCallback((error) => {
@@ -52,6 +55,16 @@ export default function TermsCondition() {
         })
 
     }, [callFetch])
+
+    React.useEffect(() => {
+        if (reload) {
+            setReload(false)
+            callFetch({
+                url:'/documents/terms_and_conditions',
+                method:"get"
+            })
+        }
+    }, [reload , callFetch])
 
     React.useEffect(() => {
         if (data) {
