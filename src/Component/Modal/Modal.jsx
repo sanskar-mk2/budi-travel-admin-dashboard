@@ -1,15 +1,23 @@
 import { Modal } from 'antd';
 import React from "react";
 const ModalComp = ({ onSubmit, state, SetState, title, children, ...pops }) => {
-  const handleOk = () => {
+  // const handleOk = () => {
+  //   SetState(false);
+  //   if (onSubmit) {
+  //     onSubmit()
+  //   }
+  // };
+
+  const handleOk = React.useCallback(() => {
     SetState(false);
     if (onSubmit) {
       onSubmit()
     }
-  };
-  const handleCancel = () => {
+  }, [onSubmit , SetState])
+
+  const handleCancel = React.useCallback(() => {
     SetState(false);
-  };
+  }, [SetState])
 
   return (
     <React.Fragment>
