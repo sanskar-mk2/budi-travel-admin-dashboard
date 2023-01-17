@@ -12,6 +12,7 @@ import VerifyOtp from "pages/ForgetPassword/VerifyOtp";
 import TicketList from "pages/Supports/components/TicketsList";
 import TicketDetail from "pages/Supports/TicketDetail";
 import TermsCondition from "pages/TermConditions/TermsCondition";
+
 import Policy from "pages/Policy/policy";
 const PublicRouteList = [
   {

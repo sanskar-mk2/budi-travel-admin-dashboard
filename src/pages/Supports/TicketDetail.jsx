@@ -19,6 +19,7 @@ import { ticketReplayValidationSchema } from 'utils/validation';
 export default function TicketDetail() {
     const navigate = useNavigate()
     const [state, SetState] = React.useState(false);
+    const [reload, setReload] = React.useState(false)
     const { id } = useParams()
     const methods = useForm({
         resolver: yupResolver(ticketReplayValidationSchema),
@@ -32,25 +33,25 @@ export default function TicketDetail() {
         // formState: { isDirty, isValid }
     } = methods;
 
+    // const onSuccess = React.useCallback((response) => {
+    //     if (response?.message) {
+    //         toast.success(response?.message)
+    //         navigate('/support')
+    //     }
+    // }, [navigate])
+    // const onFailure = React.useCallback((error) => {
+    //     if (error?.message) {
+    //         toast.error(error?.message)
+    //     }
+    // }, [])
+
     const onSuccess = React.useCallback((response) => {
-        if (response?.message) {
+        if (response?.message === "Successfully replied to support ticket") {
             toast.success(response?.message)
-            navigate('/support')
+            setReload(true)
         }
     }, [navigate])
     const onFailure = React.useCallback((error) => {
-        if (error?.message) {
-            toast.error(error?.message)
-        }
-    }, [])
-
-    const onSuccessFirst = React.useCallback((response) => {
-        if (response?.message) {
-            toast.success(response?.message)
-            navigate('/support')
-        }
-    }, [navigate])
-    const onFailureFirst = React.useCallback((error) => {
         if (error?.message) {
             toast.error(error?.message)
         }
@@ -62,43 +63,43 @@ export default function TicketDetail() {
         config: {
             method: 'get'
         },
-        onSuccessFirst,
-        onFailureFirst,
-    });
-
-    const {  data: dataProfile, callFetch: callFetchSec } = useFetch({
-        initialUrl: `/user/${data?.support?.user_id}`,
-        skipOnStart: true,
-        config: {
-            method: "get"
-        },
         onSuccess,
-        onFailure
+        onFailure,
     });
 
-    const userid = React.useMemo(() => {
-        return data?.support?.user_id ?? null
-    }, [data])
-    React.useEffect(() => {
-        if (userid) {
-            callFetchSec({
-                url: `/user/${userid}`,
-                method: 'get'
-            })
-        }
-    }, [userid])
+    // const {  data: dataProfile, callFetch: callFetchSec } = useFetch({
+    //     initialUrl: `/user/${data?.support?.user_id}`,
+    //     skipOnStart: true,
+    //     config: {
+    //         method: "get"
+    //     },
+    //     onSuccess,
+    //     onFailure
+    // });
+
+    // const userid = React.useMemo(() => {
+    //     return data?.support?.user_id ?? null
+    // }, [data])
+    // React.useEffect(() => {
+    //     if (userid) {
+    //         callFetchSec({
+    //             url: `/user/${userid}`,
+    //             method: 'get'
+    //         })
+    //     }
+    // }, [userid])
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
         formData.append("message", data?.message)
         formData.append("support_id", id)
         console.log(data)
-        callFetchSec({
+        callFetch({
             url: '/support/reply',
             method: 'post',
             data: formData
         })
-    }, [callFetchSec, id]);
+    }, [callFetch, id]);
 
 
     const redirectIT = React.useCallback((e) => {
@@ -121,19 +122,32 @@ export default function TicketDetail() {
         toast.error("Cancled !")
     }, [])
 
+    const deleteReply = React.useCallback((id) => {
+        callFetch({
+            url: `/support/support_ticket/${id}`,
+            method: 'delete',
+        })
+    }, [callFetch])
 
+    // for reload 
+    React.useEffect(() => {
+        if (reload) {
+            setReload(false)
+            callFetch({
+                url:`support/support_ticket/${id}`,
+                method:"get"
+            })
+        }
+    }, [reload , callFetch])
 
-    const TabOneRightComponent = React.memo(() => {
+    const TabOneRightComponent = React.memo((props) => {
         return (
             <React.Fragment>
                 <div className="">
                     <Tooltip placement="leftTop" color="black" title={
                         <React.Fragment>
                             <div>
-                                <button> Update </button>
-                            </div>
-                            <div>
-                                <button>  Delete </button>
+                                <button onClick={()=>deleteReply(props?.id)}>  Delete </button>
                             </div>
                         </React.Fragment>} arrowPointAtCenter>
                         <span>
@@ -184,18 +198,18 @@ export default function TicketDetail() {
                 <div className='lg:col-span-4 md:grid-cols-12 col-span-12'>
                     <BoxCantainer>
                         {
-                            !dataProfile ? (<Skeleton className='m-1' active />) : (
+                            isLoading ? (<Skeleton className='m-1' active />) : (
                                 <React.Fragment>
                                     <div className=" border-b mb-3 border-[#eae9e9] pb-2 h-auto grid grid-cols-2 gap-2 content-between pt-2">
                                         <div className="">
-                                            <div className="float-left cursor-pointer" onClick={() => redirectIT(`/user/${data?.support?.user_id}`)}>
+                                            <div className="float-left cursor-pointer" onClick={() => redirectIT(`/user/${data?.support?.user?.id}`)}>
                                                 <div className="flex  ">
                                                     <div className="pt-1">
-                                                        <Img src={ImgProvider(dataProfile?.user?.profile?.profile_picture)} alt="loading.." />
+                                                        <Img src={ImgProvider(data?.support?.user?.profile_picture)} alt="loading.." />
                                                     </div>
                                                     <div>
                                                         <div className="pl-3">
-                                                            <Title theme={{ fontSize: "12px" }}>{dataProfile?.user?.name}</Title>
+                                                            <Title theme={{ fontSize: "12px" }}>{data?.support?.user?.name}</Title>
                                                             <div>
                                                             </div>
                                                         </div>
@@ -205,35 +219,6 @@ export default function TicketDetail() {
                                         </div>
                                         <div className="">
                                             <div className="float-right mt-1">
-                                                <Status>{enLangauge.AGENT_DETAIL_ACTIVE}</Status>
-                                            </div>
-                                        </div>
-                                        <div className="pt-3 ">
-                                            <div className="float-left">
-                                                <div>
-                                                    <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                                                        {enLangauge.USER_DETAIL_PHONE_NUM}
-                                                    </Title>
-                                                    <span className='cursor-pointer' onClick={() => redirectOut(`tel:+${9080}`)}>
-                                                        <Title theme={{ color: "black", fontSize: "12px" }}>
-                                                            {phoneFormat(9621144328, "+11")}
-                                                        </Title>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="pt-3 ">
-                                            <div className="">
-                                                <div>
-                                                    <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
-                                                        {enLangauge.USER_DETAIL_EMAIL_ID}
-                                                    </Title>
-                                                    <span className='cursor-pointer' onClick={() => redirectOut(`mailto:${data?.user?.email}`)}>
-                                                        <Title theme={{ color: "black", fontSize: "12px" }}>
-                                                            {dataProfile?.user?.email}
-                                                        </Title>
-                                                    </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +229,7 @@ export default function TicketDetail() {
                                                 Created at
                                             </span>
                                             <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>{
-                                                moment(data?.created_at).format('MMMM Do YYYY, h:mm:ss a')
+                                                data?.support?.created_at
                                             }</CustomeText></span>
                                         </div>
                                         {
@@ -358,7 +343,7 @@ export default function TicketDetail() {
                                             <div className=''>
                                                 <span className=" font-semibold text-gray-900 whitespace-no-wrap"><CustomeText style={{ fontWeight: "600" }}>
                                                     {
-                                                        moment(replayies?.created_at).format('MMMM Do YYYY, h:mm:ss a')
+                                                        replayies?.created_at
                                                     }
                                                 </CustomeText></span>
                                             </div>
