@@ -60,7 +60,7 @@ export default function Policy() {
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
         console.log(data, "")
-        formData.append("message", data?.title);
+        formData.append("title", data?.title);
         formData.append("content", data?.content);
         callFetch({
             url: '/documents/privacy_policy',
@@ -71,11 +71,11 @@ export default function Policy() {
 
     React.useEffect(() => {
         if (data) {
-            setValue("title", data?.data?.title, {
+            setValue("title", data?.document?.title, {
                 isTouched: true,
                 isValid: true
             })
-            setValue("content", data?.data?.content, {
+            setValue("content", data?.document?.content, {
                 isTouched: true,
                 isValid: true
             })
@@ -169,12 +169,12 @@ export default function Policy() {
                                     <section>
                                         <article className='font-semibold mb-2 text-gray-900 '>
                                             <CustomeText style={{ fontWeight: "600", fontSize: "19px" }}>
-                                                {data?.data?.title}
+                                                {data?.document?.title}
                                             </CustomeText>
                                         </article>
                                         <article>
                                             <CustomeText>
-                                                {data?.data?.content}
+                                                {data?.document?.content}
                                             </CustomeText>
                                         </article>
                                     </section>

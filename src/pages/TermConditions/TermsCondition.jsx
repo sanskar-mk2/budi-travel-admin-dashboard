@@ -46,8 +46,9 @@ export default function TermsCondition() {
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
-        formData.append("message", data?.title);
+        formData.append("title", data?.title);
         formData.append("content", data?.content);
+        // formData.append("_method", "put");
         callFetch({
             url: '/documents/terms_and_conditions',
             method: "post",
@@ -68,11 +69,11 @@ export default function TermsCondition() {
 
     React.useEffect(() => {
         if (data) {
-            setValue("title", data?.data?.title, {
+            setValue("title", data?.document?.title, {
                 isTouched: true,
                 isValid: true
             })
-            setValue("content", data?.data?.content, {
+            setValue("content", data?.document?.content, {
                 isTouched: true,
                 isValid: true
             })
@@ -166,12 +167,12 @@ export default function TermsCondition() {
                                     <section>
                                         <article className='font-semibold mb-2 text-gray-900 '>
                                             <CustomeText style={{ fontWeight: "600", fontSize: "19px" }}>
-                                                {data?.data?.title}
+                                                {data?.document?.title}
                                             </CustomeText>
                                         </article>
                                         <article>
                                             <CustomeText>
-                                                {data?.data?.content}
+                                                {data?.document?.content}
                                             </CustomeText>
                                         </article>
                                     </section>
