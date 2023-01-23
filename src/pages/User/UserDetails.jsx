@@ -63,7 +63,7 @@ const UserDetails = () => {
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   <span id="agentID">
-                    Ej784klm
+                    {id}
                   </span>
                 </CustomeTxtOne>
               </div>
@@ -102,11 +102,11 @@ const UserDetails = () => {
                   <div className="float-left">
                     <div className="flex  ">
                       <div className="pt-1">
-                        <Img src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading.." />
+                        <Img src={data?.user?.profile?.profile_picture} alt="loading.." />
                       </div>
                       <div>
                         <div className="pl-3">
-                          <Title>{data?.user?.name}</Title>
+                          <Title style={{fontSize:"13px"}}>{data?.user?.name}</Title>
                           <div>
                             <span>
                               <Title theme={{ color: "#9295A3", fontSize: "12px" }}>

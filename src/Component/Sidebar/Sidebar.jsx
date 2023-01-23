@@ -167,7 +167,9 @@ export const ChildSubMenu = ({ SetMenu, props }) => {
 
 
 export const ChildSubAgent = React.memo(({ SetMenu, props }) => {
+
   const navigate = useNavigate();
+  console.log(props ,"====" )
 const path = useLocation();
   const redirectIT = React.useCallback((e) => {
     if (e) {
@@ -199,7 +201,7 @@ const path = useLocation();
   return (
     <React.Fragment>
       <div onClick={() => redirectIT(props?.link)} className={`my-[10px] agent grid grid-cols-3 gap-2 place-items-center  transition-opacity hover:bg-primary-color ${location === props?.link && 'text-white bg-primary-color activeClass'} bg-white px-0  py-1 rounded-md`}>
-        <ImgIcon src={ImgProvider(props?.img)} alt="loading..." />
+        <ImgIcon src={props?.img} alt="loading..." />
         <div className={`w-full  font-semibold inline text-sm break-normal ${location === props?.link ? 'text-white' : ' text-[#6B7A99]'} `} style={{ fontSize: "14px" }}>
           {props?.name}
         </div>
