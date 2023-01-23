@@ -9,10 +9,21 @@ import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
 import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
+import {useFetch} from 'hooks';
 const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
+
+const {isLoading , data} = useFetch({
+   initialUrl:`/`,
+   skipOnStart:true,
+   config:{
+    method:'get'
+   }
+})
+
+console.log(data ,"==>")
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
       <span>

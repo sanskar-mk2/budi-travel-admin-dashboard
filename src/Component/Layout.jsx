@@ -5,6 +5,9 @@ import { useAuth } from 'hooks';
 import styled from 'styled-components';
 import { Outlet } from "react-router-dom";
 import { ConfigProvider } from 'antd';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+
 
 const Layout = () => {
   const { session } = useAuth()

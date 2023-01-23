@@ -105,7 +105,7 @@ const AgentsList = ({ props }) => {
                       <div>
                         <div className="flex items-center ">
                           <div className="">
-                            <Img src={ImgProvider(agent?.profile?.profile_picture)} alt="loading... " />
+                            <Img src={agent?.profile?.profile_picture} alt="loading... " />
                           </div>
                           <div className="pl-2">
                             <CustomeTxt>{agent?.name.split(" ")[0]}</CustomeTxt>
@@ -117,11 +117,11 @@ const AgentsList = ({ props }) => {
                         <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
                           <div className='float-left text-center'>
                             <CustomeTxt>789 </CustomeTxt>
-                            <CustomeText>Lima</CustomeText>
+                            <CustomeText>Offer</CustomeText>
                           </div>
                           <div className='float-right  text-center'>
                             <CustomeTxt>489</CustomeTxt>
-                            <CustomeText>Lima</CustomeText>
+                            <CustomeText>Finished Project</CustomeText>
                           </div>
                         </div>
                       </div>
@@ -130,7 +130,7 @@ const AgentsList = ({ props }) => {
                           <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
                             <div className=''>
                               <AgentRevenueTxt>$4,089</AgentRevenueTxt>
-                              <CustomeText>Lima</CustomeText>
+                              <CustomeText>Total Profit</CustomeText>
                             </div>
                             <div className="grid mt-3 ml-3 ">
                               <div className="auto l">

@@ -2,6 +2,7 @@ import React from "react";
 import { Wrapper } from "Component";
 import Login from "pages/Login/Login";
 import Dashboard from "pages/Dashboard/Dashboard";
+import Profile from "pages/Profile/Profile";
 import Revenue from "pages/Revenue/Revenue";
 import Agents from "pages/Agents/Agents";
 import AgentDetails from "pages/Agents/AgentDetails";
@@ -12,8 +13,8 @@ import VerifyOtp from "pages/ForgetPassword/VerifyOtp";
 import TicketList from "pages/Supports/components/TicketsList";
 import TicketDetail from "pages/Supports/TicketDetail";
 import TermsCondition from "pages/TermConditions/TermsCondition";
-
 import Policy from "pages/Policy/policy";
+
 const PublicRouteList = [
   {
     path: "/login",
@@ -37,13 +38,20 @@ const PublicRouteList = [
 const PrivateRouteList = [
   {
     path: "/",
-  component: (<Wrapper>
+    component: (<Wrapper>
       <Dashboard />
     </Wrapper>)
   }, {
     path: '/dashboard-revenue',
     component: (<Wrapper>
       <Revenue />
+    </Wrapper>)
+  }
+  ,
+  {
+    path: '/profile',
+    component: (<Wrapper>
+      <Profile />
     </Wrapper>)
   }
   ,
@@ -77,7 +85,7 @@ const PrivateRouteList = [
     component: (<Wrapper>
       <TicketList />
     </Wrapper>)
-  } ,
+  },
   {
     path: '/ticket-detail/:id',
     component: (<Wrapper>

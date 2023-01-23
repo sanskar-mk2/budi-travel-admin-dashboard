@@ -33,7 +33,7 @@ const AfterLoginHeader = () => {
   const agents = React.useMemo(() => {
     if (!isLoading) {
       return data?.agents?.data?.map((i, index) => ({
-        img: undefined,
+        img: i?.profile?.profile_picture,
         isLive: 'Live',
         name: i?.name,
         link: `/agent/${i?.id}`,

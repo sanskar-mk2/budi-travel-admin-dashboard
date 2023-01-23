@@ -12,51 +12,90 @@ import { enLangauge } from 'Contents/en-langauge'
 import { useFetch } from "hooks";
 import { Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
-const { RangePicker } = DatePicker;
+import { DateRange } from 'react-date-range';
+import moment from 'moment/moment';
 
 const AllUserList = () => {
   const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
-
+  const dateFormat = 'DD/MM/YYYY';
+  const [dateState, setState] = React.useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection'
+    }
+  ]);
+  const [filter_query, Setfilter_query] = React.useState({
+    search: null,
+    from: null,
+    to: null,
+    user_role: null
+  })
   const { isLoading, data, callFetch } = useFetch({
-    initialUrl: "/users",
+    initialUrl: `/user_role?page=${1}`,
     skipOnStart: false,
     config: {
       method: "get"
     }
   });
-  const searchingFilter = React.useCallback((e) => {
-    // const searchValue = e?.target?.value;
+
+  React.useEffect(() => {
+    Object.keys(filter_query).forEach((key) => (filter_query[key] === undefined
+      || filter_query[key] === null
+      || filter_query[key] === "")
+      && delete filter_query[key]
+    )
+    let str = Object.keys(filter_query).map(function (key) {
+      return key + '=' + filter_query[key]
+    }).join('&')
+
+    callFetch({
+      url: `/user_role?page=${1}&${str}`,
+      method: ''
+    })
+  }, [filter_query])
+
+  const updateDate = React.useCallback((item) => {
+    setState([item.selection])
+    Setfilter_query({
+      ...filter_query, from: moment(item.selection?.startDate).format(dateFormat),
+      to: moment(item.selection?.endDate).format(dateFormat)
+    })
+
   }, [])
 
-  const dateRangeFilteration = React.useCallback((e) => {
-    // const [start, end] = e;
-  }, [])
-
-  const selectionFilterOne = React.useCallback((e) => {
-    // const values = e;
-    // console.log(e);
-  }, [])
-
-  const selectionFilterTwo = React.useCallback((e) => {
-    // const values = e;
-    // console.log(e);
-  }, [])
 
   const paginationAction = React.useCallback((page, b) => {
-    callFetch({
-      url: `/page?page=${page}`,
-      method: 'get'
-    })
+    if (!isLoading) {
+      Object.keys(filter_query).forEach(
+        (key) =>
+          (filter_query[key] === undefined ||
+            filter_query[key] === null ||
+            filter_query[key] === "") &&
+          delete filter_query[key]
+      );
+      const str = Object.keys(filter_query).map(function (key) {
+        return key + '=' + filter_query[key];
+      }).join('&');
+      callFetch({
+        url: `/users?page=${page}&${str}`,
+        method: 'get'
+      })
+    }
   }, [callFetch])
 
-  const redirectIT = React.useCallback((e)=>{
-    if(e){
+  const redirectIT = React.useCallback((e) => {
+    if (e) {
       navigate(e)
     }
-  },[navigate]);
+  }, [navigate]);
+  React.useLayoutEffect(() => {
+    if (isLoading) {
+      SetState(false)
+    }
+  }, [isLoading])
 
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
@@ -80,7 +119,12 @@ const AllUserList = () => {
         <Modal title={"Filter By Date "} state={state} SetState={SetState}>
           <div className="grid w-full">
             <div className="m-auto">
-              <RangePicker onChange={dateRangeFilteration} />
+              <DateRange
+                editableDateInputs={true}
+                onChange={updateDate}
+                moveRangeOnFirstSelection={false}
+                ranges={dateState}
+              />
             </div>
           </div>
         </Modal>
@@ -113,12 +157,24 @@ const AllUserList = () => {
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
-              <div className='lg:col-span-2 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
-                <Input onChange={searchingFilter} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
+              <div className='lg:col-span-3 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
+                <Input onChange={(e) => Setfilter_query({
+                  ...filter_query, search: e.target?.value
+                })} value={filter_query?.search} autoFocus={true} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
-                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} onChange={selectionFilterOne} options={["Pending", "Approved", "InActive"]} />
+                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={filter_query?.user_role ? 'Active' : 'InActive' ?? "Filter"} onChange={(e) =>
+                    e === "ALL" ? Setfilter_query({
+                      search: null,
+                      from: null,
+                      to: null,
+                      user_role: null
+                    }) :
+                      Setfilter_query({
+                        ...filter_query, user_role: e === 'Active' ? true : false
+                      })
+                  } options={["Active", "InActive" ,"ALL"]} />
                 </CustomeText>
               </div>
               <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>
@@ -127,11 +183,11 @@ const AllUserList = () => {
               <div className="px-1 lg:py-0 md:py-0 py-1 " onClick={() => SetShare(!haveToshare)}>
                 <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.USERS_TABLE_SHARE} </Button>
               </div>
-              <div className="px-1 lg:py-0 md:py-0 py-1 ">
+              {/* <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
                   <Select onChange={selectionFilterTwo} size={"defaut"} theme={{ width: "100%" }} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
                 </CustomeText>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -148,11 +204,11 @@ const AllUserList = () => {
             <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
               {
                 isLoading ? (
-                <React.Fragment>
-                  <Skeleton active />
-                  <br />
-                  <Skeleton active />
-                </React.Fragment>) : (
+                  <React.Fragment>
+                    <Skeleton active />
+                    <br />
+                    <Skeleton active />
+                  </React.Fragment>) : (
                   <React.Fragment>
                     <table className="min-w-full leading-normal">
                       <thead >
@@ -185,7 +241,7 @@ const AllUserList = () => {
                               <td className="px-5 py-3   bg-white text-sm">
                                 <div className="flex">
                                   <div className="ml-3">
-                                    <span className="text-gray-900 whitespace-no-wrap mt-2 cursor-pointer" onClick={()=>redirectIT(`/user/${data?.id}`)}>
+                                    <span className="text-gray-900 whitespace-no-wrap mt-2 cursor-pointer" onClick={() => redirectIT(`/user/${data?.id}`)}>
                                       <CustomeText>{data?.name}</CustomeText>
                                     </span>
                                   </div>
