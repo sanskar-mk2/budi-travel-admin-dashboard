@@ -17,6 +17,7 @@ import { AUTH_TOKEN, USER } from 'constants/localstorage.constants';
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const [error, SetError] = React.useState(null)
   const { getLocalStorage,
     setLocalStorage } = useLocalStorage();
   const onSuccess = React.useCallback((response) => {
@@ -31,13 +32,14 @@ export const useAuth = () => {
       // navigate('/verify-otp');
     }
   }, [navigate, setLocalStorage]);
-  const onFailure = React.useCallback((errors) => {
-    if(errors.message){
-      toast.error(errors?.message);
+  const onFailure = React.useCallback((error) => {
+    if (error) {
+      toast.error(error);
+      SetError(error)
     }
   }, []);
   const session = React.useMemo(() => {
-    return getLocalStorage(AUTH_TOKEN)??false;
+    return getLocalStorage(AUTH_TOKEN) ?? false;
   }, [getLocalStorage]);
   const userValue = React.useMemo(() => {
     return getLocalStorage(USER);
@@ -108,7 +110,8 @@ export const useAuth = () => {
     logout,
     login,
     forgetPassword,
-    isLoading
+    isLoading,
+    error
   }
 }
 

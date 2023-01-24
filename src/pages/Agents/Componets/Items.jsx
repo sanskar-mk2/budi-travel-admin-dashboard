@@ -11,11 +11,29 @@ import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
 import { useFetch } from 'hooks';
 import toast from 'react-hot-toast';
+import { DateRange } from 'react-date-range';
+import moment from 'moment/moment';
+
 const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
   const [unapproval, SetUnapproval] = React.useState([]);
+  const dateFormat = 'DD/MM/YYYY';
+  const [dateState, setState] = React.useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection'
+    }
+  ]);
+
+  const [filter_query, Setfilter_query] = React.useState({
+    search: null,
+    from: null,
+    to: null,
+    user_role: null
+  })
 
   const onFailure = React.useCallback((errors) => {
     toast.error(errors?.message);
@@ -51,7 +69,7 @@ const Items = () => {
     if (e === `Approved`) {
       Array(1).fill().map(() => {
         formData.append("agent_id", e);
-        return e ;
+        return e;
       });
       callFetch({
         url: `/agents/approve_agent`,
@@ -113,21 +131,63 @@ const Items = () => {
             method: 'get',
           });
         }, [900])
-
         SetUnapproval([])
       }
     } else {
       toast.error('Have not selected any Item');
     }
-
   }, [callFetch, unapproval])
 
-  const paginationAction = React.useCallback((page, b) => {
-    callFetch({
-      url: `/agents/unapproved_agents?page=${page}`,
-      method: 'get'
+  React.useEffect(() => {
+    Object.keys(filter_query).forEach((key) => (filter_query[key] === undefined
+      || filter_query[key] === null
+      || filter_query[key] === "")
+      && delete filter_query[key]
+    )
+    let str = Object.keys(filter_query).map(function (key) {
+      return key + '=' + filter_query[key]
+    }).join('&')
+    if (str) {
+      callFetch({
+        url: `/agents/unapproved_agents?page=${1}&${str}`,
+        method: ''
+      })
+    }
+  }, [filter_query])
+
+  const updateDate = React.useCallback((item) => {
+    setState([item.selection])
+    Setfilter_query({
+      ...filter_query, from: moment(item.selection?.startDate).format(dateFormat),
+      to: moment(item.selection?.endDate).format(dateFormat)
     })
+
+  }, [filter_query])
+
+
+  const paginationAction = React.useCallback((page, b) => {
+    if (!isLoading) {
+      Object.keys(filter_query).forEach(
+        (key) =>
+          (filter_query[key] === undefined ||
+            filter_query[key] === null ||
+            filter_query[key] === "") &&
+          delete filter_query[key]
+      );
+      const str = Object.keys(filter_query).map(function (key) {
+        return key + '=' + filter_query[key];
+      }).join('&');
+      callFetch({
+        url: `/agents/unapproved_agents?page=${page}&${str}`,
+        method: 'get'
+      })
+    }
   }, [callFetch])
+  React.useLayoutEffect(() => {
+    if (isLoading) {
+      SetState(false)
+    }
+  }, [isLoading])
 
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
@@ -151,7 +211,12 @@ const Items = () => {
         <Modal title={"Filter By Date "} state={state} SetState={SetState}>
           <div className="grid w-full">
             <div className="m-auto">
-              <RangePicker onChange={dateRangeFilteration} />
+              <DateRange
+                editableDateInputs={true}
+                onChange={updateDate}
+                moveRangeOnFirstSelection={false}
+                ranges={dateState}
+              />
             </div>
           </div>
         </Modal>
@@ -178,26 +243,37 @@ const Items = () => {
             </div>
           </div>
         </Modal >
-        <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-5 md:grid-cols-3 grid-cols-1 mb-[15px]">
-          <div className="lg:col-span-2 inline">
-            <span><TableHeader>{enLangauge.AGENT_DETAIL_TABLE_HEADER_TITLE} </TableHeader> </span>  <span>{data?.unapproved_agents?.data?.length}</span>
+        <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mb-[15px]">
+          <div className="lg:col-span-2">
+            Unappoved agents
           </div>
-          <div className="lg:col-span-3  md:col-span-2 ">
+          <div className="lg:col-span-4  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
               <div className='lg:col-span-2 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
-                <Input onChange={searchingFilter} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
+                <Input onChange={(e) => Setfilter_query({
+                  ...filter_query, search: e.target?.value
+                })} value={filter_query?.search} autoFocus={true} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
               </div>
-
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
-                  <Select onChange={selectionFilterOne} size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} options={["Pending", "Approved", "InActive"]} />
+                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={filter_query?.user_role ? 'Active' : 'InActive' ?? "Filter"} onChange={(e) =>
+                    e === "ALL" ? Setfilter_query({
+                      search: null,
+                      from: null,
+                      to: null,
+                      user_role: null
+                    }) :
+                      Setfilter_query({
+                        ...filter_query, user_role: e === 'Active' ? true : false
+                      })
+                  } options={["Active", "InActive", "ALL"]} />
                 </CustomeText>
               </div>
               <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>
-                <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.AGENT_DETAIL_FILTER}</Button>
+                <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.USERS_TABLE_FILTER}</Button>
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 " onClick={() => SetShare(!haveToshare)}>
-                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.AGENT_DETAIL_SHARE} </Button>
+                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.USERS_TABLE_SHARE} </Button>
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
@@ -210,6 +286,7 @@ const Items = () => {
       </React.Fragment >
     )
   }, [])
+
 
   return (
     <React.Fragment>

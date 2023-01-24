@@ -11,7 +11,7 @@ import { Logo } from 'utils/common.utils';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, isLoading } = useAuth();
+  const { login, isLoading, error } = useAuth();
   const methods = useForm({
     resolver: yupResolver(loginValidationSchema),
     mode: "all",
@@ -21,7 +21,7 @@ export default function Login() {
     }
   });
 
-  const { control, handleSubmit,
+  const { control, handleSubmit, setError,
     formState: { isDirty, isValid }
   } = methods;
 
@@ -29,6 +29,11 @@ export default function Login() {
     login(data);
   }, [login]);
 
+  React.useEffect(() => {
+    if (error) {
+      setError('email', { type: 'custom', message: error })
+    }
+  }, [error])
   return (
     <React.Fragment>
       <div className="grid h-[95vh]">
@@ -99,7 +104,7 @@ export default function Login() {
               </div>
               <div className="form-control mt-6">
                 <Button className={`w-full bg-primary-color rounded-full `} type={'submit'} isLoading={isLoading}
-                isDisabled={!isDirty || !isValid}
+                  isDisabled={!isDirty || !isValid}
                 >{'LOGIN'}</Button>
               </div>
             </form>
