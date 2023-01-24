@@ -10,7 +10,9 @@ import { changePasswordValidationSchema } from 'utils/validation';
 export default function Profile() {
     const { userValue } = useAuth()
     let [imgUrl, SetImgUrl] = React.useState(null);
+    const [reload, SetReload] = React.useState(false)
     const [haveToshare, SetShare] = React.useState(false);
+
     const methods = useForm({
         resolver: yupResolver(changePasswordValidationSchema),
         defaultValues: {
@@ -18,20 +20,23 @@ export default function Profile() {
             confirmPassword: ''
         }
     })
+
     const { control, handleSubmit, formState: { isDirty, isValid } } = methods
 
     const onSuccess = React.useCallback((response) => {
+        if(response?.message){
         toast.success(response?.message)
+        SetReload(true)
+        }
     }, [])
 
     const onFailure = React.useCallback((error) => {
         toast.error(error?.message)
     }, [])
 
-    console.log(userValue, '====>')
     const { isLoading, data, callFetch } = useFetch({
-        initialUrl: ``,
-        skipOnStart: true,
+        initialUrl: `/user/${userValue?.id}`,
+        skipOnStart: false,
         config: {
             method: 'get'
         }
@@ -47,7 +52,7 @@ export default function Profile() {
             SetImgUrl(e.target.files[0]);
             callFetch({
                 url: `/user/update_profile/${userValue?.id}`,
-                method: "put",
+                method: "post",
                 data: formData,
             })
         }
@@ -59,15 +64,24 @@ export default function Profile() {
         formData.append("password_confirmation", data?.confirmPassword)
         callFetch({
             url: `/user/update_password/${userValue?.id}`,
-            method: "put",
+            method: "post",
             data: formData,
         })
-    }, [])
+    }, [callFetch])
 
     const changePasswordModal = React.useCallback(() => {
         SetShare(true)
     }, [])
 
+    React.useEffect(() => {
+        if (reload) {
+            callFetch({
+                url: `/user/${userValue?.id}`,
+                method: 'get'
+            })
+            SetReload(false)
+        }
+    }, [callFetch, reload])
 
     return (
         <div>
@@ -83,9 +97,8 @@ export default function Profile() {
                                         field,
                                         fieldState: { invalid, isTouch, isDirty, error }
                                     }) => (
-                                        <InputFieldLatest error={error} inputRef={field.ref} {...field} name={"password"} placeholder={"Password "} />
+                                        <InputFieldLatest error={error}  {...field} name={"password"} placeholder={"Password "} />
                                     )} />
-
                             </div>
                             <div className='my-3'>
                                 <Controller
@@ -95,7 +108,7 @@ export default function Profile() {
                                         field,
                                         fieldState: { invalid, isTouch, isDirty, error }
                                     }) => (
-                                        <InputFieldLatest error={error} inputRef={field.ref} {...field} name={"confirmPassword"} placeholder={"Confirm Password "} />
+                                        <InputFieldLatest error={error}  {...field} name={"confirmPassword"} placeholder={"Confirm Password "} />
                                     )} />
                             </div>
                         </form>
@@ -109,9 +122,9 @@ export default function Profile() {
                             <div className='grid'>
                                 <div className='m-auto'>
                                     <section>
-                                        <CustomeLabel theme={{ fontSize: "17px", fontWeight: "normal" }}>{userValue?.name}</CustomeLabel>
-                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Email : {userValue?.email}</CustomeLabel>
-                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Role : {userValue?.role}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "17px", fontWeight: "normal" }}>{data?.user?.name}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Email : {data?.user?.email}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Role : {data?.user?.role}</CustomeLabel>
                                     </section>
                                     <div className='mt-[30px]'>
                                         <Button isLoading={isLoading} onClick={changePasswordModal} className={`w-[160px] bg-primary-color rounded-full `}
@@ -122,12 +135,13 @@ export default function Profile() {
                             </div>
                             <div>
                                 <ProfileImage>
-                                    <Image src={imgUrl ? URL.createObjectURL(imgUrl) : userValue?.profile?.profile_picture} />
+                                    <Image src={imgUrl ? URL.createObjectURL(imgUrl) : data?.user?.profile?.profile_picture} />
                                     <FileInput type="file" onChange={onProfileUpload} />
                                 </ProfileImage>
                                 <ImageUplaodText onChange={onProfileUpload} >
-                                   <CustomeLabel theme={{fontSize:"15px" , fontFamily:"normal"}}>Upload Image</CustomeLabel>
+                                    <CustomeLabel theme={{ fontSize: "15px", fontFamily: "normal" }}>Upload Image</CustomeLabel>
                                 </ImageUplaodText>
+                                {data?.profile?.profile_picture}
                             </div>
                         </div>
                     )

@@ -103,11 +103,11 @@ request.interceptors.response.use(
       const error = {
         originalRequest,
         status,
-        message:
-          "Session is Expired!",
+        message:err?.message
+          ,
       };
       localStorage.clear();
-      window.location.href='/';
+      // window.location.href='/';
       throw error;
     }
     if (status === 503) {

@@ -169,7 +169,6 @@ export const ChildSubMenu = ({ SetMenu, props }) => {
 export const ChildSubAgent = React.memo(({ SetMenu, props }) => {
 
   const navigate = useNavigate();
-  console.log(props ,"====" )
 const path = useLocation();
   const redirectIT = React.useCallback((e) => {
     if (e) {
