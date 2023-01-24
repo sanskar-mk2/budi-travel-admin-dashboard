@@ -22,11 +22,23 @@ const documentValidationSchema = yup.object({
   content:yup.string('string type value').required('it is required ')
 })
 
+const changePasswordValidationSchema = yup.object({
+  password: yup.string()
+    .required("Current Password is required")
+    .min(6, "Current Password must be at least 6 characters")
+    .max(40, "Current Password must not exceed 40 characters"),
+    confirmPassword: yup.string().oneOf(
+    [yup.ref("password"), null],
+    "New Password and Confirm password must match"
+  ),
+})
 export {
   loginValidationSchema,
   emailValidationSchema,
   ticketReplayValidationSchema,
-  documentValidationSchema
+  documentValidationSchema,
+  changePasswordValidationSchema
+
 };
 
 
