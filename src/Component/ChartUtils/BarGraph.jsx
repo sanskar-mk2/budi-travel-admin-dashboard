@@ -7,6 +7,7 @@ export const BarGraph = ({customeConfig}) => {
     {
       type: 'User',
       sales: 38,
+      
     },
     {
       type: 'Offers',
