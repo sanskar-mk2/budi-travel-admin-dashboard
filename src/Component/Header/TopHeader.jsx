@@ -9,11 +9,22 @@ import styled from 'styled-components';
 // notification icon 
 import { FaBell } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
-import { BsFillPeopleFill, BsFillFileBarGraphFill } from "react-icons/bs";
+import { BsFillPeopleFill } from "react-icons/bs";
+import { useAuth, useFetch } from 'hooks';
 
 const TopHeader = ({ SetMenu, sideMenu, children }) => {
+  const { userValue } = useAuth()
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoading, data, callFetch } = useFetch({
+    initialUrl: `/user/${userValue?.id}`,
+    skipOnStart: false,
+    config: {
+      method: 'get'
+    }
+  })
+
+
   const TopLayoutSm = React.memo(() => {
     return (
       <React.Fragment>
@@ -54,11 +65,6 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
       },
       {
         icon: <BsFillPeopleFill />,
-        Link: '',
-        notificationCount: null,
-      },
-      {
-        icon: <BsFillFileBarGraphFill />,
         Link: '',
         notificationCount: null,
       }
@@ -139,8 +145,8 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
               <div className=''>
                 <SearchBar />
               </div>
-              <div className="px-3 ">
-                <div className='grid grid-cols-5'>
+              <div className="px-3   ">
+                <div className='grid grid-cols-4 gap-4 '>
                   {
                     notificationList?.map((icon, i) => (
                       <div key={i}>
@@ -152,8 +158,17 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
                       </div>
                     ))
                   }
-                  <div>
+                  <div onClick={()=>navigate('/profile')}>
+                    <Tooltip placement="bottomRight" title={'Profile'}>
+                      <Icon >
+                        <IconProvider className={` text-[20px] cursor-pointer `} color={`#6B7A99`}>
+                          <img src={data?.user?.profile?.profile_picture} alt="loading..." />
+                        </IconProvider>
+                      </Icon>
+                    </Tooltip>
                   </div>
+                </div>
+                <div >
                 </div>
               </div>
             </div>

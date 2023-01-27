@@ -61,7 +61,7 @@ const AgentDetails = () => {
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   <span id="agentID">
-                    Ej784klm
+                   {id}
                   </span>
                 </CustomeTxtOne>
               </div>

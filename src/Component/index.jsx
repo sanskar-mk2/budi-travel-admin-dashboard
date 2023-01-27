@@ -24,7 +24,8 @@ import { PaginationComponent as PaginationContainer } from "./Pagination/Paginat
 import Modal from "./Modal/Modal";
 import InputFieldLatest from "./FormUtils/Form/Input";
 import TextFieldArea from "./FormUtils/Form/TextArea";
-
+// banner
+import ImgBanner from "./Banners/ImgBanner";
 
 export {
   AfterLoginHeader,
@@ -51,6 +52,8 @@ export {
   PieChart,
   ColumnStackPlot,
   ColumnGraph,
-  BarGraph
+  BarGraph,
+  // banner
+  ImgBanner
 
 }
