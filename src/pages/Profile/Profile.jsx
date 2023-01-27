@@ -118,7 +118,7 @@ export default function Profile() {
             <BoxCantainer>
                 {
                     isLoading ? (<Skeleton active />) : (
-                        <div className='flex justify-between'>
+                        <div className='flex lg:justify-between md:justify-between justify-between '>
                             <div className='grid'>
                                 <div className='m-auto'>
                                     <section>
@@ -168,8 +168,8 @@ const Image = styled.img`
 `;
 
 const ProfileImage = styled.label`
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: auto;
   cursor:pointer ;
   background: #ffffff;
   border-radius: 10px;

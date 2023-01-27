@@ -15,7 +15,7 @@ import { DateRange } from 'react-date-range';
 import moment from 'moment/moment';
 
 const { RangePicker } = DatePicker;
-const Items = () => {
+const ServicesList = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
   const [unapproval, SetUnapproval] = React.useState([]);
@@ -411,7 +411,7 @@ const Items = () => {
   );
 }
 
-export default Items;
+export default ServicesList;
 
 const BoxCantainer = styled.div`
 background: #FFFFFF;

@@ -21,6 +21,7 @@ const AuthenticateRoute = ({ user, redirectPath = "/dashboard" }) => {
 };
 function App() {
   const {session} = useAuth();
+
   return (
     <div className="App">
       <Routes>

@@ -88,7 +88,7 @@ const AgentsList = ({ props }) => {
             <Label>{enLangauge.AGENTS_HEADING}</Label>
           </div>
           <div className="my-2">
-            <FilterationComponent />
+            {/* <FilterationComponent /> */}
           </div>
           <div className="lg:overflow-x-hidden md:overflow-x-hidden overflow-x-scroll ">
             {
