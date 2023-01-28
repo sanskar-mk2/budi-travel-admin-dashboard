@@ -13,12 +13,15 @@ import { useFetch } from 'hooks';
 import toast from 'react-hot-toast';
 import { DateRange } from 'react-date-range';
 import moment from 'moment/moment';
+import { ImgProvider } from 'utils/common.utils';
+import { useParams } from 'react-router-dom';
 
-const { RangePicker } = DatePicker;
 const ServicesList = () => {
+  const {id} = useParams()
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
   const [unapproval, SetUnapproval] = React.useState([]);
+  const [currentPage , setCurrentPage] = React.useState(1)
   const dateFormat = 'DD/MM/YYYY';
   const [dateState, setState] = React.useState([
     {
@@ -46,7 +49,7 @@ const ServicesList = () => {
   }, [])
   // bulk action 
   const { isLoading, data, callFetch } = useFetch({
-    initialUrl: `/agents/unapproved_agents`,
+    initialUrl: `/offers/`,
     skipOnStart: false,
     onSuccess,
     onFailure
@@ -167,6 +170,7 @@ const ServicesList = () => {
 
   const paginationAction = React.useCallback((page, b) => {
     if (!isLoading) {
+      setCurrentPage(page)
       Object.keys(filter_query).forEach(
         (key) =>
           (filter_query[key] === undefined ||
@@ -245,10 +249,10 @@ const ServicesList = () => {
         </Modal >
         <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mb-[15px]">
           <div className="lg:col-span-2">
-            Unappoved agents
+            Items {data?.offers?.data?.length}
           </div>
           <div className="lg:col-span-4  md:col-span-2 ">
-            <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
+            <div style={{display:"none"}} className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
               <div className='lg:col-span-2 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
                 <Input onChange={(e) => Setfilter_query({
                   ...filter_query, search: e.target?.value
@@ -277,7 +281,7 @@ const ServicesList = () => {
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
-                  <Select onChange={selectionFilterTwo} size={"defaut"} theme={{ width: "100%" }} defaultOption={"Bulk Action"} options={[ "Approved"]} />
+                  <Select onChange={selectionFilterTwo} size={"defaut"} theme={{ width: "100%" }} defaultOption={"Bulk Action"} options={["Approved"]} />
                 </CustomeText>
               </div>
             </div>
@@ -310,32 +314,31 @@ const ServicesList = () => {
                           <input type="checkbox" className="checkbox" onClick={() => allListActionCheck(data?.unapproved_agents?.data)} />
                         </span>
                         <span className='mt-1'>
-                          {enLangauge.AGENT_DETAIL_TABLE_HEADER_PRODUCT_NAME}
+                        Product Name
                         </span>
                       </th>
                       <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {enLangauge.AGENT_DETAIL_TABLE_HEADER_UNIT_PRICE}
+                        Unit Price
                       </th>
                       <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {enLangauge.AGENT_DETAIL_TABLE_HEADER_DISCOUNT}
+                      Discount
                       </th>
                       <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {enLangauge.AGENT_DETAIL_TABLE_HEADER_TOTAL_ORDER}
+                        Order Total
                       </th>
                       <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {enLangauge.AGENT_DETAIL_TABLE_HEADER_ACTION}
+                       Action
                       </th>
                       <th className="px-5 py-3  bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {enLangauge.AGENT_DETAIL_TABLE_HEADER_STATUS}
+                       Status
                       </th>
                       <th className="px-5 py-3  bg-gray-100" />
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      data?.unapproved_agents?.data?.map((agent, index, array) => (
-
-                        <tr className=''>
+                      data?.offers?.data?.map((agent, index, array) => (
+                        <tr className='' key={index}>
                           <td className="px-5 py-3   bg-white text-sm">
                             <div className="flex">
                               <div className="mx-2 pt-2 ">
@@ -348,25 +351,28 @@ const ServicesList = () => {
                                 }
                               </div>
                               <div className="flex-shrink-0 w-10 h-10">
-                                <img className="w-full h-full rounded-full" src={agent?.profile?.profile_picture} alt="loading..." />
+                                <img className="w-full h-full rounded-full"
+                                 src={ImgProvider(agent?.profile?.profile_picture)} alt="loading..." />
                               </div>
                               <div className="ml-3">
                                 <p className="text-gray-900 whitespace-no-wrap mt-2">
-                                  <CustomeText>{agent?.name}</CustomeText>
+                                  <CustomeText>{agent?.title}</CustomeText>
                                 </p>
                               </div>
                             </div>
                           </td>
                           <td className="px-5 py-3  bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$20,000</CustomeText></p>
+                            <p className="text-gray-900 whitespace-no-wrap">
+                              <CustomeText>{`$ ${agent?.price}`}</CustomeText></p>
                           </td>
                           <td className="px-5 py-3  bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$10,000</CustomeText></p>
+                            <p className="text-gray-900 whitespace-no-wrap">
+                              <CustomeText>--</CustomeText></p>
                           </td>
                           <td className="px-5 py-3 bg-white text-sm">
                             <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                               <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                              <span className="relative"><CustomeText>98</CustomeText></span>
+                              <span className="relative"><CustomeText>--</CustomeText></span>
                             </span>
                           </td>
                           <td className="px-5 py-3  bg-white text-sm">
@@ -374,7 +380,7 @@ const ServicesList = () => {
                               <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
                               <span className="relative">
                                 <CustomeText>
-                                  <Select size={"small"} onChange={indiviualAction} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
+                                  <Select size={"small"}  onChange={indiviualAction} defaultOption={"Pending"} options={[]} />
                                 </CustomeText>
                               </span>
                             </span>
@@ -396,12 +402,13 @@ const ServicesList = () => {
           }
           <div className="pt-2 lg:px-3 md:px-2 px-0">
             <PaginationContainer labelText={"Total : "
-              + "" + data?.unapproved_agents?.total + " of Page " + data?.unapproved_agents?.current_page
+              + "" + data?.offers?.total + " of Page " + data?.offers?.current_page
             }>
               <Pagination showSizeChanger={false}
                 defaultCurrent={1}
                 defaultPageSize={10}
-                total={data?.unapproved_agents?.total}
+                current={currentPage}
+                total={data?.offers?.total}
                 onChange={paginationAction} />
             </PaginationContainer>
           </div>

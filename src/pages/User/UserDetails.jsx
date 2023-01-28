@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Breadcrumb } from 'antd';
 import { AiFillHome } from "react-icons/ai";
-import { IconProvider, TxtCopy, redirectOut, phoneFormat, ImgProvider } from 'utils/common.utils';
+import { IconProvider, TxtCopy, redirectOut, phoneFormat } from 'utils/common.utils';
 import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
@@ -74,7 +74,7 @@ const UserDetails = () => {
               </span>
             </div>
           </div>
-          <div className='lg:flex md:flex lg:justify-end md:justify-end'>
+          <div className='lg:flex md:flex lg:justify-end md:justify-end' style={{display:"none"}}>
             <div className='grid px-2'>
               <div className="m-auto">
                 <CustomeButton theme={{ bg: "#2B4C9B", color: "#fff" }}>{enLangauge.USER_DETAIL_EDIT_CUSTOMER}</CustomeButton>
@@ -90,6 +90,7 @@ const UserDetails = () => {
       </React.Fragment>
     )
   }, [])
+  
   return (
     <React.Fragment>
       <div className="lg:px-4 md:px-3 px-1">

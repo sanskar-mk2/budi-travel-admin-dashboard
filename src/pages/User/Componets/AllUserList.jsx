@@ -7,7 +7,6 @@ import { Input, Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal, PaginationContainer } from 'Component';
-import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge'
 import { useFetch } from "hooks";
 import { Pagination } from 'antd';
@@ -18,6 +17,7 @@ import moment from 'moment/moment';
 const AllUserList = () => {
   const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
+  const [currentPage , setCurrentPage] = React.useState(1)
   const [haveToshare, SetShare] = React.useState(false);
   const dateFormat = 'DD/MM/YYYY';
   const [dateState, setState] = React.useState([
@@ -34,7 +34,7 @@ const AllUserList = () => {
     user_role: null
   })
   const { isLoading, data, callFetch } = useFetch({
-    initialUrl: `/user_role?page=${1}`,
+    initialUrl: `/users`,
     skipOnStart: false,
     config: {
       method: "get"
@@ -52,8 +52,8 @@ const AllUserList = () => {
     }).join('&')
 
     callFetch({
-      url: `/user_role?page=${1}&${str}`,
-      method: ''
+      url: `/users?page=${1}&${str}`,
+      method: 'get'
     })
   }, [filter_query])
 
@@ -63,12 +63,12 @@ const AllUserList = () => {
       ...filter_query, from: moment(item.selection?.startDate).format(dateFormat),
       to: moment(item.selection?.endDate).format(dateFormat)
     })
-
   }, [])
 
 
   const paginationAction = React.useCallback((page, b) => {
     if (!isLoading) {
+      setCurrentPage(page)
       Object.keys(filter_query).forEach(
         (key) =>
           (filter_query[key] === undefined ||
@@ -76,6 +76,7 @@ const AllUserList = () => {
             filter_query[key] === "") &&
           delete filter_query[key]
       );
+
       const str = Object.keys(filter_query).map(function (key) {
         return key + '=' + filter_query[key];
       }).join('&');
@@ -248,21 +249,23 @@ const AllUserList = () => {
                                 </div>
                               </td>
                               <td className="px-5 py-3  bg-white text-sm">
-                                <span className="text-gray-900 whitespace-no-wrap"><CustomeText>Today</CustomeText></span>
+                                <span className="text-gray-900 whitespace-no-wrap">
+                                  <CustomeText>--</CustomeText></span>
                               </td>
                               <td className="px-5 py-3  bg-white text-sm">
-                                <span className="text-gray-900 whitespace-no-wrap"><CustomeText>{data?.email}</CustomeText></span>
+                                <span className="text-gray-900 whitespace-no-wrap">
+                                  <CustomeText>{data?.email}</CustomeText></span>
                               </td>
                               <td className="px-5 py-3 bg-white text-sm">
                                 <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                   <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                                  <span className="relative"><CustomeText>India</CustomeText></span>
+                                  <span className="relative"><CustomeText>--</CustomeText></span>
                                 </span>
                               </td>
                               <td className="px-5 py-3  bg-white text-sm">
                                 <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                   <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                                  <span className="relative"><Status theme={{}}>Active</Status></span>
+                                  <span className="relative"><Status theme={{}}>--</Status></span>
                                 </span>
                               </td>
                             </tr>
@@ -275,9 +278,10 @@ const AllUserList = () => {
               }
             </div>
             <div className="pt-2 lg:px-3 md:px-2 px-0">
-              <PaginationContainer>
+              <PaginationContainer labelText={` Page Number ${1} of ${data?.users?.total}`} >
                 <Pagination showSizeChanger={false}
                   defaultCurrent={1}
+                  current={currentPage}
                   defaultPageSize={10}
                   total={data?.users?.total} onChange={paginationAction} />
               </PaginationContainer>

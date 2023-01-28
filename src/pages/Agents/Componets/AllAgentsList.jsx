@@ -10,6 +10,7 @@ import { enLangauge } from 'Contents/en-langauge';
 import { Pagination } from 'antd';
 const AgentsList = ({ props }) => {
   const navigate = useNavigate()
+  const [currentPage , setCurrentPage] = React.useState(1)
   const onSuccess = React.useCallback((response) => {
 
   }, []);
@@ -26,6 +27,7 @@ const AgentsList = ({ props }) => {
   console.log(data, "")
   const paginationAction = React.useCallback((a, b) => {
     if (a) {
+      setCurrentPage(a)
       callFetch({
         url: `/agents?page=${a}`,
         method: "get"
@@ -116,11 +118,11 @@ const AgentsList = ({ props }) => {
                       <div className="col-span-2">
                         <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
                           <div className='float-left text-center'>
-                            <CustomeTxt>789 </CustomeTxt>
+                            <CustomeTxt>-- </CustomeTxt>
                             <CustomeText>Offer</CustomeText>
                           </div>
                           <div className='float-right  text-center'>
-                            <CustomeTxt>489</CustomeTxt>
+                            <CustomeTxt>--</CustomeTxt>
                             <CustomeText>Finished Project</CustomeText>
                           </div>
                         </div>
@@ -129,7 +131,7 @@ const AgentsList = ({ props }) => {
                         <div className="lg:m-0 md:m-0 m-auto">
                           <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
                             <div className=''>
-                              <AgentRevenueTxt>$4,089</AgentRevenueTxt>
+                              <AgentRevenueTxt>$--</AgentRevenueTxt>
                               <CustomeText>Total Profit</CustomeText>
                             </div>
                             <div className="grid mt-3 ml-3 ">
@@ -155,6 +157,7 @@ const AgentsList = ({ props }) => {
               } >
                 <Pagination showSizeChanger={false}
                   defaultCurrent={1}
+                  current={currentPage}
                   defaultPageSize={10}
                   total={data?.agents?.total} onChange={paginationAction} />
               </PaginationContainer>

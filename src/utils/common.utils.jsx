@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import ProfileImg from "Assets/profile_pic.jpg";
 import LogoImg from "Assets/budiLogo.png";
 import styled from "styled-components";
-import { imgBaseUrl } from "constants/config.constants";
+// import { imgBaseUrl } from "constants/config.constants";
 
 
 
@@ -137,7 +137,7 @@ export const toExponent = (num, decimalValue = 3, isCurrency = false) => {
 
 export const ImgProvider = (src) => {
   if (src) {
-    return `${imgBaseUrl + src}`;
+    return `${src}`;
   } else {
     return ProfileImg;
   }

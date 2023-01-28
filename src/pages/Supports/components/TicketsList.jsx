@@ -2,20 +2,36 @@ import React from 'react';
 import styled from "styled-components";
 import { Selector } from 'Component';
 import { IconProvider } from 'utils/common.utils';
+import { SocialShare } from 'utils/ObjectUtils';
 import { Input, Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { Modal, PaginationContainer } from 'Component';
-import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge'
 import { useFetch } from "hooks";
 import { Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment/moment';
-const { RangePicker } = DatePicker;
+import { DateRange } from 'react-date-range';
+import { FaTelegramPlane } from 'react-icons/fa';
 
 const TicketList = () => {
   const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
+  const [haveToshare, SetShare] = React.useState(false);
+  const dateFormat = 'DD/MM/YYYY';
+  const [dateState, setState] = React.useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection'
+    }
+  ]);
+  const [filter_query, Setfilter_query] = React.useState({
+    search: null,
+    from: null,
+    to: null,
+    user_role: null
+  })
 
   const { isLoading, data, callFetch } = useFetch({
     initialUrl: "/support/support_tickets",
@@ -38,6 +54,14 @@ const TicketList = () => {
     // console.log(e);
   }, [])
 
+
+  const updateDate = React.useCallback((item) => {
+    setState([item.selection])
+    Setfilter_query({
+      ...filter_query, from: moment(item.selection?.startDate).format(dateFormat),
+      to: moment(item.selection?.endDate).format(dateFormat)
+    })
+  }, [])
 
   const paginationAction = React.useCallback((page, b) => {
     callFetch({
@@ -69,35 +93,81 @@ const TicketList = () => {
         <Modal title={"Filter By Date "} state={state} SetState={SetState}>
           <div className="grid w-full">
             <div className="m-auto">
-              <RangePicker onChange={dateRangeFilteration} />
+              <DateRange
+                editableDateInputs={true}
+                onChange={updateDate}
+                moveRangeOnFirstSelection={false}
+                ranges={dateState}
+              />
             </div>
           </div>
         </Modal>
-
+        {/*  */}
+        <Modal title={"Share "} state={haveToshare} SetState={SetShare}>
+          <div className="grid w-full">
+            <div className="m-auto">
+              <div className='grid lg:grid-col-4 md:grid-cols-3 grid-cols-2 gap-2'>
+                {
+                  SocialShare?.map((i, index) => (
+                    <div key={index}>
+                      <ShareButton theme={{ bg: i?.bg, color: i?.color }} >
+                        <div className="inline-flex">
+                          <IconProvider className={i?.className ?? ''} color={i?.color}>
+                            {i?.icon}
+                          </IconProvider>
+                          <span>{i?.title}</span>
+                        </div>
+                      </ShareButton>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </Modal >
         <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-5 md:grid-cols-3 grid-cols-1 mb-[15px]">
           <div className="lg:col-span-2">
 
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
-            <div className='grid lg:grid-cols-6 md:grid-cols-8 grid-cols-2 '>
-              <div className='lg:col-span-4 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
-                <Input onChange={searchingFilter} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
+            <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
+              <div className='lg:col-span-3 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
+                <Input onChange={(e) => Setfilter_query({
+                  ...filter_query, search: e.target?.value
+                })} value={filter_query?.search} autoFocus={true} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
-                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} onChange={selectionFilterOne} options={["Pending", "Approved", "InActive"]} />
+                  <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={filter_query?.user_role ? 'Active' : 'InActive' ?? "Filter"} onChange={(e) =>
+                    e === "ALL" ? Setfilter_query({
+                      search: null,
+                      from: null,
+                      to: null,
+                      user_role: null
+                    }) :
+                      Setfilter_query({
+                        ...filter_query, user_role: e === 'Active' ? true : false
+                      })
+                  } options={["Active", "InActive" ,"ALL"]} />
                 </CustomeText>
               </div>
               <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>
                 <Button icon={<BiFilterAlt />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.USERS_TABLE_FILTER}</Button>
               </div>
+              <div className="px-1 lg:py-0 md:py-0 py-1 " onClick={() => SetShare(!haveToshare)}>
+                <Button icon={<FaTelegramPlane />} IconClassName={'text-[20px] pt-1 mr-1'} color={""}>{enLangauge.USERS_TABLE_SHARE} </Button>
+              </div>
+              {/* <div className="px-1 lg:py-0 md:py-0 py-1 ">
+                <CustomeText>
+                  <Select onChange={selectionFilterTwo} size={"defaut"} theme={{ width: "100%" }} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
+                </CustomeText>
+              </div> */}
             </div>
           </div>
         </div>
       </React.Fragment >
     )
   }, [])
-
   return (
     <React.Fragment>
       <div className=" mt-3">
@@ -262,4 +332,12 @@ width: ${props => props?.theme.width ?? '80px !important'};
 }import { IconProvider } from 'utils/common.utils';
 import { useFetch } from 'hooks';
 
+`;
+
+const ShareButton = styled.button`
+padding:3px 10px;
+background:${props => props?.theme.bg};
+color:${props => props?.theme?.color};
+border-radius:3px;
+width:100%;
 `;

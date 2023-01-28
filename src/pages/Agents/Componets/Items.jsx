@@ -14,11 +14,12 @@ import toast from 'react-hot-toast';
 import { DateRange } from 'react-date-range';
 import moment from 'moment/moment';
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
   const [unapproval, SetUnapproval] = React.useState([]);
+  const [current , setCurrentPage] = React.useState(1)
   const dateFormat = 'DD/MM/YYYY';
   const [dateState, setState] = React.useState([
     {
@@ -167,6 +168,7 @@ const Items = () => {
 
   const paginationAction = React.useCallback((page, b) => {
     if (!isLoading) {
+      setCurrentPage(page)
       Object.keys(filter_query).forEach(
         (key) =>
           (filter_query[key] === undefined ||
@@ -400,6 +402,7 @@ const Items = () => {
             }>
               <Pagination showSizeChanger={false}
                 defaultCurrent={1}
+                current={current}
                 defaultPageSize={10}
                 total={data?.unapproved_agents?.total}
                 onChange={paginationAction} />
