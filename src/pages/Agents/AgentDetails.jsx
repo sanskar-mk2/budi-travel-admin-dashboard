@@ -11,6 +11,7 @@ import Items from './Componets/Items';
 import { useParams } from 'react-router-dom';
 import { useFetch } from "hooks";
 import { enLangauge } from 'Contents/en-langauge';
+import ServicesList from './Componets/ServicesList';
 const AgentDetails = () => {
   const { id } = useParams();
   const [setState] = React.useState(null);
@@ -21,7 +22,7 @@ const AgentDetails = () => {
 
   }, [])
 
-  const { isLoading, data,  } = useFetch({
+  const { isLoading, data, } = useFetch({
     initialUrl: `/user/${id}`,
     skipOnStart: false,
     onFailure,
@@ -61,7 +62,7 @@ const AgentDetails = () => {
                 </CustomeTxtOne>
                 <CustomeTxtOne >
                   <span id="agentID">
-                   {id}
+                    {id}
                   </span>
                 </CustomeTxtOne>
               </div>
@@ -72,7 +73,7 @@ const AgentDetails = () => {
               </span>
             </div>
           </div>
-          <div className='lg:flex md:flex lg:justify-end md:justify-end'>
+          <div className='lg:flex md:flex lg:justify-end md:justify-end ' style={{ display: "none" }}>
             <div className='grid px-2'>
               <div className="m-auto">
                 <CustomeButton theme={{ bg: "#2B4C9B", color: "#fff" }}>{enLangauge.AGENT_DETAIL_EDIT_BTN}</CustomeButton>
@@ -104,7 +105,7 @@ const AgentDetails = () => {
                       </div>
                       <div>
                         <div className="pl-3">
-                          <Title>{data?.user?.name}</Title>
+                          <Title style={{ fontSize: "12px" }}>{data?.user?.name}</Title>
                           <div>
                             <span>
                               <Title theme={{ color: "#9295A3", fontSize: "12px" }}>
@@ -344,7 +345,12 @@ const AgentDetails = () => {
             </BoxCantainer>
           </div>
         </div>
-        <Items />
+        <div className=' my-3'>
+          <ServicesList />
+        </div>
+        <div className='my-3'>
+          <Items />
+        </div>
       </div >
     </React.Fragment >
   );

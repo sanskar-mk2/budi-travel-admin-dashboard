@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Skeleton } from 'antd';
 import { changePasswordValidationSchema } from 'utils/validation';
 export default function Profile() {
-    const { userValue } = useAuth()
+    const { userValue , logout } = useAuth()
     let [imgUrl, SetImgUrl] = React.useState(null);
     const [reload, SetReload] = React.useState(false)
     const [haveToshare, SetShare] = React.useState(false);
@@ -125,12 +125,14 @@ export default function Profile() {
                                         <CustomeLabel theme={{ fontSize: "17px", fontWeight: "normal" }}>{data?.user?.name}</CustomeLabel>
                                         <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Email : {data?.user?.email}</CustomeLabel>
                                         <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Role : {data?.user?.role}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }} onClick={logout}>LogOut</CustomeLabel>
                                     </section>
                                     <div className='mt-[30px]'>
                                         <Button isLoading={isLoading} onClick={changePasswordModal} className={`w-[160px] bg-primary-color rounded-full `}
                                             type={'button'}
                                         >{'CHANGES PASSWORD'}</Button>
                                     </div>
+                                
                                 </div>
                             </div>
                             <div>

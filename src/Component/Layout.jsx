@@ -31,7 +31,7 @@ const Layout = () => {
             }} />
           {isOnline ?
             session ? (<AfterLoginHeader />) : (<Outlet />)
-            : (<ImgBanner><Img src={noInternt} alt='loading...' /></ImgBanner>)
+            : (<ImgBanner><Img src={noInternt} className="lg:w-[35%] mt-6 " alt='loading...' /></ImgBanner>)
           }
         </Container>
       </ConfigProvider>
@@ -47,5 +47,4 @@ background-color:#f6fbfe !important;
 
 const Img = styled.img`
 margin:auto;
-
 `;

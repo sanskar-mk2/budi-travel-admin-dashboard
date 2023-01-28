@@ -37,7 +37,7 @@ const TopAgents = ({ props }) => {
   const FilterationComponent = React.memo(() => {
     return (
       <React.Fragment>
-        <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-3">
+        <div style={{display:"none"}} className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-3">
           <div className="p-2 grid" >
             <select onChange={timeFrameFilteration} className="select m-auto select-bordered select-sm w-full max-w-xs">
               <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_TIME_FRAMED}</option>
@@ -101,12 +101,12 @@ const TopAgents = ({ props }) => {
                         <div className="col-span-2">
                           <div className="grid grid-cols-2 lg:pt-3 md:pt-3">
                             <div className='float-left text-center'>
-                              <CustomeTxt>789 </CustomeTxt>
-                              <CustomeText>Lima</CustomeText>
+                              <CustomeTxt>-- </CustomeTxt>
+                              <CustomeText>Offer</CustomeText>
                             </div>
                             <div className='float-right  text-center'>
-                              <CustomeTxt>489</CustomeTxt>
-                              <CustomeText>Lima</CustomeText>
+                              <CustomeTxt>--</CustomeTxt>
+                              <CustomeText>Price</CustomeText>
                             </div>
                           </div>
                         </div>
@@ -114,8 +114,8 @@ const TopAgents = ({ props }) => {
                           <div className="lg:m-0 md:m-0 m-auto">
                             <div className="flex lg:float-right md:float-right float-none pr-3 lg:pt-2 md:pt-2 lg:pb-0 md:pb-0 pb-2 ">
                               <div className=''>
-                                <AgentRevenueTxt>$4,089</AgentRevenueTxt>
-                                <CustomeText>Lima</CustomeText>
+                                <AgentRevenueTxt>--</AgentRevenueTxt>
+                                <CustomeText>Profit</CustomeText>
                               </div>
                               <div className="grid mt-3 ml-3 ">
                                 <div className="auto l">

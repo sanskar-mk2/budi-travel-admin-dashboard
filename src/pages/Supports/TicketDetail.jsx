@@ -4,12 +4,11 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment/moment';
 import { Skeleton, Tooltip, Popconfirm } from 'antd';
-import { Modal, TextFieldArea, Selector } from 'Component';
+import { Modal, TextFieldArea } from 'Component';
 import { InputFieldLatest } from 'Component';
 import { BsFillChatTextFill } from "react-icons/bs"
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IconProvider, ImgProvider, redirectOut, phoneFormat, TxtCopy } from 'utils/common.utils';
-import { enLangauge } from 'Contents/en-langauge';
+import { IconProvider, ImgProvider, TxtCopy } from 'utils/common.utils';
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -467,8 +466,3 @@ height: 45px;
 border-radius:3px;
 `;
 
-const Select = styled(Selector)`
-width: ${props => props?.theme.width ?? '100% !important'};
-border-radius:7px;
-color:black !important;
-`;

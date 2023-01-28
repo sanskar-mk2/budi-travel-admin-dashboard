@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CheckBox, Selector } from 'Component';
 import { IconProvider } from 'utils/common.utils';
 import { SocialShare } from 'utils/ObjectUtils';
-import { Input } from "antd";
+import { Input , Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
@@ -140,6 +140,7 @@ console.log(data ,"==>")
               </thead>
               <tbody>
                 {
+                  isLoading ? (<Skeleton active/>):
                   Array(5).fill().map((_, index) => (
                     <tr className=''>
                       <td className="px-5 py-3   bg-white text-sm">
@@ -210,13 +211,13 @@ line-height: 17px;
 color: #6E7079;
 `;
 
-const Status = styled.button`
-width: 56px;
-background: ${props => props?.theme?.bg ?? '#FFF2E2'};
-color:black;
-border-radius: 8px;
-padding:2px 5px;
-`;
+// const Status = styled.button`
+// width: 56px;
+// background: ${props => props?.theme?.bg ?? '#FFF2E2'};
+// color:black;
+// border-radius: 8px;
+// padding:2px 5px;
+// `;
 const Select = styled(Selector)`
 width: ${props => props?.theme.width ?? '80px !important'};
 && :hover {

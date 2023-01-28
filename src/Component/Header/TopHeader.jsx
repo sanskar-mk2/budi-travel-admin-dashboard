@@ -1,7 +1,7 @@
 import React from 'react';
 import { HiOutlineDotsHorizontal, HiMenuAlt1 } from "react-icons/hi";
 import { Icon, SearchBar } from "Component";
-import { IconProvider } from 'utils/common.utils';
+import { IconProvider , ImgProvider} from 'utils/common.utils';
 import { Tooltip } from "antd";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SidebarContants } from 'constants/Sidebar.menu';
@@ -16,6 +16,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
   const { userValue } = useAuth()
   const location = useLocation();
   const navigate = useNavigate();
+
   const { isLoading, data, callFetch } = useFetch({
     initialUrl: `/user/${userValue?.id}`,
     skipOnStart: false,
@@ -38,7 +39,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
               </div>
             </div>
             <div className="col-span-2 grid">
-              <div className="m-auto">
+              <div className="m-auto text-secondry-color font-bold">
                 BUDI
               </div>
             </div>
@@ -64,6 +65,10 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
         notificationCount: 14,
       },
       {
+        icon: <BsFillPeopleFill />,
+        Link: '',
+        notificationCount: null,
+      },  {
         icon: <BsFillPeopleFill />,
         Link: '',
         notificationCount: null,
@@ -146,7 +151,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
                 <SearchBar />
               </div>
               <div className="px-3   ">
-                <div className='grid grid-cols-4 gap-4 '>
+                <div className='grid grid-cols-5 gap-4 '>
                   {
                     notificationList?.map((icon, i) => (
                       <div key={i}>
@@ -162,7 +167,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
                     <Tooltip placement="bottomRight" title={'Profile'}>
                       <Icon >
                         <IconProvider className={` text-[20px] cursor-pointer `} color={`#6B7A99`}>
-                          <img src={data?.user?.profile?.profile_picture} alt="loading..." />
+                          <img src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading..." />
                         </IconProvider>
                       </Icon>
                     </Tooltip>

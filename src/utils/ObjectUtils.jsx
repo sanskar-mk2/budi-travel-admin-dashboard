@@ -1,6 +1,5 @@
 import { AiOutlineTwitter, AiFillFacebook , 
   AiFillInstagram ,AiOutlineCopy  , AiOutlineWhatsApp} from "react-icons/ai";
-  import {FaTelegramPlane} from "react-icons/fa"
 
 const ServiceCardData = [
   {
