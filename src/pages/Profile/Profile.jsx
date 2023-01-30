@@ -128,11 +128,10 @@ export default function Profile() {
                                         <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }} onClick={logout}>LogOut</CustomeLabel>
                                     </section>
                                     <div className='mt-[30px]'>
-                                        <Button isLoading={isLoading} onClick={changePasswordModal} className={`w-[160px] bg-primary-color rounded-full `}
+                                        <Button isLoading={isLoading} onClick={changePasswordModal} className={`w-[160px] bg-primary-color rounded-full cursor-pointer `}
                                             type={'button'}
                                         >{'CHANGES PASSWORD'}</Button>
                                     </div>
-                                
                                 </div>
                             </div>
                             <div>

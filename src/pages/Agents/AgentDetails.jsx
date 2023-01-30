@@ -7,7 +7,6 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BsHandbag } from "react-icons/bs";
 import { Selector } from 'Component';
-import Items from './Componets/Items';
 import { useParams } from 'react-router-dom';
 import { useFetch } from "hooks";
 import { enLangauge } from 'Contents/en-langauge';
@@ -347,9 +346,6 @@ const AgentDetails = () => {
         </div>
         <div className=' my-3'>
           <ServicesList />
-        </div>
-        <div className='my-3'>
-          <Items />
         </div>
       </div >
     </React.Fragment >

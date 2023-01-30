@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+.tab-active-btn{
+  background: #1aaac3 !important;
+}
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -19,7 +22,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(26, 170, 195);
+  background: #1aaac3;
 }
 
 .ant-btn-default:hover{

@@ -7,6 +7,7 @@ import Revenue from "pages/Revenue/Revenue";
 import Agents from "pages/Agents/Agents";
 import AgentDetails from "pages/Agents/AgentDetails";
 import Users from "pages/User/Users";
+import ServiceDetail from "pages/Agents/Componets/ServiceDetail";
 import UserDetails from "pages/User/UserDetails";
 import ForgetPassword from "pages/ForgetPassword/ForgetPassword";
 import VerifyOtp from "pages/ForgetPassword/VerifyOtp";
@@ -59,6 +60,12 @@ const PrivateRouteList = [
     path: '/agents',
     component: (<Wrapper>
       <Agents />
+    </Wrapper>)
+  },
+  {
+    path: '/offer-detail/:id',
+    component: (<Wrapper>
+      <  ServiceDetail />
     </Wrapper>)
   },
   {

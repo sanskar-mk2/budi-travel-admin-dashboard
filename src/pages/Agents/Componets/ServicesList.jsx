@@ -9,15 +9,17 @@ import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
 import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
-import { useFetch } from 'hooks';
+import { useAuth, useFetch } from 'hooks';
 import toast from 'react-hot-toast';
 import { DateRange } from 'react-date-range';
 import moment from 'moment/moment';
 import { ImgProvider } from 'utils/common.utils';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ServicesList = () => {
   const {id} = useParams()
+  const {userValue} = useAuth()
+  const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
   const [unapproval, SetUnapproval] = React.useState([]);
@@ -354,7 +356,7 @@ const ServicesList = () => {
                                 <img className="w-full h-full rounded-full"
                                  src={ImgProvider(agent?.profile?.profile_picture)} alt="loading..." />
                               </div>
-                              <div className="ml-3">
+                              <div className="ml-3 cursor-pointer " onClick={()=>navigate(`/offer-detail/${agent?.id}`)}>
                                 <p className="text-gray-900 whitespace-no-wrap mt-2">
                                   <CustomeText>{agent?.title}</CustomeText>
                                 </p>
