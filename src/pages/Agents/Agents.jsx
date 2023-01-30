@@ -7,6 +7,8 @@ import { HiOutlineDotsHorizontal, HiOutlineDotsVertical } from 'react-icons/hi';
 import AgentsList from './Componets/AllAgentsList';
 import { enLangauge } from 'Contents/en-langauge';
 import { useFetch } from 'hooks';
+import Items from './Componets/Items';
+
 const Agents = () => {
   const onSuccess = React.useCallback((response) => {
 
@@ -39,6 +41,23 @@ const Agents = () => {
       }
     ]
   }, []);
+
+  React.useEffect(() => {
+    document.getElementById("defaulopen")?.click();
+  }, [])
+  function openTab(evt, cityName) {
+    var i, tabcontainer, tabbtn;
+    tabcontainer = document.getElementsByClassName("tabcontainer");
+    for (i = 0; i < tabcontainer.length; i++) {
+      tabcontainer[i].style.display = "none";
+    }
+    tabbtn = document.getElementsByClassName("tabbtn");
+    for (i = 0; i < tabbtn.length; i++) {
+      tabbtn[i].className = tabbtn[i].className.replace(" tab-active-btn", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " tab-active-btn";
+  }
 
   const SiteSpeedTabLeftComponent = React.memo(() => {
     return (
@@ -133,7 +152,7 @@ const Agents = () => {
             <div className="">
               <BoxCantainer>
                 {
-                   isLoading ? (
+                  isLoading ? (
                     <Skeleton className="mt-3" active />
                   ) : (
                     <Tab props={SiteSpeedProps} />
@@ -143,7 +162,18 @@ const Agents = () => {
             </div>
           </div>
         </div>
-        <AgentsList />
+        <div className='my-2' >
+          <button className='tabbtn  mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-primary-color  shadow rounded-full' id="defaulopen" onClick={(event) => openTab(event, "1")}>Agents</button>
+          <button className='tabbtn  mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-primary-color shadow rounded-full' onClick={(event) => openTab(event, "2")}> Unapproval</button>
+     </div>
+        <div>
+          <div className='tabcontainer' id="1">
+            <AgentsList />
+          </div>
+          <div className='tabcontainer' id="2">
+          <Items/>
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );

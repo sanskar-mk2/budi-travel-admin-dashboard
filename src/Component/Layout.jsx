@@ -9,6 +9,12 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { useOnlineStatus } from "hooks"
 import noInternt from 'Assets/no-internet.png'
+// swiper css 
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+
 const Layout = () => {
   const { session } = useAuth()
   const { isOnline } = useOnlineStatus()
