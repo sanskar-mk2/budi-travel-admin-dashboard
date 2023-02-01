@@ -1,44 +1,13 @@
 
 import { Column } from '@ant-design/plots';
 
-export const ColumnGraph = () => {
-  const data = [
-    {
-      type: 'India ',
-      sales: 38,
-    },
-    {
-      type: 'China',
-      sales: 52,
-    },
-    {
-      type: 'Pakistan',
-      sales: 61,
-    },
-    {
-      type: 'Nepal',
-      sales: 80,
-    },
-    {
-      type: 'Bhutan',
-      sales: 48,
-    },
-    {
-      type: 'Bangladesh',
-      sales: 38,
-    },
-    {
-      type: 'Shrilamka',
-      sales: 38,
-    },
-    {
-      type: 'Canada',
-      sales: 38,
-    },
-    
-  ];
+export const ColumnGraph = ({  ...props}) => {
+  
+  console.log( props?.data,"it is your name ")
+
+ 
   const config = {
-    data,
+    data:props?.data??[],
     xField: 'type',
     yField: 'sales',
     xAxis: {
@@ -57,9 +26,10 @@ export const ColumnGraph = () => {
     },
     minColumnWidth: 10,
     maxColumnWidth: 10,
-    height:260,
+    height: 260,
     color: ' #27AE60'
   };
-  return <Column {...config} />;
+    return <Column {...config} />;
+// 
 };
 

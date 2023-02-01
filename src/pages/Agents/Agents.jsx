@@ -17,30 +17,51 @@ const Agents = () => {
 
   }, [])
   const { isLoading, data } = useFetch({
-    initialUrl: "/agents",
+    initialUrl: "/agent_chart",
     skipOnStart: false,
     onFailure,
     onSuccess
   });
+  const graph_data = React.useMemo(() => {
+    let arr = []
+    if (!isLoading) {
+      data.months.forEach((i, index) => {
+
+        arr.push({
+          type: [i][0],
+          sales: data.count[index]
+        })
+      })
+    }
+    return arr
+  }, [isLoading, data])
+  const user_count = React.useMemo(() => {
+    if (!isLoading) {
+      return data?.count.reduce((i, b) => i + b)
+    } else {
+      return 0
+    }
+  }, [isLoading, data])
+
   const SiteSpeedComponent = React.useMemo(() => {
-    return [
-      {
-        label: 'Weekly',
-        key: 'weekly',
-        children: <ColumnGraph />
-      },
-      {
-        label: 'Month',
-        key: 'month',
-        children: <ColumnGraph />
-      },
+   return [
+      // {
+      //   label: 'Weekly',
+      //   key: 'weekly',
+      //   children: <ColumnGraph  {...{data:graph_data}} />
+      // },
+      // {
+      //   label: 'Month',
+      //   key: 'month',
+      //   children: <ColumnGraph  {...{data:graph_data}} />
+      // },
       {
         label: 'Year',
         key: 'year',
-        children: <ColumnGraph />
+        children: <ColumnGraph  {...{ data: graph_data }} />
       }
     ]
-  }, []);
+  }, [graph_data]);
 
   React.useEffect(() => {
     document.getElementById("defaulopen")?.click();
@@ -73,8 +94,7 @@ const Agents = () => {
         <div className="">
           <Tooltip placement="leftTop" color="black" title={
             <React.Fragment>
-              <button>Click </button>
-              <p className="cursor-pointer">lorem ipsum </p>
+          {/* tool tip dom  */}
             </React.Fragment>} arrowPointAtCenter>
             <span>
               <IconProvider className={`text-[4D5E80] text-lg float-right cursor-pointer `} color={`#4D5E80`}>
@@ -116,8 +136,7 @@ const Agents = () => {
                         <div className=" col-span-1 ">
                           <Tooltip placement="leftTop" color="black" title={
                             <React.Fragment>
-                              <button>Click </button>
-                              <p className="cursor-pointer">lorem ipsum </p>
+                         {/* tooltip doms  */}
                             </React.Fragment>} arrowPointAtCenter>
                             <span>
                               <IconProvider className={`text-white text-lg float-right cursor-pointer `} color={`#4D5E80`}>
@@ -138,7 +157,7 @@ const Agents = () => {
                                 borderWidth: 'border-4',
                                 border: 'border-[#E2FBD7]'
                               }
-                            } value={28} />
+                            } value={user_count} />
                         </div>
                       </div>
                     </div>
