@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.4cf64b8a.css",
-    "main.js": "/static/js/main.b1c50213.js",
+    "main.css": "/static/css/main.26e4d403.css",
+    "main.js": "/static/js/main.eeb52ae4.js",
     "static/js/787.a7f05235.chunk.js": "/static/js/787.a7f05235.chunk.js",
     "static/media/no-internet.png": "/static/media/no-internet.8381b6921655d2a855ae.png",
     "static/media/budiLogo.png": "/static/media/budiLogo.7d37a7c736bc8a82120a.png",
     "index.html": "/index.html",
-    "main.4cf64b8a.css.map": "/static/css/main.4cf64b8a.css.map",
-    "main.b1c50213.js.map": "/static/js/main.b1c50213.js.map",
+    "main.26e4d403.css.map": "/static/css/main.26e4d403.css.map",
+    "main.eeb52ae4.js.map": "/static/js/main.eeb52ae4.js.map",
     "787.a7f05235.chunk.js.map": "/static/js/787.a7f05235.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4cf64b8a.css",
-    "static/js/main.b1c50213.js"
+    "static/css/main.26e4d403.css",
+    "static/js/main.eeb52ae4.js"
   ]
 }
