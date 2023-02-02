@@ -36,6 +36,7 @@ const PublicRouteList = [
     </Wrapper>)
   }
 ];
+
 const PrivateRouteList = [
   {
     path: "/",
