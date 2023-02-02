@@ -66,6 +66,7 @@ const Agents = () => {
   React.useEffect(() => {
     document.getElementById("defaulopen")?.click();
   }, [])
+  
   function openTab(evt, cityName) {
     var i, tabcontainer, tabbtn;
     tabcontainer = document.getElementsByClassName("tabcontainer");
