@@ -2,7 +2,7 @@ import AfterLoginHeader from "./Header/AfterLoginHeader";
 import Sidebar from "./Sidebar/Sidebar";
 import TopHeader from "./Header/TopHeader";
 import Icon from "./Icon/Icon";
-import { SearchBar } from "./Searchbar/Searchbar";
+import SearchBar from "./Searchbar/Searchbar";
 import Selector from "./Selector/Select";
 import Radio from "./FormUtils/Radio";
 import CheckBox from "./FormUtils/CheckBox";
