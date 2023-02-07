@@ -38,16 +38,16 @@ const client = ({
   useCache && !invalidateQuery && cache[url]
     ? Promise.resolve(cache[url])
     : request({
-        method,
-        url,
-        data,
-        // eslint-disable-next-line no-undef
-        paramsSerializer,
-        ...rest,
-      }).then((res) => {
-        if (useCache) cache[url] = res.data;
-        return res.data;
-      });
+      method,
+      url,
+      data,
+      // eslint-disable-next-line no-undef
+      paramsSerializer,
+      ...rest,
+    }).then((res) => {
+      if (useCache) cache[url] = res.data;
+      return res.data;
+    });
 
 export const clientWithHeaders = ({
   method = METHODS.POST,
@@ -70,9 +70,9 @@ export const clientWithHeaders = ({
 
 request.interceptors.request.use(
   (req) => {
-    req.headers.Accept ="application/json";
+    req.headers.Accept = "application/json";
     if (isPublicApi(req.url) || req.isPublic) {
-   
+
       delete req.headers.Authorization;
     }
     if (
@@ -81,16 +81,16 @@ request.interceptors.request.use(
         null
       )
     ) {
-      req.headers["Accept"] ="application/json";
+      req.headers["Accept"] = "application/json";
       req.headers.Authorization = `Bearer ${getLocalStorage(
         AUTH_TOKEN,
         null
       )}`;
-      
+
     }
     return req;
   },
-  (error) => {}
+  (error) => { }
 );
 request.interceptors.response.use(
   (res) => {
@@ -103,8 +103,9 @@ request.interceptors.response.use(
       const error = {
         originalRequest,
         status,
-        message:err?.message
-          ,
+        // message:err?.message
+        message: 'Invalid  credentails  '
+        ,
       };
       localStorage.clear();
       // window.location.href='/';

@@ -59,7 +59,6 @@ const Sidebar = ({ SetMenu, props,
                   </IconContext.Provider>
                 </ToggleBtn>)
               }
-
             </div>
           </div>
           <div className={` overflow-hidden transition-all duration-700 ${toggle ? 'h-auto' : 'h-[0px]'}`}>{children}</div>
@@ -196,7 +195,6 @@ const path = useLocation();
       </div>
     </React.Fragment>
   ))
-
   return (
     <React.Fragment>
       <div onClick={() => redirectIT(props?.link)} className={`my-[10px] agent grid grid-cols-3 gap-2 place-items-center  transition-opacity hover:bg-primary-color ${location === props?.link && 'text-white bg-primary-color activeClass'} bg-white px-0  py-1 rounded-md`}>

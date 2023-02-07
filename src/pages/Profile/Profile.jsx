@@ -2,13 +2,15 @@ import React from 'react'
 import styled from 'styled-components';
 import { useFetch, useAuth } from 'hooks';
 import { toast } from 'react-hot-toast';
+import {Popconfirm} from "antd"
 import { Button, Modal, InputFieldLatest } from 'Component';
 import { FormProvider, Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Skeleton } from 'antd';
 import { changePasswordValidationSchema } from 'utils/validation';
+import { enLangauge } from 'Contents/en-langauge';
 export default function Profile() {
-    const { userValue , logout } = useAuth()
+    const { userValue, logout } = useAuth()
     let [imgUrl, SetImgUrl] = React.useState(null);
     const [reload, SetReload] = React.useState(false)
     const [haveToshare, SetShare] = React.useState(false);
@@ -24,9 +26,9 @@ export default function Profile() {
     const { control, handleSubmit, formState: { isDirty, isValid } } = methods
 
     const onSuccess = React.useCallback((response) => {
-        if(response?.message){
-        toast.success(response?.message)
-        SetReload(true)
+        if (response?.message) {
+            toast.success(response?.message)
+            SetReload(true)
         }
     }, [])
 
@@ -85,7 +87,7 @@ export default function Profile() {
 
     return (
         <div>
-            <Modal onSubmit={handleSubmit(onSubmit)} title={"Change Password "} state={haveToshare} SetState={SetShare}>
+            <Modal onSubmit={handleSubmit(onSubmit)} title={enLangauge?.PROFILE_CHANEG_PASSWORD} state={haveToshare} SetState={SetShare}>
                 <div className="grid w-full">
                     <FormProvider {...methods}>
                         <form  >
@@ -97,7 +99,7 @@ export default function Profile() {
                                         field,
                                         fieldState: { invalid, isTouch, isDirty, error }
                                     }) => (
-                                        <InputFieldLatest error={error}  {...field} name={"password"} placeholder={"Password "} />
+                                        <InputFieldLatest error={error}  {...field} name={"password"} placeholder={enLangauge?.PROFILE_FIELD_PASSWORD} />
                                     )} />
                             </div>
                             <div className='my-3'>
@@ -108,7 +110,7 @@ export default function Profile() {
                                         field,
                                         fieldState: { invalid, isTouch, isDirty, error }
                                     }) => (
-                                        <InputFieldLatest error={error}  {...field} name={"confirmPassword"} placeholder={"Confirm Password "} />
+                                        <InputFieldLatest error={error}  {...field} name={"confirmPassword"} placeholder={enLangauge?.PROFILE_FIELD_PASSWORD_CONFIRM} />
                                     )} />
                             </div>
                         </form>
@@ -122,10 +124,22 @@ export default function Profile() {
                             <div className='grid'>
                                 <div className='m-auto'>
                                     <section>
-                                        <CustomeLabel theme={{ fontSize: "17px", fontWeight: "normal" }}>{data?.user?.name}</CustomeLabel>
-                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Email : {data?.user?.email}</CustomeLabel>
-                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }}>Role : {data?.user?.role}</CustomeLabel>
-                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }} onClick={logout}>LogOut</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "17px", fontWeight: "500" }}>{data?.user?.name}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500" }}>{enLangauge?.PROFILE_USER_EMAIL} : {data?.user?.email}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500" }}>{enLangauge?.PROFILE_USER_ROLE} : {data?.user?.role}</CustomeLabel>
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500" }} >
+                                            <Popconfirm
+                                                title="Are you sure want ot logout  ?"
+                                                description="Are you sure want ot logout ?"
+                                                onConfirm={logout}
+                                                placement={"right"}
+                                                onCancel={()=>console.log("")}
+                                                okText="Yes"
+                                                cancelText="No"
+                                            >
+                                                {enLangauge.PROFILE_USER_LOGOUT}
+                                            </Popconfirm>
+                                        </CustomeLabel>
                                     </section>
                                     <div className='mt-[30px]'>
                                         <Button isLoading={isLoading} onClick={changePasswordModal} className=' hover:bg-primary-color hover:text-white py-1 mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold px-4 border border-primary-color  shadow rounded-full'

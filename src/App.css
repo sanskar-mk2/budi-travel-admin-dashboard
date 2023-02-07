@@ -128,6 +128,10 @@
 .ant-select:not(.ant-select-customize-input) .ant-select-selector{
   border-radius:3px !important;  
 }
+/* drawer */
+.ant-drawer-header{
+  padding: 8px !important;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
