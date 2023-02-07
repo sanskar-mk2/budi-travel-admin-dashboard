@@ -128,7 +128,7 @@ export default function Profile() {
                                         <CustomeLabel theme={{ fontSize: "14px", fontWeight: "normal" }} onClick={logout}>LogOut</CustomeLabel>
                                     </section>
                                     <div className='mt-[30px]'>
-                                        <Button isLoading={isLoading} onClick={changePasswordModal} className={`w-[160px] bg-primary-color rounded-full cursor-pointer `}
+                                        <Button isLoading={isLoading} onClick={changePasswordModal} className=' hover:bg-primary-color hover:text-white py-1 mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold px-4 border border-primary-color  shadow rounded-full'
                                             type={'button'}
                                         >{'CHANGES PASSWORD'}</Button>
                                     </div>

@@ -163,11 +163,11 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
                       </div>
                     ))
                   }
-                  <div onClick={()=>navigate('/profile')}>
+                  <div className='' onClick={()=>navigate('/profile')}>
                     <Tooltip placement="bottomRight" title={'Profile'}>
                       <Icon >
                         <IconProvider className={` text-[20px] cursor-pointer `} color={`#6B7A99`}>
-                          <img src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading..." />
+                          <img className='border border-1 ' src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading..." />
                         </IconProvider>
                       </Icon>
                     </Tooltip>

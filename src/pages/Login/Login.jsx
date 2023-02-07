@@ -103,7 +103,7 @@ export default function Login() {
                 </div>
               </div>
               <div className="form-control mt-6">
-                <Button className={`w-full bg-primary-color rounded-full `} type={'submit'} isLoading={isLoading}
+                <Button className={`w-full bg-primary-color rounded-full btn `} type={'submit'} isLoading={isLoading}
                   isDisabled={!isDirty || !isValid}
                 >{'LOGIN'}</Button>
               </div>
