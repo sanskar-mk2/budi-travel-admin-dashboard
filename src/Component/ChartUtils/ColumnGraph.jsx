@@ -3,8 +3,6 @@ import { Column } from '@ant-design/plots';
 
 export const ColumnGraph = ({  ...props}) => {
   
-  console.log( props?.data,"it is your name ")
-
  
   const config = {
     data:props?.data??[],

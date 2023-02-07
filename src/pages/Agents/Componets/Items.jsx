@@ -247,7 +247,7 @@ const Items = () => {
         <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mb-[15px]">
           <div className="lg:col-span-2">
           <CustomeText style={{fontWeight:"600" , marginTop:"5px"}}>
-            Unappoved agents
+            {enLangauge?.AGENT_ITEMS_TITLE}
         </CustomeText>
           </div>
           <div className="lg:col-span-4  md:col-span-2 ">

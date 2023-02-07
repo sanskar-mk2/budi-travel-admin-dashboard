@@ -183,8 +183,8 @@ const Agents = () => {
           </div>
         </div>
         <div className='my-2' >
-          <button className='tabbtn  mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-primary-color  shadow rounded-full' id="defaulopen" onClick={(event) => openTab(event, "1")}>Agents</button>
-          <button className='tabbtn  mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-primary-color shadow rounded-full' onClick={(event) => openTab(event, "2")}> Unapproval</button>
+          <button className='tabbtn  mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-primary-color  shadow rounded-full' id="defaulopen" onClick={(event) => openTab(event, "1")}>{enLangauge?.AGENT_BUTTON_AGENTS}</button>
+          <button className='tabbtn  mx-1 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-primary-color shadow rounded-full' onClick={(event) => openTab(event, "2")}>{enLangauge?.AGENT_BUTTON_UNAPPROVED}</button>
      </div>
         <div>
           <div className='tabcontainer' id="1">

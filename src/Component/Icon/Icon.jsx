@@ -10,12 +10,12 @@ const Icon = ({
 
   return (
     <React.Fragment>
-      <div className=" w-[40px] grid h-[40px]   mx-1 relative">
-    {
-      notification && (<span className="absolute rounded-full  top-[-2px] bg-primary-color  text-white text-xs font-semibold right-[-15px]  p-[4px] z-[2]">{notification}</span>)
-    }
+      <div className={` w-[40px] grid h-[40px]   mx-1 relative`}>
+        {
+          notification && (<span className="absolute rounded-full  top-[-2px] bg-primary-color  text-white text-xs font-semibold right-[-15px]  p-[4px] z-[2]">{notification}</span>)
+        }
         {/* <NavLink to="" className={(isActive) => isActive ? 'activeclassANme' : ''}> */}
-        <div className="w-[40px] grid h-[40px] rounded-full bg-[#c5d4ed] cursor-pointer hover:bg-primary-color overflow-auto">
+        <div className={className ?? `w-[40px] grid h-[40px] rounded-full bg-[#c5d4ed] cursor-pointer hover:bg-primary-color overflow-auto`}>
           <div className="m-auto">
             {
               children

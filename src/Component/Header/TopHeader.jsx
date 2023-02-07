@@ -1,11 +1,13 @@
 import React from 'react';
 import { HiOutlineDotsHorizontal, HiMenuAlt1 } from "react-icons/hi";
 import { Icon, SearchBar } from "Component";
-import { IconProvider , ImgProvider} from 'utils/common.utils';
+import { IconProvider, ImgProvider } from 'utils/common.utils';
 import { Tooltip } from "antd";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SidebarContants } from 'constants/Sidebar.menu';
 import styled from 'styled-components';
+import { Logo } from 'utils/common.utils';
+import logo from "Assets/budi.png"
 // notification icon 
 import { FaBell } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
@@ -40,7 +42,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
             </div>
             <div className="col-span-2 grid">
               <div className="m-auto text-secondry-color font-bold">
-                BUDI
+                <div className='float-left'><Logo src={logo} style={{ width: "100px" }} /></div>
               </div>
             </div>
             <div className="col-span-7 px-3">
@@ -68,7 +70,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
         icon: <BsFillPeopleFill />,
         Link: '',
         notificationCount: null,
-      },  {
+      }, {
         icon: <BsFillPeopleFill />,
         Link: '',
         notificationCount: null,
@@ -118,7 +120,10 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
           <div>
             <div className='grid grid-cols-7'>
               <div className='col-span-2'>
-                <div className='grid h-[100%]'><strong className="m-auto text-secondry-color text-xl">BUDI</strong></div>
+                <div className='grid h-[100%]'><strong className="m-auto text-secondry-color text-xl">
+                  <div className='float-left'><Logo src={logo} style={{ width: "100px" }} /></div>
+                </strong>
+                </div>
               </div>
               {
                 SidebarContants?.slice(0, 4).map((name, i, arr) => (
@@ -163,11 +168,11 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
                       </div>
                     ))
                   }
-                  <div onClick={()=>navigate('/profile')}>
+                  <div className=' ' onClick={() => navigate('/profile')}>
                     <Tooltip placement="bottomRight" title={'Profile'}>
-                      <Icon >
+                      <Icon className={" w-[45px] grid h-[45px] rounded-full border  drop-shadow-md cursor-pointer mt-[-3px] border-2 overflow-auto border-primary-color mx-1 relative "} >
                         <IconProvider className={` text-[20px] cursor-pointer `} color={`#6B7A99`}>
-                          <img src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading..." />
+                          <img className='border border-1 ' src={ImgProvider(data?.user?.profile?.profile_picture)} alt="loading..." />
                         </IconProvider>
                       </Icon>
                     </Tooltip>

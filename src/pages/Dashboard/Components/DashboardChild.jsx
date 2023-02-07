@@ -238,7 +238,7 @@ const DashboardChild = () => {
         <div className="">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2  gap-4">
             {ServiceCardData?.map((props, index, array) => (
-              isLoading ? (<Skeleton className="m-3" active />) : (
+              isLoading ? (<Skeleton className="m-3" active key={index} />) : (
                 <ServiceCard {...props} key={index} />
               )
             )

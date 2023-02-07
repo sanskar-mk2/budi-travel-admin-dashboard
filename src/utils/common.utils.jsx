@@ -11,7 +11,7 @@ import styled from "styled-components";
 
 
 
-export const Logo = () => <LogoIcon src={LogoImg} alt="budi" />;
+export const Logo = ({style, src}) => <LogoIcon theme={style} src={src??LogoImg} alt="budi" />;
 
 export const asyncWrapper = (promise) =>
   promise
@@ -167,10 +167,10 @@ export const redirectOut = (e) => {
 }
 
 const LogoIcon = styled.img`
-width:140px;
+width: ${props=>props?.theme.width?? '140px'};
 height:auto;
 margin:auto;
 && @media only screen and (max-width:550px){
-width:140px;
+  width: ${props=>props?.theme.width?? '140px'};
 }
 `;
