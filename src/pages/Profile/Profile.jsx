@@ -127,7 +127,7 @@ export default function Profile() {
                                         <CustomeLabel theme={{ fontSize: "17px", fontWeight: "500" }}>{data?.user?.name}</CustomeLabel>
                                         <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500" }}>{enLangauge?.PROFILE_USER_EMAIL} : {data?.user?.email}</CustomeLabel>
                                         <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500" }}>{enLangauge?.PROFILE_USER_ROLE} : {data?.user?.role}</CustomeLabel>
-                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500" }} >
+                                        <CustomeLabel theme={{ fontSize: "14px", fontWeight: "500"  }} style={{ cursor:"pointer"}} >
                                             <Popconfirm
                                                 title="Are you sure want ot logout  ?"
                                                 description="Are you sure want ot logout ?"
