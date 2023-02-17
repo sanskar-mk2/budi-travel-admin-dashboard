@@ -17,7 +17,7 @@ import moment from 'moment/moment';
 const AllUserList = () => {
   const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
-  const [currentPage , setCurrentPage] = React.useState(1)
+  const [currentPage, setCurrentPage] = React.useState(1)
   const [haveToshare, SetShare] = React.useState(false);
   const dateFormat = 'DD/MM/YYYY';
   const [dateState, setState] = React.useState([
@@ -98,6 +98,13 @@ const AllUserList = () => {
     }
   }, [isLoading])
 
+  const searchingFilter = React.useCallback(() => {
+    let value = document.getElementById('input_searchbar').value;
+    Setfilter_query({
+      ...filter_query, search: value?.value
+    })
+  }, [])
+
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
       <span>
@@ -159,9 +166,10 @@ const AllUserList = () => {
           <div className="lg:col-span-3  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
               <div className='lg:col-span-3 md:col-span-2 col-span-1 px-1 lg:py-0 md:py-0 py-1 '>
-                <Input onChange={(e) => Setfilter_query({
-                  ...filter_query, search: e.target?.value
-                })} value={filter_query?.search} autoFocus={true} style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
+                <Input id="input_searchbar" allowClear
+                  style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} addonAfter={<div className='cursor-pointer ' onClick={() => searchingFilter()}>
+                    Search
+                  </div>} />
               </div>
               <div className="px-1 lg:py-0 md:py-0 py-1 ">
                 <CustomeText>
@@ -175,7 +183,7 @@ const AllUserList = () => {
                       Setfilter_query({
                         ...filter_query, user_role: e === 'Active' ? true : false
                       })
-                  } options={["Active", "InActive" ,"ALL"]} />
+                  } options={["Active", "InActive", "ALL"]} />
                 </CustomeText>
               </div>
               <div className="px-x lg:py-0 md:py-0 py-1 " onClick={() => SetState(!state)}>

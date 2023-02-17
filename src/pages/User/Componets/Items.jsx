@@ -3,27 +3,27 @@ import styled from "styled-components";
 import { CheckBox, Selector } from 'Component';
 import { IconProvider } from 'utils/common.utils';
 import { SocialShare } from 'utils/ObjectUtils';
-import { Input , Skeleton } from "antd";
+import { Input, Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
 import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
-import {useFetch} from 'hooks';
+import { useFetch } from 'hooks';
 const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
 
-const {isLoading , data} = useFetch({
-   initialUrl:`/`,
-   skipOnStart:true,
-   config:{
-    method:'get'
-   }
-})
+  const { isLoading, data } = useFetch({
+    initialUrl: `/`,
+    skipOnStart: true,
+    config: {
+      method: 'get'
+    }
+  })
 
-console.log(data ,"==>")
+  console.log(data, "==>")
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
       <span>
@@ -75,14 +75,13 @@ console.log(data ,"==>")
         </Modal >
         <div className="grid lg:px-4  md:px-2 px-1 lg:grid-cols-5 md:grid-cols-3 grid-cols-1 mb-[15px]">
           <div className="lg:col-span-2 pt-1">
-<TableHeader>{enLangauge.USER_DETAIL_TABEL_TITLE}</TableHeader>
+            <TableHeader>{enLangauge.USER_DETAIL_TABEL_TITLE}</TableHeader>
           </div>
           <div className="lg:col-span-3  md:col-span-2 ">
             <div className='grid lg:grid-cols-6 md:grid-cols-9 grid-cols-2'>
               <div className='lg:col-span-2 px-1 '>
                 <Input style={{ width: "100% ", boxShadow: "none" }} placeholder="Search..." prefix={<BiSearch />} />
               </div>
-
               <div className="px-1  ">
                 <CustomeText>
                   <Select size={"defaut"} theme={{ width: "100%" }} defaultOption={"Filter"} options={["Pending", "Approved", "InActive"]} />
@@ -140,46 +139,46 @@ console.log(data ,"==>")
               </thead>
               <tbody>
                 {
-                  isLoading ? (<Skeleton active/>):
-                  Array(5).fill().map((_, index) => (
-                    <tr className=''>
-                      <td className="px-5 py-3   bg-white text-sm">
-                        <div className="flex">
-                          <div className="mx-2 pt-2 ">
-                            <CheckBox />
-                          </div>
+                  isLoading ? (<Skeleton active />) :
+                    Array(5).fill().map((_, index) => (
+                      <tr className=''>
+                        <td className="px-5 py-3   bg-white text-sm">
+                          <div className="flex">
+                            <div className="mx-2 pt-2 ">
+                              <CheckBox />
+                            </div>
 
-                          <div className="ml-3">
-                            <p className="text-gray-900 whitespace-no-wrap mt-2">
-                              <CustomeText>Molly Sanders</CustomeText>
-                            </p>
+                            <div className="ml-3">
+                              <p className="text-gray-900 whitespace-no-wrap mt-2">
+                                <CustomeText>Molly Sanders</CustomeText>
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-5 py-3  bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$20,000</CustomeText></p>
-                      </td>
-                      <td className="px-5 py-3  bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$10,000</CustomeText></p>
-                      </td>
-                      <td className="px-5 py-3 bg-white text-sm">
-                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                          <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                          <span className="relative"><CustomeText>98</CustomeText></span>
-                        </span>
-                      </td>
-                      <td className="px-5 py-3  bg-white text-sm">
-                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                          <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
-                          <span className="relative">
-                            <CustomeText>
-                              <Select size={"small"} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
-                            </CustomeText>
+                        </td>
+                        <td className="px-5 py-3  bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$20,000</CustomeText></p>
+                        </td>
+                        <td className="px-5 py-3  bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap"><CustomeText>$10,000</CustomeText></p>
+                        </td>
+                        <td className="px-5 py-3 bg-white text-sm">
+                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                            <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
+                            <span className="relative"><CustomeText>98</CustomeText></span>
                           </span>
-                        </span>
-                      </td>
-                    </tr>
-                  ))
+                        </td>
+                        <td className="px-5 py-3  bg-white text-sm">
+                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                            <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full" />
+                            <span className="relative">
+                              <CustomeText>
+                                <Select size={"small"} defaultOption={"Pending"} options={["Pending", "Approved", "InActive"]} />
+                              </CustomeText>
+                            </span>
+                          </span>
+                        </td>
+                      </tr>
+                    ))
                 }
               </tbody>
             </table>
