@@ -20,6 +20,7 @@ export default function TicketDetail() {
     const [state, SetState] = React.useState(false);
     const [reload, setReload] = React.useState(false)
     const { id } = useParams()
+
     const methods = useForm({
         resolver: yupResolver(ticketReplayValidationSchema),
         mode: "all",
@@ -49,7 +50,7 @@ export default function TicketDetail() {
             toast.success(response?.message)
             setReload(true)
         }
-    }, [navigate])
+    }, [])
     const onFailure = React.useCallback((error) => {
         if (error?.message) {
             toast.error(error?.message)
@@ -92,7 +93,6 @@ export default function TicketDetail() {
         const formData = new FormData()
         formData.append("message", data?.message)
         formData.append("support_id", id)
-        console.log(data)
         callFetch({
             url: '/support/reply',
             method: 'post',
@@ -115,7 +115,7 @@ export default function TicketDetail() {
             method: 'put',
             data: data
         })
-    }, [callFetch])
+    }, [callFetch , id])
 
     const cancel = React.useCallback(() => {
         toast.error("Cancled !")
@@ -137,7 +137,7 @@ export default function TicketDetail() {
                 method:"get"
             })
         }
-    }, [reload , callFetch])
+    }, [reload , callFetch ,id])
 
     const TabOneRightComponent = React.memo((props) => {
         return (

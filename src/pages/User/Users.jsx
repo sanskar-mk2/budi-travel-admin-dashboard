@@ -33,8 +33,8 @@ const Users = () => {
       return 0
     }
   }, [isLoading, data])
-  console.log(user_count, "total user here ")
-  console.log(user_count, "it is your name ")
+
+  
   const SiteSpeedComponent = React.useMemo(() => {
     return [
       // {

@@ -15,7 +15,7 @@ const Items = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
 
-  const { isLoading, data } = useFetch({
+  const { isLoading } = useFetch({
     initialUrl: `/`,
     skipOnStart: true,
     config: {
@@ -23,7 +23,6 @@ const Items = () => {
     }
   })
 
-  console.log(data, "==>")
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
       <span>

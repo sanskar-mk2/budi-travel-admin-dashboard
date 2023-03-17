@@ -24,15 +24,12 @@ const TopAgents = ({ props }) => {
 
 
   const timeFrameFilteration = React.useCallback((e) => {
-    console.log(e.target.value, " timeFrameFilteration ");
   }, []);
   const offerAllTime =
     React.useCallback((e) => {
-      console.log(e.target.value, " profitAll");
     }, []);
   const profitAll =
     React.useCallback((e) => {
-      console.log(e.target.value, " profitAll");
     }, []);
   const FilterationComponent = React.memo(() => {
     return (

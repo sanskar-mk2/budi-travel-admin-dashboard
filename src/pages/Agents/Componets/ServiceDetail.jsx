@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from 'antd';
-import { useFetch, useAuth } from 'hooks';
+import { useFetch } from 'hooks';
 import { enLangauge } from 'Contents/en-langauge';
-import { IconProvider, TxtCopy, ImgProvider, redirectOut, phoneFormat, numberFormatter } from 'utils/common.utils';
+import {  ImgProvider, redirectOut, phoneFormat, numberFormatter } from 'utils/common.utils';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, HashNavigation } from "swiper";
@@ -13,17 +13,11 @@ import "swiper/css/navigation";
 
 
 export default function ServiceDetail() {
-
-
     const { id } = useParams()
-    const { userValue } = useAuth()
     const onSuccess = React.useCallback((response) => {
-
     }, [])
     const onFailure = React.useCallback((error) => {
-
     }, [])
-
     const { isLoading, data } = useFetch({
         initialUrl: `/offers/${id}`,
         skipOnStart: false,
@@ -31,7 +25,6 @@ export default function ServiceDetail() {
         onFailure
     });
 
-    console.log(data, "=====><=")
     return (
         <div>
             <div className=' grid lg:grid-cols-12 md gap-3'>
