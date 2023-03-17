@@ -23,7 +23,9 @@ export default function Profile() {
         }
     })
 
-    const { control, handleSubmit, formState: { isDirty, isValid } } = methods
+    const { control, handleSubmit,
+        //  formState: {  isDirty, isValid   }
+     } = methods
 
     const onSuccess = React.useCallback((response) => {
         if (response?.message) {
@@ -47,7 +49,6 @@ export default function Profile() {
         onFailure
     })
     const onProfileUpload = React.useCallback((e) => {
-        console.log(e.target.files[0]);
         const formData = new FormData();
         if (e.target.files[0]) {
             formData.append("profile_picture", e.target.files[0]);
@@ -58,7 +59,7 @@ export default function Profile() {
                 data: formData,
             })
         }
-    }, [callFetch]);
+    }, [callFetch , userValue]);
 
     const onSubmit = React.useCallback((data) => {
         const formData = new FormData()
@@ -69,7 +70,7 @@ export default function Profile() {
             method: "post",
             data: formData,
         })
-    }, [callFetch])
+    }, [callFetch, userValue])
 
     const changePasswordModal = React.useCallback(() => {
         SetShare(true)
@@ -83,7 +84,7 @@ export default function Profile() {
             })
             SetReload(false)
         }
-    }, [callFetch, reload])
+    }, [callFetch, reload , userValue?.id])
 
     return (
         <div>

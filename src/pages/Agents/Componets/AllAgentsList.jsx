@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import { IoIosArrowForward } from "react-icons/io";
-import { IconProvider, ImgProvider } from 'utils/common.utils';
+import { IconProvider } from 'utils/common.utils';
 import { PaginationContainer } from 'Component';
 import { useFetch } from 'hooks';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { enLangauge } from 'Contents/en-langauge';
 import { Pagination } from 'antd';
 const AgentsList = ({ props }) => {
   const navigate = useNavigate()
-  const [currentPage , setCurrentPage] = React.useState(1)
+  const [currentPage, setCurrentPage] = React.useState(1)
   const onSuccess = React.useCallback((response) => {
 
   }, []);
@@ -24,7 +24,6 @@ const AgentsList = ({ props }) => {
     onSuccess
   });
 
-  console.log(data, "")
   const paginationAction = React.useCallback((a, b) => {
     if (a) {
       setCurrentPage(a)
@@ -34,52 +33,55 @@ const AgentsList = ({ props }) => {
       })
     }
   }, [callFetch])
+  
+  // fiteration fucntion
 
-  const timeFrameFilteration = React.useCallback((e) => {
-    console.log(e.target.value, " timeFrameFilteration ");
-  }, []);
-  const offerAllTime =
-    React.useCallback((e) => {
-      console.log(e.target.value, " profitAll");
-    }, []);
-  const profitAll =
-    React.useCallback((e) => {
-      console.log(e.target.value, " profitAll");
-    }, []);
-  const FilterationComponent = React.memo(() => {
-    return (
-      <React.Fragment>
-        <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-3">
-          <div className="p-2 grid" >
-            <select onChange={timeFrameFilteration} className="select m-auto select-bordered select-sm w-full max-w-xs">
-              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_TIME_FRAMED}</option>
-              <option>English</option>
-              <option>Japanese</option>
-              <option>Italian</option>
-            </select>
-          </div>
+  // const timeFrameFilteration = React.useCallback((e) => {
+  // }, []);
 
-          <div className="p-2 grid">
-            <select onChange={offerAllTime} className="select m-auto select-bordered select-sm w-full max-w-xs">
-              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_OFFER_ALLD}</option>
-              <option>English</option>
-              <option>Japanese</option>
-              <option>Italian</option>
-            </select>
-          </div>
+  // const offerAllTime =
+  //   React.useCallback((e) => {
+  //   }, []);
 
-          <div className="p-2 grid">
-            <select onChange={profitAll} className="select m-auto select-bordered select-sm w-full max-w-xs">
-              <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_PROFIT_ALLD}</option>
-              <option>English</option>
-              <option>Japanese</option>
-              <option>Italian</option>
-            </select>
-          </div>
-        </div>
-      </React.Fragment>
-    )
-  }, []);
+  // const profitAll =
+  //   React.useCallback((e) => {
+  //   }, []);
+
+  // filteration components
+  // const FilterationComponent = React.memo(() => {
+  //   return (
+  //     <React.Fragment>
+  //       <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-3">
+  //         <div className="p-2 grid" >
+  //           <select onChange={timeFrameFilteration} className="select m-auto select-bordered select-sm w-full max-w-xs">
+  //             <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_TIME_FRAMED}</option>
+  //             <option>English</option>
+  //             <option>Japanese</option>
+  //             <option>Italian</option>
+  //           </select>
+  //         </div>
+
+  //         <div className="p-2 grid">
+  //           <select onChange={offerAllTime} className="select m-auto select-bordered select-sm w-full max-w-xs">
+  //             <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_OFFER_ALLD}</option>
+  //             <option>English</option>
+  //             <option>Japanese</option>
+  //             <option>Italian</option>
+  //           </select>
+  //         </div>
+
+  //         <div className="p-2 grid">
+  //           <select onChange={profitAll} className="select m-auto select-bordered select-sm w-full max-w-xs">
+  //             <option value={undefined} selected>{enLangauge.TOP_AGENT_FILTERATION_PROFIT_ALLD}</option>
+  //             <option>English</option>
+  //             <option>Japanese</option>
+  //             <option>Italian</option>
+  //           </select>
+  //         </div>
+  //       </div>
+  //     </React.Fragment>
+  //   )
+  // }, []);
 
   return (
     <React.Fragment>

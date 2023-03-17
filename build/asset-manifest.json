@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.cbf10728.css",
-    "main.js": "/static/js/main.03438332.js",
+    "main.js": "/static/js/main.f82e64bd.js",
     "static/js/787.a7f05235.chunk.js": "/static/js/787.a7f05235.chunk.js",
     "static/media/no-internet.png": "/static/media/no-internet.8381b6921655d2a855ae.png",
     "static/media/budi.png": "/static/media/budi.68f930257c6d27757cb9.png",
     "static/media/budiLogo.png": "/static/media/budiLogo.7d37a7c736bc8a82120a.png",
     "index.html": "/index.html",
     "main.cbf10728.css.map": "/static/css/main.cbf10728.css.map",
-    "main.03438332.js.map": "/static/js/main.03438332.js.map",
+    "main.f82e64bd.js.map": "/static/js/main.f82e64bd.js.map",
     "787.a7f05235.chunk.js.map": "/static/js/787.a7f05235.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cbf10728.css",
-    "static/js/main.03438332.js"
+    "static/js/main.f82e64bd.js"
   ]
 }

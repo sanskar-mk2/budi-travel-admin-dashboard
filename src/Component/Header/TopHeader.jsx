@@ -19,7 +19,7 @@ const TopHeader = ({ SetMenu, sideMenu, children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isLoading, data, callFetch } = useFetch({
+  const { data  } = useFetch({
     initialUrl: `/user/${userValue?.id}`,
     skipOnStart: false,
     config: {

@@ -20,6 +20,7 @@ export default function TicketDetail() {
     const [state, SetState] = React.useState(false);
     const [reload, setReload] = React.useState(false)
     const { id } = useParams()
+
     const methods = useForm({
         resolver: yupResolver(ticketReplayValidationSchema),
         mode: "all",
@@ -49,7 +50,7 @@ export default function TicketDetail() {
             toast.success(response?.message)
             setReload(true)
         }
-    }, [navigate])
+    }, [])
     const onFailure = React.useCallback((error) => {
         if (error?.message) {
             toast.error(error?.message)
@@ -65,7 +66,6 @@ export default function TicketDetail() {
         onSuccess,
         onFailure,
     });
-
     // const {  data: dataProfile, callFetch: callFetchSec } = useFetch({
     //     initialUrl: `/user/${data?.support?.user_id}`,
     //     skipOnStart: true,
@@ -92,7 +92,6 @@ export default function TicketDetail() {
         const formData = new FormData()
         formData.append("message", data?.message)
         formData.append("support_id", id)
-        console.log(data)
         callFetch({
             url: '/support/reply',
             method: 'post',
@@ -115,7 +114,7 @@ export default function TicketDetail() {
             method: 'put',
             data: data
         })
-    }, [callFetch])
+    }, [callFetch , id])
 
     const cancel = React.useCallback(() => {
         toast.error("Cancled !")
@@ -137,9 +136,9 @@ export default function TicketDetail() {
                 method:"get"
             })
         }
-    }, [reload , callFetch])
+    }, [reload , callFetch ,id])
 
-    const TabOneRightComponent = React.memo((props) => {
+    const TabOneRightComponent = React.memo(({props}) => {
         return (
             <React.Fragment>
                 <div className="">
@@ -347,7 +346,7 @@ export default function TicketDetail() {
                                                 </CustomeText></span>
                                             </div>
                                             <div className=''>
-                                                <TabOneRightComponent />
+                                                <TabOneRightComponent props={replayies}/>
                                             </div>
                                         </div>
 
@@ -355,13 +354,13 @@ export default function TicketDetail() {
                                             <CustomeText>
                                                 <div className=' flex justify-between'>
                                                     <div>
-                                                        <div className="flex justify-between cursor-pointer  mb-2" onClick={() => redirectIT(`/user/${replayies?.user_id}`)}>
+                                                        <div className="flex justify-between cursor-pointer  mb-2" onClick={() => redirectIT(`/user/${replayies?.support_id}`)}>
                                                             <div className="pt-1">
-                                                                <Img src={ImgProvider()} alt="loading.." />
+                                                                <Img src={replayies?.replied_by?.profile_picture} alt="loading.." />
                                                             </div>
                                                             <div>
                                                                 <div className="pl-3 mt-2">
-                                                                    <Title theme={{ fontSize: "12px" }}>{replayies?.user?.name}</Title>
+                                                                    <Title theme={{ fontSize: "12px" }}>{replayies?.replied_by?.name}</Title>
                                                                     <div>
                                                                         <span>
                                                                             <Title theme={{ color: "#9295A3", fontSize: "12px" }}>

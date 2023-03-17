@@ -8,12 +8,11 @@ import { ChildSubMenu, ChildSubAgent } from 'Component/Sidebar/Sidebar';
 import { Outlet , useNavigate} from 'react-router-dom';
 import { useFetch } from 'hooks';
 import { BsPeopleFill } from "react-icons/bs";
-import { FaTimes } from 'react-icons/fa';
 import { useAuth } from 'hooks';
 import { Logo } from 'utils/common.utils';
 import logo from "Assets/budi.png"
 const AfterLoginHeader = () => {
-  const { session, logout , userValue} = useAuth()
+  const { session , userValue} = useAuth()
   const navigate = useNavigate()
   const [sideMenu, SetMenu] = React.useState(false);
   const onClose = () => {
@@ -95,7 +94,7 @@ onClose()
             <div className="mt-3">
               <SideBarContainer>
                 {
-                  AgentUser?.map((i, index) => (
+                  AgentUser?.slice(0 , 8).map((i, index) => (
                     <Sidebar props={i} key={index}>
                       {
                         i?.child?.map((i, index) => (

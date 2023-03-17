@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import { useFetch } from "hooks";
 import { enLangauge } from 'Contents/en-langauge';
 import ServicesList from './Componets/ServicesList';
+
 const AgentDetails = () => {
   const { id } = useParams();
   const [setState] = React.useState(null);
@@ -21,7 +22,7 @@ const AgentDetails = () => {
 
   }, [])
 
-  const { isLoading, data, } = useFetch({
+  const {  data, } = useFetch({
     initialUrl: `/user/${id}`,
     skipOnStart: false,
     onFailure,

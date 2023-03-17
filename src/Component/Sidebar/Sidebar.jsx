@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { useNavigate } from 'react-router-dom';
-import { ImgProvider } from 'utils/common.utils';
 import { useLocation } from 'react-router-dom';
 const Sidebar = ({ SetMenu, props,
   children
@@ -17,12 +16,12 @@ const Sidebar = ({ SetMenu, props,
     try{
     if (e?.link) {
       navigate(e?.link);
-      SetMenu(false)
+      // SetMenu(false)
     }
   }catch(error){
 
   }
-  }, [ navigate ,SetMenu])
+  }, [ navigate ])
 
   const location = React.useMemo(() => {
     return path?.pathname;

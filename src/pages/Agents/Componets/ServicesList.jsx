@@ -7,18 +7,16 @@ import { Input, Skeleton, Pagination } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal } from 'Component';
-import { DatePicker } from 'antd';
 import { enLangauge } from 'Contents/en-langauge';
-import { useAuth, useFetch } from 'hooks';
+import { useFetch } from 'hooks';
 import toast from 'react-hot-toast';
 import { DateRange } from 'react-date-range';
 import moment from 'moment/moment';
 import { ImgProvider } from 'utils/common.utils';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ServicesList = () => {
-  const {id} = useParams()
-  const {userValue} = useAuth()
+  
   const navigate = useNavigate()
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
@@ -103,19 +101,7 @@ const ServicesList = () => {
     }
   }, [unapproval, isLoading])
 
-  const searchingFilter = React.useCallback((e) => {
-    const searchValue = e?.target?.value;
-    console.log(searchValue, "===")
-  }, [])
 
-  const dateRangeFilteration = React.useCallback((e) => {
-    const [start, end] = e;
-    console.log(start, end, "====> ")
-  }, [])
-
-  const selectionFilterOne = React.useCallback((e) => {
-    console.log(e);
-  }, [])
 
   const selectionFilterTwo = React.useCallback((e) => {
     const formData = new FormData()
@@ -155,10 +141,10 @@ const ServicesList = () => {
     if (str) {
       callFetch({
         url: `/agents/unapproved_agents?page=${1}&${str}`,
-        method: ''
+        method: 'get'
       })
     }
-  }, [filter_query])
+  }, [filter_query , callFetch])
 
   const updateDate = React.useCallback((item) => {
     setState([item.selection])
@@ -188,7 +174,7 @@ const ServicesList = () => {
         method: 'get'
       })
     }
-  }, [callFetch])
+  }, [callFetch , filter_query , isLoading])
   React.useLayoutEffect(() => {
     if (isLoading) {
       SetState(false)
@@ -461,12 +447,3 @@ border-radius:3px;
 width:100%;
 `;
 
-const TableHeader = styled.span`
-font-family: 'Open Sans';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 22px;
-color: #45464E;
-
-`;

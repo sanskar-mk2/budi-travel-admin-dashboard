@@ -13,7 +13,6 @@ import toast from 'react-hot-toast';
 import { DateRange } from 'react-date-range';
 import moment from 'moment/moment';
 
-// const { RangePicker } = DatePicker;
 const Items = () => {
   const [state, SetState] = React.useState(false);
   const [haveToshare, SetShare] = React.useState(false);
@@ -98,19 +97,16 @@ const Items = () => {
     }
   }, [unapproval, isLoading])
 
-  const searchingFilter = React.useCallback((e) => {
-    const searchValue = e?.target?.value;
-    console.log(searchValue, "===")
-  }, [])
+  // const searchingFilter = React.useCallback((e) => {
+  //   const searchValue = e?.target?.value;
+  // }, [])
 
-  const dateRangeFilteration = React.useCallback((e) => {
-    const [start, end] = e;
-    console.log(start, end, "====> ")
-  }, [])
+  // const dateRangeFilteration = React.useCallback((e) => {
+  //   const [start, end] = e;
+  // }, [])
 
-  const selectionFilterOne = React.useCallback((e) => {
-    console.log(e);
-  }, [])
+  // const selectionFilterOne = React.useCallback((e) => {
+  // }, [])
 
   const selectionFilterTwo = React.useCallback((e) => {
     const formData = new FormData()
@@ -153,7 +149,7 @@ const Items = () => {
         method: ''
       })
     }
-  }, [filter_query])
+  }, [filter_query , callFetch])
 
   const updateDate = React.useCallback((item) => {
     setState([item.selection])
@@ -183,7 +179,8 @@ const Items = () => {
         method: 'get'
       })
     }
-  }, [callFetch])
+  }, [callFetch , isLoading , filter_query])
+  
   React.useLayoutEffect(() => {
     if (isLoading) {
       SetState(false)
@@ -456,12 +453,3 @@ border-radius:3px;
 width:100%;
 `;
 
-const TableHeader = styled.span`
-font-family: 'Open Sans';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 22px;
-color: #45464E;
-
-`;

@@ -21,7 +21,7 @@ const ForgetPassword = () => {
 
 
   const onSubmit = React.useCallback((data) => {
-    console.log(data, " verify otp  ");
+
   }, [])
 
   return (

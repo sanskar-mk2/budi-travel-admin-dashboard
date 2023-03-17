@@ -33,7 +33,7 @@ export default function Login() {
     if (error) {
       setError('email', { type: 'custom', message: error })
     }
-  }, [error])
+  }, [error , setError])
   return (
     <React.Fragment>
       <div className="grid h-[95vh]">
