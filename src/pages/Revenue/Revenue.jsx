@@ -10,7 +10,7 @@ import { useFetch } from 'hooks';
 
 const Revenue = () => {
 
-  const { isLoading, data } = useFetch({
+  const { isLoading  } = useFetch({
     initialUrl: "/agents",
     skipOnStart: false
   });

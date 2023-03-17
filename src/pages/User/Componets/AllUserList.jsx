@@ -7,7 +7,7 @@ import { Input, Skeleton } from "antd";
 import { BiSearch, BiFilterAlt } from "react-icons/bi";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Modal, PaginationContainer } from 'Component';
-import { enLangauge } from 'Contents/en-langauge'
+import { enLangauge } from 'Contents/en-langauge';
 import { useFetch } from "hooks";
 import { Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -55,7 +55,7 @@ const AllUserList = () => {
       url: `/users?page=${1}&${str}`,
       method: 'get'
     })
-  }, [filter_query])
+  }, [filter_query , callFetch])
 
   const updateDate = React.useCallback((item) => {
     setState([item.selection])
@@ -63,7 +63,7 @@ const AllUserList = () => {
       ...filter_query, from: moment(item.selection?.startDate).format(dateFormat),
       to: moment(item.selection?.endDate).format(dateFormat)
     })
-  }, [])
+  }, [filter_query])
 
 
   const paginationAction = React.useCallback((page, b) => {
@@ -85,7 +85,7 @@ const AllUserList = () => {
         method: 'get'
       })
     }
-  }, [callFetch])
+  }, [callFetch , filter_query , isLoading])
 
   const redirectIT = React.useCallback((e) => {
     if (e) {
@@ -103,7 +103,7 @@ const AllUserList = () => {
     Setfilter_query({
       ...filter_query, search: value?.value
     })
-  }, [])
+  }, [filter_query])
 
   const Button = React.memo(({ IconClassName, color, icon, children }) => (
     <button className="bg-white w-full text-center hover:bg-gray-100 flex text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
