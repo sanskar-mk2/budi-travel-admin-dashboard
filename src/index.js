@@ -4,10 +4,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-
+import { isDebugging } from 'utils/common.utils';
+isDebugging(false)
 const container = document.getElementById('root');
 const root = createRoot(container);
-
 root.render(
   <React.StrictMode>
     <BrowserRouter>
