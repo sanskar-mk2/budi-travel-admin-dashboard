@@ -165,6 +165,28 @@ export const redirectOut = (e) => {
     window.open(e);
   }
 }
+export function isDebugging(debugging) {
+  if (!debugging)
+    try {
+      if (typeof (window.console) != "undefined") {
+        window.console = {};
+        window.console.log = function () {
+        };
+        window.console.debug = function () {
+        };
+        window.console.info = function () {
+        };
+        window.console.warn = function () {
+        };
+        window.console.error = function () {
+        };
+      } else {
+
+      }
+    } catch (ex) {
+
+    }
+}
 
 const LogoIcon = styled.img`
 width: ${props=>props?.theme.width?? '140px'};
