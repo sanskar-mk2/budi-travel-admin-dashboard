@@ -29,6 +29,7 @@
   border:rgb(26, 170, 195) 1.5px solid !important ;
   color: rgb(26, 170, 195) !important;
 }
+
 .ant-btn-primary {
   border:#1aaac3 1.5px solid !important ;
   color: rgb(26, 170, 195) !important;
@@ -41,13 +42,12 @@
 .ant-btn-primary {
   border:rgb(26, 170, 195) 1.5px solid !important ;
   color: rgb(26, 170, 195) !important;
-
 }
+
 .ant-btn-primary:hover {
   background:rgb(26, 170, 195) !important ;
   color: rgb(255, 255, 255) !important;
 }
-
 
 @media only screen and (max-width:450px) {
   ::-webkit-scrollbar {
@@ -81,9 +81,11 @@
 .activeClass:hover svg {
   color: white !important;
 }
+
 .activeClass:hover div {
   color: white !important;
 }
+
 .agent:hover div {
   color: white !important;
 }
